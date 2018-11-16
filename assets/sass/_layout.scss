@@ -23,13 +23,14 @@ section
 	}
 	div
 	{
+		margin: 1rem;
 		p
 		{
 			color: $text-colorDark;
 		}
 	}
 }
-.home-introContainer
+.home-intro
 {
 	color: white;
 	background: url("../img/home_terrasse.jpg");
@@ -45,7 +46,6 @@ section
     }
     div
     {
-    	margin-top: 3rem;
     	width: 100%;
     	display: flex;
     	flex-wrap: wrap;
@@ -57,118 +57,91 @@ section
     	margin: $mainButton-spaceBetween;
     }
 }
-.home-cafeRestoContainer
+.home-cafeResto
 {
-	& > div
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	div
 	{
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		align-items: center;
-		& > div
+		max-width: 250px;
+		text-align: center;
+		h3
 		{
-			margin-top: $mainButton-size;
-			margin-left: $mainCtnr-margin;
-			margin-right: $mainCtnr-margin;
-			max-width: 250px;
-			text-align: center;
+			margin: 1rem 0;
+			padding-bottom: 1rem;
+			position: relative;
+			&:before
+			{
+				content: "";
+				position: absolute;
+				bottom: 0;
+				left: 33%;
+				width: 33%;
+				height: 2px;
+			}
+		}
+		img
+		{
+			border: 10px solid grey;
+			border-radius: 50%;
+			width: 125px;
+			height: 125px;
+			transition: all 0.3s;
+			&:hover
+			{
+				cursor: pointer;
+			}
+		}
+		&:first-child
+		{
 			h3
 			{
-				margin-top: $mainCtnr-margin;
-				margin-bottom: $mainCtnr-margin;
-				padding-bottom: calc(#{$mainCtnr-margin} / 2);
-				position: relative;
 				&:before
 				{
-					content: "";
-					position: absolute;
-					bottom: 0;
-					left: 33%;
-					width: 33%;
-					height: 2px;
+					background-color: $mainHover-color;
 				}
 			}
 			img
 			{
-				border: 10px solid grey;
-				border-radius: 50%;
-				width: 125px;
-				height: 125px;
-				transition: all 0.3s;
 				&:hover
 				{
-					cursor: pointer;
+					border-color: $mainHover-color;
 				}
 			}
-			&:first-child
+		}
+		&:last-child
+		{
+			h3
 			{
-				h3
+				&:before
 				{
-					&:before
-					{
-						background-color: $mainHover-color;
-					}
-				}
-				img
-				{
-					&:hover
-					{
-						border-color: $mainHover-color;
-					}
+					background-color: $second-color;
 				}
 			}
-			&:last-child
+			img
 			{
-				h3
+				&:hover
 				{
-					&:before
-					{
-						background-color: $second-color;
-					}
-				}
-				img
-				{
-					&:hover
-					{
-						border-color: $second-color;
-					}
+					border-color: $second-color;
 				}
 			}
 		}
 	}
 }
-.home-presentationContainer
+.home-presentation
 {
-	& > div
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	div
 	{
-		margin-top: $mainButton-size;
-		display: flex;
-		justify-content: center;
-		align-items: flex-start;
-		div
-		{
-			margin-right: 1rem;
-			margin-left: 1rem;
-			flex: 1;
-			&:nth-child(2)
-			{
-				p
-				{
-					margin-bottom: 2rem;
-				}
-			}
-			&:nth-child(3)
-			{
-				h3
-				{
-					color: $title-colorLight;
-				}
-				p
-				{
-					margin-bottom: 2rem;
-				}
-			}
-		}	
+		flex: 1;
+	}
+	h3
+	{
+		color: $title-colorLight;
 	}
 }
 .big-Parag
@@ -180,6 +153,75 @@ section
 	font-family: $main-fontFam;
 	font-weight: lighter;
 }
+.home_activities
+{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: flex-start;
+	h3, p
+	{
+		text-align: center;
+	}
+	a
+	{
+		margin: 0 auto;
+		border: 1px solid $main-color;
+		padding: 0.2rem;
+		display: inline-block;
+		color: $main-color;
+		text-decoration: none;
+		font-weight: bold;
+		transition: border-color 0.3s, color 0.3s;
+		&:hover
+		{
+			border-color: $mainHover-color;
+			color: $mainHover-color;
+		}
+	}
+	img
+	{
+		width: 174px;
+		height: 174px;
+	}
+	.description
+	{
+		border-radius: 4px;
+		padding: 0.5rem;
+		position: absolute;
+		top: 0;
+		left: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		opacity: 0;
+		max-height: 0;
+		height: 100%;
+		width: 100%;
+		color: $title-colorLight;
+		background-color: $title-colorDark;
+		transition: max-height 0.3s, opacity 1s;
+	}
+	& > div
+	{
+		flex: 1;
+		text-align: center;
+		& > div
+		{
+			margin: 0;
+			position: relative;
+			text-align: center;
+			&:hover
+			{
+				.description
+				{
+					opacity: 1;
+					max-height: 174px;
+				}
+			}
+		}
+	}
+}
 
  @media screen and (max-width: 843px)
 {
@@ -187,29 +229,22 @@ section
 	{
 		padding-top: 2rem;
 		padding-bottom: 2rem;
-		p
-		{
-			text-align: center;
-		}
 	}
-	.home-introContainer
+	h3, p
 	{
-		margin-top: 0;
+		text-align: center;
+	}
+	.home-intro
+	{
 		position: relative;
 		z-index: 1;
 	}
-	.home-presentationContainer
+	.home-presentation
 	{
-		& > div
-		{
-			margin-top: 2rem;
-			flex-direction: column;
-			text-align: center;
-		}
+		flex-direction: column;
 	}
 	.big-Parag
 	{
-		margin-bottom: 2rem;
 		font-size: 2.75rem;
 		line-height: 3rem;
 		text-align: center;

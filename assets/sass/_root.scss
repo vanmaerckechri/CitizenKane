@@ -27,34 +27,19 @@ body
 	width: 100%;
 	flex: 1;
 }
-a.button, .btn
-{
-	border-radius: 0.2rem;
-	padding: 1rem 1.5rem;
-	font-size: 1.1rem;
-	text-decoration: none;
-    text-transform: uppercase;
-	color: white!important;
-	background-color: $main-color;
-	transition: background-color .3s!important;
-	&:hover
-	{
-		background-color: $mainHover-color;
-	}
-}
 h1
 {
 	color: white;
-}
-h2, h3
-{
-    color: $title-colorDark;
 }
 h1, h2
 {
     font-family: $title-fontFam;
     text-transform: uppercase;
     text-align: center;
+}
+h2, h3
+{
+    color: $title-colorDark;
 }
 h3, h4, h5, h6
 {
@@ -77,8 +62,27 @@ p, a, h3, h4, h5, h6
 {
 	font-family: $main-fontFam;
 }
+p
+{
+	margin-bottom: 2rem;
+}
+a.button, .btn
+{
+	border-radius: 0.2rem;
+	padding: 1rem 1.5rem;
+	font-size: 1.1rem;
+	text-decoration: none;
+    text-transform: uppercase;
+	color: white!important;
+	background-color: $main-color;
+	transition: background-color .3s!important;
+	&:hover
+	{
+		background-color: $mainHover-color;
+	}
+}
 
- @media screen and (max-width: 843px)
+@media screen and (max-width: 843px)
 {
 	h1
 	{
