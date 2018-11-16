@@ -31,16 +31,15 @@ a.button, .btn
 {
 	border-radius: 0.2rem;
 	padding: 1rem 1.5rem;
-	font-family: $mainButtonLink-fontFam;
 	font-size: 1.1rem;
 	text-decoration: none;
     text-transform: uppercase;
 	color: white!important;
-	background-color: $mainButton-bgColor;
+	background-color: $main-color;
 	transition: background-color .3s!important;
 	&:hover
 	{
-		background-color: $mainButtonHover-bgColor;
+		background-color: $mainHover-color;
 	}
 }
 h1
@@ -49,17 +48,16 @@ h1
 }
 h2, h3
 {
-    color: $titles-colorDark;
+    color: $title-colorDark;
 }
 h1, h2
 {
-    font-family: $mainTitles-fontFam;
+    font-family: $title-fontFam;
     text-transform: uppercase;
     text-align: center;
 }
 h3, h4, h5, h6
 {
-	font-family: $secondTitles-fontFam;
 	text-transform: uppercase;
 	font-size: bold;
 }
@@ -75,9 +73,9 @@ h3
 {
 	font-size: 1.2rem;
 }
-p
+p, a, h3, h4, h5, h6
 {
-	font-family: $mainText-fontFam;
+	font-family: $main-fontFam;
 }
 
  @media screen and (max-width: 843px)

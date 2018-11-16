@@ -6,7 +6,7 @@
 	transition: color .3s;
 	&:hover
 	{
-		color: $mainNavLinkHover-color;
+		color: $mainHover-color;
 	}
 }
 header
@@ -69,9 +69,8 @@ nav
 	{
 		@include nav-button;
 		text-decoration: none;
-		font-family: $mainNavLink-fontFam;
 		font-size: 1rem;
-		color: $mainNavLink-color;
+		color: $title-colorDark;
 	}
 }
 @media screen and (max-width: 843px)
@@ -122,10 +121,11 @@ nav
 			width: 48px;
 			height: 3px;
 			display: block;
-			background-color: $mainNavLinkHover-color;
+			background-color: $main-color;
 			transform: translateX(-50%);
 			transition: opacity 0.5s, transform 0.5s, margin-top 0.5s;
 			pointer-events: none;
+			transition: all .3s;
 			&:nth-of-type(1)
 			{
 				transform-origin: left center;
@@ -150,6 +150,10 @@ nav
 			{
 				cursor: pointer;
 			}
+		}
+		input:hover ~ span
+		{
+			background-color: $mainHover-color;
 		}
 		input:checked ~ ul
 		{

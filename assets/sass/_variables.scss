@@ -3,35 +3,23 @@ $mainCtnr-maxWidth: 1280px;
 $mainCtnr-margin: 1rem;
 
 // buttons
-$mainButton-bgColor: #FC6D6D;
-$mainButtonHover-bgColor: #cb4332;
 $mainButton-size: 3rem;
 $mainButton-spaceBetween: 0.5rem;
 $mainButtonLink-fontFam: 'Lato', sans-serif;
 
-// navigation
-$mainNavLink-color: black;
-$mainNavLinkHover-color: #e96656;
-$mainNavLink-borderSize: 1px;
-$mainNavLink-fontFam: 'Lato', sans-serif;
-
-// links
-$mainLink-color: black;
-$mainLinkHover-color: orange;
-
-$mainSelected-color: purple;
-
 // fonts
-$mainTitles-fontFam: 'Montserrat', sans-serif;
-$titles-colorDark: #404040;
-$titles-colorLight: white;
-$secondTitles-fontFam: 'Lato', sans-serif;
-
-$mainText-fontFam: 'Lato', sans-serif;
+$title-fontFam: 'Montserrat', sans-serif;
+$main-fontFam: 'Lato', sans-serif;
 $mainText-fontSize: 16px;
+$title-colorDark: #404040;
+$title-colorLight: white;
 $text-colorDark: #8f8f8f;
 
+// colors
+$main-color: #FC6D6D;
+$mainHover-color: #cb4332;
 $second-color: #66d0c8;
+$secondHover-color: #1e9e6b;
 
 @mixin widthMaxContent
 {

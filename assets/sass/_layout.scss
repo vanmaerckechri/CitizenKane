@@ -18,7 +18,7 @@ section
 		color: white;
 		h2
 		{	
-			color: $titles-colorLight;
+			color: $title-colorLight;
 		}
 	}
 	div
@@ -106,14 +106,14 @@ section
 				{
 					&:before
 					{
-						background-color: $mainButtonHover-bgColor;
+						background-color: $mainHover-color;
 					}
 				}
 				img
 				{
 					&:hover
 					{
-						border-color: $mainButtonHover-bgColor;
+						border-color: $mainHover-color;
 					}
 				}
 			}
@@ -161,7 +161,7 @@ section
 			{
 				h3
 				{
-					color: $titles-colorLight;
+					color: $title-colorLight;
 				}
 				p
 				{
@@ -177,7 +177,7 @@ section
 	line-height: 5rem;
 	text-align: right;
 	color: white;
-	font-family: $mainText-fontFam;
+	font-family: $main-fontFam;
 	font-weight: lighter;
 }
 
