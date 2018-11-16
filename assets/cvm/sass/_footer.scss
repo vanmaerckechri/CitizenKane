@@ -1,0 +1,15 @@
+footer
+{
+	width: 100vw;
+	background-color: pink;
+}
+.footerContent
+{
+	margin: 0 auto;
+	padding: $mainCtnr-margin;
+	max-width: $mainCtnr-maxWidth;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}

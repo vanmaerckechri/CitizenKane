@@ -1,0 +1,217 @@
+section
+{
+	width: 100%;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	& > div, & > h1, & > h2, & > p,
+	{
+		padding-left: $mainCtnr-margin;
+		padding-right: $mainCtnr-margin;
+		max-width: $mainCtnr-maxWidth;
+	}
+	&:nth-child(2n+1)
+	{
+		background-color: #272727;
+		color: white;
+		h2
+		{	
+			color: $titles-colorLight;
+		}
+	}
+	div
+	{
+		p
+		{
+			color: $text-colorDark;
+		}
+	}
+}
+.home-introContainer
+{
+	color: white;
+	background: url("../img/home_terrasse.jpg");
+	background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    z-index: 0;
+    h1
+    {
+    	padding: $mainCtnr-margin;
+    	text-align: center;
+    	background-color: rgba(0, 0, 0, 0.5);
+    }
+    div
+    {
+    	margin-top: 3rem;
+    	width: 100%;
+    	display: flex;
+    	flex-wrap: wrap;
+    	justify-content: center;
+    	align-items: center;
+    }
+    a
+    {
+    	margin: $mainButton-spaceBetween;
+    }
+}
+.home-cafeRestoContainer
+{
+	& > div
+	{
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+		& > div
+		{
+			margin-top: $mainButton-size;
+			margin-left: $mainCtnr-margin;
+			margin-right: $mainCtnr-margin;
+			max-width: 250px;
+			text-align: center;
+			h3
+			{
+				margin-top: $mainCtnr-margin;
+				margin-bottom: $mainCtnr-margin;
+				padding-bottom: calc(#{$mainCtnr-margin} / 2);
+				position: relative;
+				&:before
+				{
+					content: "";
+					position: absolute;
+					bottom: 0;
+					left: 33%;
+					width: 33%;
+					height: 2px;
+				}
+			}
+			img
+			{
+				border: 10px solid grey;
+				border-radius: 50%;
+				width: 125px;
+				height: 125px;
+				transition: all 0.3s;
+				&:hover
+				{
+					cursor: pointer;
+				}
+			}
+			&:first-child
+			{
+				h3
+				{
+					&:before
+					{
+						background-color: $mainButtonHover-bgColor;
+					}
+				}
+				img
+				{
+					&:hover
+					{
+						border-color: $mainButtonHover-bgColor;
+					}
+				}
+			}
+			&:last-child
+			{
+				h3
+				{
+					&:before
+					{
+						background-color: $second-color;
+					}
+				}
+				img
+				{
+					&:hover
+					{
+						border-color: $second-color;
+					}
+				}
+			}
+		}
+	}
+}
+.home-presentationContainer
+{
+	& > div
+	{
+		margin-top: $mainButton-size;
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		div
+		{
+			margin-right: 1rem;
+			margin-left: 1rem;
+			flex: 1;
+			&:nth-child(2)
+			{
+				p
+				{
+					margin-bottom: 2rem;
+				}
+			}
+			&:nth-child(3)
+			{
+				h3
+				{
+					color: $titles-colorLight;
+				}
+				p
+				{
+					margin-bottom: 2rem;
+				}
+			}
+		}	
+	}
+}
+.big-Parag
+{
+	font-size: 3.75rem;
+	line-height: 5rem;
+	text-align: right;
+	color: white;
+	font-family: $mainText-fontFam;
+	font-weight: lighter;
+}
+
+ @media screen and (max-width: 843px)
+{
+	section
+	{
+		padding-top: 2rem;
+		padding-bottom: 2rem;
+		p
+		{
+			text-align: center;
+		}
+	}
+	.home-introContainer
+	{
+		margin-top: 0;
+		position: relative;
+		z-index: 1;
+	}
+	.home-presentationContainer
+	{
+		& > div
+		{
+			margin-top: 2rem;
+			flex-direction: column;
+			text-align: center;
+		}
+	}
+	.big-Parag
+	{
+		margin-bottom: 2rem;
+		font-size: 2.75rem;
+		line-height: 3rem;
+		text-align: center;
+	}
+}

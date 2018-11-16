@@ -1,0 +1,41 @@
+// main container
+$mainCtnr-maxWidth: 1280px;
+$mainCtnr-margin: 1rem;
+
+// buttons
+$mainButton-bgColor: #FC6D6D;
+$mainButtonHover-bgColor: #cb4332;
+$mainButton-size: 3rem;
+$mainButton-spaceBetween: 0.5rem;
+$mainButtonLink-fontFam: 'Lato', sans-serif;
+
+// navigation
+$mainNavLink-color: black;
+$mainNavLinkHover-color: #e96656;
+$mainNavLink-borderSize: 1px;
+$mainNavLink-fontFam: 'Lato', sans-serif;
+
+// links
+$mainLink-color: black;
+$mainLinkHover-color: orange;
+
+$mainSelected-color: purple;
+
+// fonts
+$mainTitles-fontFam: 'Montserrat', sans-serif;
+$titles-colorDark: #404040;
+$titles-colorLight: white;
+$secondTitles-fontFam: 'Lato', sans-serif;
+
+$mainText-fontFam: 'Lato', sans-serif;
+$mainText-fontSize: 16px;
+$text-colorDark: #8f8f8f;
+
+$second-color: #66d0c8;
+
+@mixin widthMaxContent
+{
+	width: intrinsic;
+	width: -moz-max-content;
+	width: -webkit-max-content;
+}

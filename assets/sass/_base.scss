@@ -1,0 +1,13 @@
+.hidden
+{
+	opacity: 0;
+	pointer-events: none;
+}
+.displayNone
+{
+	display: none;
+}
+.selected
+{
+	background-color: $mainSelected-color;
+}

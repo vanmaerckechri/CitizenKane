@@ -1,0 +1,31 @@
+.alertCookies-container
+{
+	position: fixed;
+	bottom: 0;
+	width: 100vw;
+	text-align: center;
+	color: white;
+	background-color: #333333;
+	p
+	{
+		margin: 0 auto;
+		padding: $mainCtnr-margin;
+		max-width: $mainCtnr-maxWidth;
+		width: 100%;
+	}
+	a
+	{
+		color: white;
+		font-weight: bold;
+		&:hover
+		{
+			color: $mainLinkHover-color;
+		}
+	}
+	button
+	{
+		margin: $mainCtnr-margin auto 0;
+		display: block;
+		font-size: 1.2rem;
+	}
+}
