@@ -1,5 +1,6 @@
 html, body, header, nav, footer, section, div, span, h1, h2, h3, h4, h5, h6, p, a, blockquote, cite, img, ol, ul, li, form, fieldset, legend, label, input, button {
   margin: 0;
+  border: none;
   padding: 0;
   box-sizing: border-box; }
 
@@ -26,7 +27,7 @@ body {
 h1 {
   color: white; }
 
-h1, h2 {
+h1, h2, legend {
   font-family: "Montserrat", sans-serif;
   text-transform: uppercase;
   text-align: center; }
@@ -47,11 +48,41 @@ h2 {
 h3 {
   font-size: 1.2rem; }
 
-p, a, h3, h4, h5, h6 {
+p, a, h3, h4, h5, h6, label, input {
   font-family: "Lato", sans-serif; }
 
 p {
   margin-bottom: 2rem; }
+
+form {
+  margin-left: 1rem;
+  margin-right: 1rem; }
+
+fieldset {
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  fieldset p {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    color: #8f8f8f; }
+
+legend {
+  font-size: 1.2rem; }
+
+label {
+  margin-top: 1rem;
+  margin-bottom: .2rem;
+  color: #8f8f8f; }
+
+input {
+  padding: .5rem;
+  width: 100%; }
+
+input[type="submit"] {
+  width: inherit; }
 
 a.button, .btn {
   border-radius: 0.2rem;
@@ -63,6 +94,7 @@ a.button, .btn {
   background-color: #FC6D6D;
   transition: background-color 0.3s !important; }
   a.button:hover, .btn:hover {
+    cursor: pointer;
     background-color: #cb4332; }
 
 @media screen and (max-width: 843px) {
@@ -317,6 +349,19 @@ nav {
 .displayNone {
   display: none; }
 
+.underline {
+  margin: 1rem 0;
+  padding-bottom: 1rem;
+  position: relative; }
+  .underline::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 33%;
+    width: 33%;
+    height: 2px;
+    background-color: #FC6D6D; }
+
 section {
   width: 100%;
   min-height: 100vh;
@@ -357,6 +402,10 @@ section {
     align-items: center; }
   .home-intro a {
     margin: 0.5rem; }
+    .home-intro a:last-child {
+      background-color: #1e9e6b; }
+      .home-intro a:last-child:hover {
+        background-color: #069059; }
 
 .home-cafeResto {
   display: flex;
@@ -366,17 +415,6 @@ section {
   .home-cafeResto div {
     max-width: 250px;
     text-align: center; }
-    .home-cafeResto div h3 {
-      margin: 1rem 0;
-      padding-bottom: 1rem;
-      position: relative; }
-      .home-cafeResto div h3:before {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 33%;
-        width: 33%;
-        height: 2px; }
     .home-cafeResto div img {
       border: 10px solid grey;
       border-radius: 50%;
@@ -385,14 +423,12 @@ section {
       transition: all 0.3s; }
       .home-cafeResto div img:hover {
         cursor: pointer; }
-    .home-cafeResto div:first-child h3:before {
-      background-color: #cb4332; }
     .home-cafeResto div:first-child img:hover {
       border-color: #cb4332; }
     .home-cafeResto div:last-child h3:before {
-      background-color: #66d0c8; }
+      background-color: #1e9e6b; }
     .home-cafeResto div:last-child img:hover {
-      border-color: #66d0c8; }
+      border-color: #1e9e6b; }
 
 .home-presentation {
   display: flex;
@@ -418,6 +454,12 @@ section {
   align-items: flex-start; }
   .home_activities h3, .home_activities p {
     text-align: center; }
+  .home_activities > div:nth-child(2) h3::before {
+    background-color: #1e9e6b; }
+  .home_activities > div:nth-child(3) h3::before {
+    background-color: #3ab0e2; }
+  .home_activities > div:nth-child(4) h3::before {
+    background-color: #f7d861; }
   .home_activities a {
     margin: 0 auto;
     border: 1px solid #FC6D6D;
@@ -459,6 +501,11 @@ section {
       .home_activities > div > div:hover .description {
         opacity: 1;
         max-height: 174px; }
+
+.home_form img {
+  margin: 0 1rem 2rem;
+  width: 256px;
+  max-width: calc(100vw - 2rem); }
 
 @media screen and (max-width: 843px) {
   section {

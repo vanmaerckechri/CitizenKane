@@ -55,6 +55,14 @@ section
     a
     {
     	margin: $mainButton-spaceBetween;
+    	&:last-child
+    	{
+    		background-color: $second-color;
+    		&:hover
+    		{
+    			background-color: $secondHover-color;
+    		}
+    	}
     }
 }
 .home-cafeResto
@@ -67,21 +75,6 @@ section
 	{
 		max-width: 250px;
 		text-align: center;
-		h3
-		{
-			margin: 1rem 0;
-			padding-bottom: 1rem;
-			position: relative;
-			&:before
-			{
-				content: "";
-				position: absolute;
-				bottom: 0;
-				left: 33%;
-				width: 33%;
-				height: 2px;
-			}
-		}
 		img
 		{
 			border: 10px solid grey;
@@ -96,13 +89,6 @@ section
 		}
 		&:first-child
 		{
-			h3
-			{
-				&:before
-				{
-					background-color: $mainHover-color;
-				}
-			}
 			img
 			{
 				&:hover
@@ -163,6 +149,39 @@ section
 	{
 		text-align: center;
 	}
+	& > div
+	{
+		&:nth-child(2)
+		{
+			h3
+			{
+				&::before
+				{
+					background-color: $second-color;
+				}
+			}
+		}
+		&:nth-child(3)
+		{
+			h3
+			{
+				&::before
+				{
+					background-color: $third-color;
+				}
+			}
+		}
+		&:nth-child(4)
+		{
+			h3
+			{
+				&::before
+				{
+					background-color: $fourth-color;
+				}
+			}
+		}
+	}
 	a
 	{
 		margin: 0 auto;
@@ -222,7 +241,15 @@ section
 		}
 	}
 }
-
+.home_form
+{
+	img
+	{
+		margin: 0 $mainCtnr-margin 2rem;
+		width: 256px;
+		max-width: calc(100vw - 2rem);
+	}
+}
  @media screen and (max-width: 843px)
 {
 	section

@@ -1,6 +1,7 @@
 html, body, header, nav, footer, section, div, span, h1, h2, h3, h4, h5, h6, p, a, blockquote, cite, img, ol, ul, li, form, fieldset, legend, label, input, button
 {
 	margin: 0;
+	border: none;
 	padding: 0;
 	box-sizing: border-box;
 }
@@ -31,7 +32,7 @@ h1
 {
 	color: white;
 }
-h1, h2
+h1, h2, legend
 {
     font-family: $title-fontFam;
     text-transform: uppercase;
@@ -58,13 +59,51 @@ h3
 {
 	font-size: 1.2rem;
 }
-p, a, h3, h4, h5, h6
+p, a, h3, h4, h5, h6, label, input
 {
 	font-family: $main-fontFam;
 }
 p
 {
 	margin-bottom: 2rem;
+}
+form
+{
+	margin-left: $mainCtnr-margin;
+	margin-right: $mainCtnr-margin;
+}
+fieldset
+{
+	border: none;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	p
+	{
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+		color: $text-colorDark;
+	}
+}
+legend
+{
+	font-size: 1.2rem;
+}
+label
+{
+	margin-top: 1rem;
+	margin-bottom: .2rem;
+	color: $text-colorDark;
+}
+input
+{
+	padding: .5rem;
+	width: 100%;
+}
+input[type="submit"]
+{
+	width: inherit;
 }
 a.button, .btn
 {
@@ -78,6 +117,7 @@ a.button, .btn
 	transition: background-color .3s!important;
 	&:hover
 	{
+		cursor: pointer;
 		background-color: $mainHover-color;
 	}
 }
