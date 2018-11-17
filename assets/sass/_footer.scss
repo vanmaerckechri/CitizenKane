@@ -2,37 +2,42 @@ footer
 {
 	max-width: 100vw;
 	width: 100%;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-around;
 	background-color: $footer-bgColor;
-	a
+	.footer-content
 	{
-		padding: 3rem 0;
-		display: block;
-		text-align: center;
-		text-decoration: none;
-		flex: 1;
-		min-width: 210px;
-		&:hover
+		margin: 0 auto;
+		max-width: $mainCtnr-maxWidth;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-around;
+		a
 		{
-			cursor: pointer;
-			p
+			padding: 3rem 0;
+			display: block;
+			text-align: center;
+			text-decoration: none;
+			flex: 1;
+			min-width: 210px;
+			&:hover
 			{
-				color: $mainHover-color;
+				cursor: pointer;
+				p
+				{
+					color: $mainHover-color;
+				}
 			}
 		}
-	}
-	p
-	{
-		margin-top: 0.5rem;
-		margin-bottom: 0;
-		color: $font-colorLight;
-		transition: color 0.3s;
-	}
-	img
-	{
-		width: 30px;
-		height: auto;
+		p
+		{
+			margin-top: 0.5rem;
+			margin-bottom: 0;
+			color: $font-colorLight;
+			transition: color 0.3s;
+		}
+		img
+		{
+			width: 30px;
+			height: auto;
+		}
 	}
 }
