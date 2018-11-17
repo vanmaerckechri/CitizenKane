@@ -14,11 +14,14 @@ section
 	}
 	&:nth-child(2n+1)
 	{
-		background-color: #272727;
-		color: white;
-		h2
+		background-color: $section-bgColor;
+		p
+		{
+			color: $font-colorLight;
+		}
+		h3, h2, & > p
 		{	
-			color: $title-colorLight;
+			color: $font-colorLighter;
 		}
 	}
 	div
@@ -26,7 +29,7 @@ section
 		margin: 1rem;
 		p
 		{
-			color: $text-colorDark;
+			color: $font-colorDark;
 		}
 	}
 }
@@ -125,19 +128,21 @@ section
 	{
 		flex: 1;
 	}
-	h3
-	{
-		color: $title-colorLight;
-	}
 }
-.big-Parag
+section
 {
-	font-size: 3.75rem;
-	line-height: 5rem;
-	text-align: right;
-	color: white;
-	font-family: $main-fontFam;
-	font-weight: lighter;
+	&:nth-child(2n+1)
+	{
+		.big-Parag
+		{
+			font-size: 3.75rem;
+			line-height: 5rem;
+			text-align: right;
+			color: $font-colorLighter;
+			font-family: $main-fontFam;
+			font-weight: lighter;
+		}
+	}
 }
 .home_activities
 {
@@ -217,8 +222,8 @@ section
 		max-height: 0;
 		height: 100%;
 		width: 100%;
-		color: $title-colorLight;
-		background-color: $title-colorDark;
+		color: $font-colorLighter;
+		background-color: $font-colorDarker;
 		transition: max-height 0.3s, opacity 1s;
 	}
 	& > div
@@ -270,10 +275,16 @@ section
 	{
 		flex-direction: column;
 	}
-	.big-Parag
+	section
 	{
-		font-size: 2.75rem;
-		line-height: 3rem;
-		text-align: center;
+		&:nth-child(2n+1)
+		{
+			.big-Parag
+			{
+				font-size: 2.75rem;
+				line-height: 3rem;
+				text-align: center;
+			}
+		}
 	}
 }

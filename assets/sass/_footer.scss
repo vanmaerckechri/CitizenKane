@@ -1,15 +1,38 @@
 footer
 {
-	width: 100vw;
-	background-color: pink;
-}
-.footerContent
-{
-	margin: 0 auto;
-	padding: $mainCtnr-margin;
-	max-width: $mainCtnr-maxWidth;
+	max-width: 100vw;
 	width: 100%;
 	display: flex;
-	justify-content: space-between;
-	align-items: center;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	background-color: $footer-bgColor;
+	a
+	{
+		padding: 3rem 0;
+		display: block;
+		text-align: center;
+		text-decoration: none;
+		flex: 1;
+		min-width: 210px;
+		&:hover
+		{
+			cursor: pointer;
+			p
+			{
+				color: $mainHover-color;
+			}
+		}
+	}
+	p
+	{
+		margin-top: 0.5rem;
+		margin-bottom: 0;
+		color: $font-colorLight;
+		transition: color 0.3s;
+	}
+	img
+	{
+		width: 30px;
+		height: auto;
+	}
 }

@@ -40,7 +40,7 @@ h1, h2, legend
 }
 h2, h3
 {
-    color: $title-colorDark;
+    color: $font-colorDarker;
 }
 h3, h4, h5, h6
 {
@@ -83,18 +83,19 @@ fieldset
 	{
 		margin-top: 1rem;
 		margin-bottom: 1rem;
-		color: $text-colorDark;
+		color: $font-colorLight;
 	}
 }
 legend
 {
 	font-size: 1.2rem;
+	color: $font-colorLighter;
 }
 label
 {
 	margin-top: 1rem;
 	margin-bottom: .2rem;
-	color: $text-colorDark;
+	color: $font-colorLight;
 }
 input
 {

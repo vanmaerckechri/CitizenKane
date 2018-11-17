@@ -1,3 +1,28 @@
+// colors
+$colorGrey0: #171717;
+$colorGrey1: #323232;
+$colorGrey2: #404040;
+$colorGrey3: #6f6f6f;
+$colorGrey4: #8f8f8f;
+$colorGrey5: #939393;
+$colorGrey6: #FFF;
+
+$main-color: #FC6D6D;//red
+$mainHover-color: #cb4332;
+$second-color: #1e9e6b;//green
+$secondHover-color: #069059;
+
+$third-color: #3ab0e2;//blue
+$fourth-color: #f7d861;//yellow
+
+$section-bgColor: $colorGrey1;
+$footer-bgColor: $colorGrey0;
+
+$font-colorDarker: $colorGrey2;
+$font-colorDark: $colorGrey3;
+$font-colorLight: $colorGrey4;
+$font-colorLighter: $colorGrey6;
+
 // main container
 $mainCtnr-maxWidth: 1280px;
 $mainCtnr-margin: 1rem;
@@ -5,23 +30,12 @@ $mainCtnr-margin: 1rem;
 // buttons
 $mainButton-size: 3rem;
 $mainButton-spaceBetween: 0.5rem;
-$mainButtonLink-fontFam: 'Lato', sans-serif;
 
 // fonts
 $title-fontFam: 'Montserrat', sans-serif;
 $main-fontFam: 'Lato', sans-serif;
 $mainText-fontSize: 16px;
-$title-colorDark: #404040;
-$title-colorLight: white;
-$text-colorDark: #8f8f8f;
 
-// colors
-$main-color: #FC6D6D;
-$mainHover-color: #cb4332;
-$second-color: #1e9e6b;
-$secondHover-color: #069059;
-$third-color: #3ab0e2;
-$fourth-color: #f7d861;
 
 @mixin widthMaxContent
 {

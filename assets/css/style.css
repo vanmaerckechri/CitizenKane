@@ -70,7 +70,8 @@ fieldset {
     color: #8f8f8f; }
 
 legend {
-  font-size: 1.2rem; }
+  font-size: 1.2rem;
+  color: #FFF; }
 
 label {
   margin-top: 1rem;
@@ -101,17 +102,31 @@ a.button, .btn {
   h1 {
     font-size: 2.5rem; } }
 footer {
-  width: 100vw;
-  background-color: pink; }
-
-.footerContent {
-  margin: 0 auto;
-  padding: 1rem;
-  max-width: 1280px;
+  max-width: 100vw;
   width: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: center; }
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: #171717; }
+  footer a {
+    padding: 3rem 0;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    flex: 1;
+    min-width: 210px; }
+    footer a:hover {
+      cursor: pointer; }
+      footer a:hover p {
+        color: #cb4332; }
+  footer p {
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+    color: #8f8f8f;
+    transition: color 0.3s; }
+  footer img {
+    width: 30px;
+    height: auto; }
 
 header {
   width: 100vw;
@@ -374,14 +389,15 @@ section {
     padding-right: 1rem;
     max-width: 1280px; }
   section:nth-child(2n+1) {
-    background-color: #272727;
-    color: white; }
-    section:nth-child(2n+1) h2 {
-      color: white; }
+    background-color: #323232; }
+    section:nth-child(2n+1) p {
+      color: #8f8f8f; }
+    section:nth-child(2n+1) h3, section:nth-child(2n+1) h2, section:nth-child(2n+1) > p {
+      color: #FFF; }
   section div {
     margin: 1rem; }
     section div p {
-      color: #8f8f8f; }
+      color: #6f6f6f; }
 
 .home-intro {
   color: white;
@@ -436,14 +452,12 @@ section {
   align-items: flex-start; }
   .home-presentation div {
     flex: 1; }
-  .home-presentation h3 {
-    color: white; }
 
-.big-Parag {
+section:nth-child(2n+1) .big-Parag {
   font-size: 3.75rem;
   line-height: 5rem;
   text-align: right;
-  color: white;
+  color: #FFF;
   font-family: "Lato", sans-serif;
   font-weight: lighter; }
 
@@ -488,7 +502,7 @@ section {
     max-height: 0;
     height: 100%;
     width: 100%;
-    color: white;
+    color: #FFF;
     background-color: #404040;
     transition: max-height 0.3s, opacity 1s; }
   .home_activities > div {
@@ -522,7 +536,7 @@ section {
   .home-presentation {
     flex-direction: column; }
 
-  .big-Parag {
+  section:nth-child(2n+1) .big-Parag {
     font-size: 2.75rem;
     line-height: 3rem;
     text-align: center; } }

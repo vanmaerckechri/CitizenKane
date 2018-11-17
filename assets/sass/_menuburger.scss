@@ -70,7 +70,7 @@ nav
 		@include nav-button;
 		text-decoration: none;
 		font-size: 1rem;
-		color: $title-colorDark;
+		color: $font-colorDarker;
 	}
 }
 @media screen and (max-width: 843px)
