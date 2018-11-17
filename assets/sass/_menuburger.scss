@@ -71,8 +71,12 @@ nav
 		font-size: 1rem;
 		color: $font-colorDarker;
 	}
+	a.btn
+	{
+		padding: 1rem 1.5rem;
+	}
 }
-@media screen and (max-width: 843px)
+@media screen and (max-width: 880px)
 {
 	header
 	{
