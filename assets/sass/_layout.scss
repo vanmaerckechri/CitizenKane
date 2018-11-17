@@ -12,24 +12,37 @@ section
 		padding-right: $mainCtnr-margin;
 		max-width: $mainCtnr-maxWidth;
 	}
+	div
+	{
+		margin: 1rem;
+	}
 	&:nth-child(2n+1)
 	{
 		background-color: $section-bgColor;
-		p
+		div
 		{
-			color: $font-colorLight;
+			p
+			{
+				color: $font-colorLight;
+			}
 		}
 		h3, h2, & > p
 		{	
 			color: $font-colorLighter;
 		}
 	}
-	div
+	&:nth-child(2n)
 	{
-		margin: 1rem;
-		p
+		& > p
 		{
-			color: $font-colorDark;
+			color: $font-colorDarker;
+		}
+		div
+		{
+			p
+			{
+				color: $font-colorDark;
+			}
 		}
 	}
 }
@@ -234,7 +247,6 @@ section
 		{
 			margin: 0;
 			position: relative;
-			text-align: center;
 			&:hover
 			{
 				.description

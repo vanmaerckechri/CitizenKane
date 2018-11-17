@@ -48,7 +48,7 @@ h2 {
 h3 {
   font-size: 1.2rem; }
 
-p, a, h3, h4, h5, h6, label, input {
+p, a, h3, h4, h5, h6, label, input, button {
   font-family: "Lato", sans-serif; }
 
 p {
@@ -88,7 +88,6 @@ input[type="submit"] {
 a.button, .btn {
   border-radius: 0.2rem;
   padding: 1rem 1.5rem;
-  font-size: 1.1rem;
   text-decoration: none;
   text-transform: uppercase;
   color: white !important;
@@ -176,7 +175,6 @@ nav {
   .menu-burger a {
     padding: 0.5rem;
     display: inline-block;
-    font-size: 1.2rem;
     transition: color .3s;
     text-decoration: none;
     font-size: 1rem;
@@ -357,8 +355,7 @@ nav {
       color: #cb4332; }
   .alertCookies-container button {
     margin: 1rem auto 0;
-    display: block;
-    font-size: 1.2rem; }
+    display: block; }
 
 .hidden {
   opacity: 0;
@@ -391,16 +388,18 @@ section {
     padding-left: 1rem;
     padding-right: 1rem;
     max-width: 1280px; }
+  section div {
+    margin: 1rem; }
   section:nth-child(2n+1) {
     background-color: #323232; }
-    section:nth-child(2n+1) p {
+    section:nth-child(2n+1) div p {
       color: #8f8f8f; }
     section:nth-child(2n+1) h3, section:nth-child(2n+1) h2, section:nth-child(2n+1) > p {
       color: #FFF; }
-  section div {
-    margin: 1rem; }
-    section div p {
-      color: #6f6f6f; }
+  section:nth-child(2n) > p {
+    color: #404040; }
+  section:nth-child(2n) div p {
+    color: #6f6f6f; }
 
 .home-intro {
   color: white;
@@ -513,8 +512,7 @@ section:nth-child(2n+1) .big-Parag {
     text-align: center; }
     .home_activities > div > div {
       margin: 0;
-      position: relative;
-      text-align: center; }
+      position: relative; }
       .home_activities > div > div:hover .description {
         opacity: 1;
         max-height: 174px; }
