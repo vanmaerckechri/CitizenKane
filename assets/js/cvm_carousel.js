@@ -2,7 +2,7 @@
 
 document.addEventListener("DOMContentLoaded", function(event)
 {
-	let loadCarousel = function(id, path, fileName, imgAlt)
+	let loadCarousel = function(id, imageList, imageLength)
 	{
 		let carouselContainer = document.getElementById(id);
 		let carouselIndex = -1;
@@ -21,26 +21,21 @@ document.addEventListener("DOMContentLoaded", function(event)
 			navButtons[index].classList.add("selected");
 		}
 
-		//load image
-		let carouselImg = carouselContainer.querySelector("img");
-		let loadImage = function(imageIndex)
+		let changeImage = function(imageIndex)
 		{
-			let imageLength = fileName.length - 1;
-			let src;
-			let alt;
+			let lastImage = carouselContainer.querySelector("img");
+			let imageLastIndex = fileName.length - 1;
 			if (imageIndex < 0)
 			{
-				imageIndex = imageLength;
+				imageIndex = imageLastIndex;
 			}
-			else if (imageIndex > imageLength)
+			else if (imageIndex > imageLastIndex)
 			{
 				imageIndex = 0;
 			}
 			carouselIndex = imageIndex;
-			src = path + fileName[carouselIndex];
-			alt = path + imgAlt[carouselIndex];
-			carouselImg.src = src;
-			carouselImg.alt = alt;
+			carouselContainer.insertBefore(imageList[carouselIndex], lastImage);
+			lastImage.remove();
 
 			updateSelectedNavBtn(imageIndex);
 		}
@@ -53,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function(event)
 			arrows[i].addEventListener("click", function()
 			{
 				let nextIndex = carouselIndex + directionIndex;
-				loadImage(nextIndex);
+				changeImage(nextIndex);
 			}, false);			
 		}
 
@@ -63,11 +58,11 @@ document.addEventListener("DOMContentLoaded", function(event)
 		{
 			let button = document.createElement("button");
 			carouselNav.appendChild(button);
-			button.addEventListener("click", loadImage.bind(this, i), false);
+			button.addEventListener("click", changeImage.bind(this, i), false);
 		}
 
 		//load first image
-		loadImage(0);
+		changeImage(0);
 
 		// carousel auto
 		let carouselManual = false;
@@ -76,20 +71,50 @@ document.addEventListener("DOMContentLoaded", function(event)
 			if (carouselManual === false)
 			{
 				let nextIndex = carouselIndex + 1;
-				loadImage(nextIndex);
+				changeImage(nextIndex);
 			}
 		}, 5000);
 		carouselContainer.addEventListener("mouseover", function()
 		{
+			console.log("dessus")
 			carouselManual = true
 		}, false);
 		carouselContainer.addEventListener("mouseout", function()
 		{
+			console.log("pardti")
 			carouselManual = false;
 		}, false);
 	}
+	//load image
+	let imageList = []
+	let loadImages = function(id, path, fileName, imgAlt)
+	{
+		let imgLength = fileName.length;
+		let imgLoadedLength = 0;
+
+		let checkAllImgLoaded = function(event)
+		{
+			event.target.onload = null;
+			imgLoadedLength += 1;
+			if (imgLoadedLength === imgLength)
+			{
+				loadCarousel(id, imageList, imgLength);
+			}
+		}
+
+		let carouselContainer = document.getElementById("carouselDemo01");
+
+		for (let i = 0; i < imgLength; i++)
+		{
+			let img = new Image();
+			img.onload = checkAllImgLoaded;
+			img.src = path + fileName[i];
+			img.alt = imgAlt[i];
+			imageList.push(img);
+		}
+	}
 	let path = "assets/img/";
-	let fileName = ["restaurant_facade.jpg", "restaurant_interieur01.jpg", "restaurant_plat01.jpg", "terrasse.jpg" ,"restaurant_interieur02.jpg", "restaurant_plat02.jpg", "restaurant_deco.jpg"];
-	let imgAlt = ["", "", "", "", "", "", ""];
-	loadCarousel("carouselDemo01", path, fileName, imgAlt)
+	let fileName = ["restaurant_facade.jpg", "restaurant_interieur01.jpg", "restaurant_plat01.jpg", "terrasse.jpg" , "restaurant_interieur02.jpg", "restaurant_plat02.jpg", "restaurant_deco.jpg"];
+	let imgAlt = ["photo de la facade", "photo de l'intérieur", "photo de roulades de légumes", "photo de la terrasse", "photo de l'intérieur", "photo d'un plat à base de viande", "photo de la décoration d'intérieur"];
+	loadImages("carouselDemo01", path, fileName, imgAlt)
 });

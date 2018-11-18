@@ -121,7 +121,7 @@ nav
 		{
 			position: absolute;
 			top: calc(#{$mainCtnr-margin} / 2);
-			left: calc(#{$mainCtnr-margin} / 2);
+			left: calc(#{$mainCtnr-margin} * 1.5);
 		}
 	}	
 	.menu-burger
