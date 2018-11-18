@@ -48,7 +48,7 @@ h2 {
 h3 {
   font-size: 1.2rem; }
 
-p, a, h3, h4, h5, h6, label, input, button {
+p, a, h3, h4, h5, h6, label, input, button, span {
   font-family: "Lato", sans-serif; }
 
 p {
@@ -131,7 +131,7 @@ footer {
       height: auto; }
 
 header {
-  width: 100vw;
+  width: 100%;
   position: fixed;
   top: 0;
   left: 0;
@@ -176,13 +176,32 @@ nav {
     padding: 0.5rem;
     display: inline-block;
     transition: color .3s;
+    position: relative;
     text-decoration: none;
     font-size: 1rem;
     color: #404040; }
     .menu-burger a:hover {
       color: #cb4332; }
+    .menu-burger a::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 10%;
+      width: 0;
+      height: 2px;
+      background-color: #FC6D6D;
+      opacity: 0;
+      transition: width .3s; }
+    .menu-burger a:hover::before {
+      width: 80%;
+      opacity: 1; }
   .menu-burger a.btn {
     padding: 1rem 1.5rem; }
+    .menu-burger a.btn::before {
+      display: none; }
+  .menu-burger a.active::before {
+    width: 80%;
+    opacity: 1; }
 
 @media screen and (max-width: 880px) {
   header {
@@ -205,9 +224,8 @@ nav {
       text-align: center; }
       .menu-burger li:first-of-type {
         margin-top: 1rem; }
-      .menu-burger li a {
-        border-top: 1px solid rgba(0, 0, 0, 0.2);
-        width: 100%; }
+    .menu-burger .btn {
+      margin-top: 0.5rem; }
     .menu-burger span {
       position: absolute;
       right: 0;
@@ -247,43 +265,68 @@ nav {
       margin-top: 22px;
       transform: rotate(-45deg) translateX(-50%); } }
 .readMore-container {
-  border: 1px solid black;
-  padding: 1rem 1rem 3rem 1rem;
+  margin: 0 auto;
+  max-width: 1000px;
   position: relative;
   text-align: center; }
   .readMore-container .readMore-content {
-    max-height: 75px;
+    margin: 0;
+    max-height: 0;
+    height: 100%;
     overflow: hidden;
-    text-align: left; }
-  .readMore-container > span {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 3rem; }
-    .readMore-container > span::after {
-      content: "voir plus..."; }
+    text-align: left;
+    transition: max-height .3s; }
   .readMore-container input {
     opacity: 0;
     position: absolute;
-    bottom: 0;
-    max-height: 3rem;
+    top: 0;
+    left: 50%;
     height: 100%;
-    max-width: calc(3rem * 1.5);
     width: 100%;
-    z-index: 1;
-    background-color: red;
+    z-index: 0;
     transform: translateX(-50%); }
     .readMore-container input:hover {
       cursor: pointer; }
   .readMore-container input:checked ~ .readMore-content {
-    max-height: 100%; }
-  .readMore-container input:checked ~ span::after {
-    content: "...voir moins"; }
+    max-height: 2000px; }
+  .readMore-container li {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center; }
+    .readMore-container li:last-child {
+      margin-bottom: 2rem; }
+  .readMore-container img {
+    width: 100%;
+    height: auto; }
+  .readMore-container h3 {
+    margin-top: 1rem;
+    font-size: 1.4rem;
+    letter-spacing: 0.3rem;
+    text-align: center; }
+  .readMore-container .plat {
+    font-weight: bold; }
+  .readMore-container .platCompo {
+    width: 100%;
+    color: #6f6f6f; }
+  .readMore-container .dots {
+    margin: 0 1rem;
+    border-bottom: 2px dotted #8f8f8f;
+    flex: 1; }
+  .readMore-container .prix {
+    font-weight: bold;
+    color: #cb4332; }
 
+.restaurant-carte h2 {
+  margin-bottom: 1rem; }
+
+@media screen and (max-width: 880px) {
+  li {
+    flex-direction: column; }
+
+  .platCompo {
+    text-align: center; } }
 .modal-container {
   width: 100vw;
   height: 100vh;
@@ -306,7 +349,7 @@ nav {
 
 .carousel-container {
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 50vh; }
   .carousel-container:hover > button {
     opacity: 1; }
@@ -319,7 +362,7 @@ nav {
     object-fit: cover;
     transform: translate(-50%, -50%); }
   .carousel-container button {
-    transition: background-color 0.3s, color 0.3s; }
+    transition: background-color 0.3s, color 0.3s, opacity 0.5s; }
   .carousel-container > button {
     margin: 1rem;
     border-radius: 50%;
@@ -410,6 +453,7 @@ nav {
   background-color: #1e9e6b; }
 
 section {
+  padding: 1rem;
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -422,7 +466,8 @@ section {
     font-size: 1.2rem;
     line-height: 1.7rem; }
   section > div, section > h1, section > h2, section > p {
-    max-width: 1280px; }
+    max-width: 1280px;
+    width: 100%; }
   section div {
     margin: 1rem; }
   section:nth-child(2n+1) {

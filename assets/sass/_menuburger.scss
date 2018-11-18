@@ -10,7 +10,7 @@
 }
 header
 {
-	width: 100vw;
+	width: 100%;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -67,13 +67,46 @@ nav
 	a
 	{
 		@include nav-button;
+		position: relative;
 		text-decoration: none;
 		font-size: 1rem;
 		color: $font-colorDarker;
+		&::before
+		{
+			content: "";
+			position: absolute;
+			bottom: 0;
+			left: 10%;
+			width: 0;
+			height: 2px;
+			background-color: $main-color;
+			opacity: 0;
+			transition: width .3s;
+		}
+		&:hover
+		{
+			&::before
+			{
+				width: 80%;
+				opacity: 1;
+			}
+		}
 	}
 	a.btn
 	{
 		padding: 1rem 1.5rem;
+		&::before
+		{
+			display: none;
+		}
+	}
+	a.active
+	{
+		&::before
+		{
+			width: 80%;
+			opacity: 1;
+		}
 	}
 }
 @media screen and (max-width: 880px)
@@ -109,11 +142,10 @@ nav
 			{
 				margin-top: 1rem;
 			}
-			a
-			{
-				border-top: 1px solid rgba(0, 0, 0, .2);
-				width: 100%;
-			}
+		}
+		.btn
+		{
+			margin-top: 0.5rem;
 		}
 		// hamburger icon
 		span

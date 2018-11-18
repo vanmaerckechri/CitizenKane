@@ -1,41 +1,27 @@
 .readMore-container
 {
-	border: 1px solid black;
-	padding: $mainCtnr-margin $mainCtnr-margin $mainButton-size $mainCtnr-margin;
+	margin: 0 auto;
+	max-width: 1000px;
 	position: relative;
 	text-align: center;
 	.readMore-content
 	{
-		max-height: 75px;
+		margin: 0;
+		max-height: 0;
+		height: 100%;
 		overflow: hidden;
 		text-align: left;
-	}
-	& > span
-	{
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 100%;
-		height: $mainButton-size;
-		&::after
-		{
-			content: "voir plus...";
-		}
+		transition: max-height .3s;
 	}
 	input
 	{
 		opacity: 0;
 		position: absolute;
-		bottom: 0;
-		max-height: $mainButton-size;
+		top: 0;
+		left: 50%;
 		height: 100%;
-		max-width: calc(#{$mainButton-size} * 1.5);
 		width: 100%;
-		z-index: 1;
-		background-color: red;
+		z-index: 0;
 		transform: translateX(-50%);
 		&:hover
 		{
@@ -44,13 +30,69 @@
 	}
 	input:checked ~ .readMore-content
 	{
-		max-height: 100%;
+		max-height: 2000px;
 	}
-	input:checked ~ span
+	li
 	{
-		&::after
+		margin-top: 1rem;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+		&:last-child
 		{
-			content: "...voir moins";
+			margin-bottom: 2rem;
 		}
+	}
+	img
+	{
+		width: 100%;
+		height: auto;
+	}
+	h3
+	{
+		margin-top: 1rem;
+		font-size: 1.4rem;
+		letter-spacing: 0.3rem;
+		text-align: center;
+	}
+	.plat
+	{
+		font-weight: bold;
+	}
+	.platCompo
+	{
+		width: 100%;
+		color: $font-colorDark;
+	}
+	.dots
+	{
+		margin: 0 1rem;
+		border-bottom: 2px dotted $font-colorLight;
+		flex: 1;
+	}
+	.prix
+	{
+		font-weight: bold;
+		color: $mainHover-color;
+	}
+}
+.restaurant-carte
+{
+	h2
+	{
+		margin-bottom: 1rem;
+	}
+}
+
+ @media screen and (max-width: 880px)
+{
+	li
+	{
+		flex-direction: column;
+	}	
+	.platCompo
+	{
+		text-align: center;
 	}
 }
