@@ -57,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function(event)
 		for (let i = 0, length = fileName.length; i < length; i++)
 		{
 			let button = document.createElement("button");
+			button.setAttribute("aria-label", "image" + i);
 			carouselNav.appendChild(button);
 			button.addEventListener("click", changeImage.bind(this, i), false);
 		}
