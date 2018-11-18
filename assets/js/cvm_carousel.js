@@ -67,24 +67,24 @@ document.addEventListener("DOMContentLoaded", function(event)
 
 		// carousel auto
 		let carouselManual = false;
-		let carouselAuto = setInterval(function()
+		let carouselAuto;
+		let launchAutoCarousel = function()
 		{
-			if (carouselManual === false)
+			carouselAuto = setInterval(function()
 			{
 				let nextIndex = carouselIndex + 1;
 				changeImage(nextIndex);
-			}
-		}, 5000);
+			}, 5000);
+		}
 		carouselContainer.addEventListener("mouseover", function()
 		{
-			console.log("dessus")
-			carouselManual = true
+			clearInterval(carouselAuto);
 		}, false);
 		carouselContainer.addEventListener("mouseout", function()
 		{
-			console.log("pardti")
-			carouselManual = false;
+			launchAutoCarousel();
 		}, false);
+		launchAutoCarousel()
 	}
 	//load image
 	let imageList = []
