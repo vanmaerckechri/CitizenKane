@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function(event)
 				let nextIndex = carouselIndex + 1;
 				loadImage(nextIndex);
 			}
-		}, 3000);
+		}, 5000);
 		carouselContainer.addEventListener("mouseover", function()
 		{
 			carouselManual = true
@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function(event)
 		}, false);
 	}
 	let path = "assets/img/";
-	let fileName = ["test01.jpg", "test02.jpg", "test03.jpg"];
-	let imgAlt = ["image 1", "image 2", "image 3"];
+	let fileName = ["restaurant_facade.jpg", "restaurant_interieur01.jpg", "restaurant_plat01.jpg", "terrasse.jpg" ,"restaurant_interieur02.jpg", "restaurant_plat02.jpg", "restaurant_deco.jpg"];
+	let imgAlt = ["", "", "", "", "", "", ""];
 	loadCarousel("carouselDemo01", path, fileName, imgAlt)
 });

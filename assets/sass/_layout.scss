@@ -1,3 +1,4 @@
+// Main Commun
 section
 {
 	width: 100%;
@@ -6,10 +7,15 @@ section
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	& > p
+	{
+		margin-bottom: 0;
+		text-align: center;
+		font-size: 1.2rem;
+		line-height: 1.7rem;
+	}
 	& > div, & > h1, & > h2, & > p,
 	{
-		padding-left: $mainCtnr-margin;
-		padding-right: $mainCtnr-margin;
 		max-width: $mainCtnr-maxWidth;
 	}
 	div
@@ -46,10 +52,11 @@ section
 		}
 	}
 }
+// Home Page
 .home-intro
 {
 	color: white;
-	background: url("../img/home_terrasse.jpg");
+	background: url("../img/terrasse.jpg");
 	background-size: cover;
     background-attachment: fixed;
     background-position: center;
@@ -298,5 +305,52 @@ section
 				text-align: center;
 			}
 		}
+	}
+}
+// Retaurant Page
+.restaurant-intro
+{
+	margin-top: $header-middleHeight;
+	min-height: calc(100vh - #{$header-middleHeight});
+	position: relative;
+	justify-content: flex-start;
+	z-index: 0;
+	& > div
+	{
+		margin: 0;
+		&:last-child
+		{
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			flex: 1;
+			p
+			{
+				margin-bottom: 0;
+				text-align: center;
+				font-style: 1.2rem;
+				color: $font-colorLighter;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 1010px)
+{
+	.restaurant-intro
+	{
+		margin-top: $header-bigHeight;
+		min-height: calc(100vh - #{$header-bigHeight});
+	}
+}
+@media screen and (max-width: 880px)
+{
+	.restaurant-intro
+	{
+		margin-top: 0;
+		padding-top: 0;
+		min-height: calc(100vh - #{$header-smallHeight});
+		z-index: 1;
 	}
 }

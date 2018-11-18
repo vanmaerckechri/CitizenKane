@@ -36,6 +36,10 @@ $title-fontFam: 'Montserrat', sans-serif;
 $main-fontFam: 'Lato', sans-serif;
 $mainText-fontSize: 16px;
 
+// header
+$header-smallHeight: 64px;
+$header-middleHeight: 78px;
+$header-bigHeight: 130px;
 
 @mixin widthMaxContent
 {
