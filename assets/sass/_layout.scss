@@ -342,6 +342,11 @@ section
 			}
 		}
 	}
+	p
+	{
+		line-height: 1.5rem;
+		font-weight: lighter;
+	}
 }
 .restaurant-cartes
 {
@@ -350,13 +355,17 @@ section
 		margin-top: 0;
 		margin-bottom: 0;
 	}
+	& > p
+	{
+		text-align: left;
+	}
 	h2
 	{
 		text-align: left;
 	}
-	& > h3
+	h3
 	{
-		margin: 1rem auto 0.5rem;
+		margin: 1.5rem auto 0.5rem;
 		width: 100%;
 		max-width: $mainCtnr-maxWidth;
 		text-align: left;
@@ -365,6 +374,9 @@ section
 	h4
 	{
 		margin-top: 1rem;
+		text-align: center;
+		font-size: 1.2rem;
+		letter-spacing: 0.3rem;
 	}
 	img
 	{
@@ -374,6 +386,62 @@ section
 	a.btn
 	{
 		margin-top: 2rem;
+	}
+}
+
+// CAFE-BAR PAGE -->
+.cafe-intro
+{
+	ul
+	{
+		text-align: center;
+	}
+	li
+	{
+		color: $font-colorLighter;
+		list-style: none;
+		font-family: $main-fontFam;
+		line-height: 1.5rem;
+	}
+	p
+	{
+		margin-bottom: 1rem;
+	}
+}
+.cafe-cartes
+{
+	& > p
+	{
+		text-align: left;
+	}
+}
+.cafe-chouffes
+{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	h3
+	{
+		margin: 1.5rem 0 1rem;
+		width: 100%;
+	}
+	div
+	{
+		margin: 0 1rem 0 0;
+		flex: 2;
+	}
+	img
+	{
+		flex: 1;
+		height: auto;
+		object-fit: cover;
+	}
+	p
+	{
+		margin-bottom: 1rem;
+		color: $font-colorDarker!important;
+		font-weight: normal;
 	}
 }
 
@@ -396,9 +464,18 @@ section
 	}
 	.restaurant-cartes
 	{
-		h2, & > h3
+		h2, h3, & > p
 		{
 			text-align: center;
+		}
+	}
+	.cafe-chouffes
+	{
+		flex-direction: column;
+		flex-wrap: nowrap;
+		img
+		{
+			max-height: 200px;
 		}
 	}
 }

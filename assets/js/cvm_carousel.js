@@ -114,8 +114,5 @@ document.addEventListener("DOMContentLoaded", function(event)
 			imageList.push(img);
 		}
 	}
-	let path = "assets/img/";
-	let fileName = ["restaurant_facade.jpg", "restaurant_interieur01.jpg", "restaurant_plat01.jpg", "terrasse.jpg" , "restaurant_interieur02.jpg", "restaurant_plat02.jpg", "restaurant_deco.jpg"];
-	let imgAlt = ["photo de la facade", "photo de l'intérieur", "photo de roulades de légumes", "photo de la terrasse", "photo de l'intérieur", "photo d'un plat à base de viande", "photo de la décoration d'intérieur"];
 	loadImages("carouselDemo01", path, fileName, imgAlt)
 });
