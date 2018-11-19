@@ -67,6 +67,17 @@ p
 {
 	margin-bottom: 2rem;
 }
+a
+{
+	font-size: 1rem;
+	color: $main-color;
+	text-decoration: none;
+	transition: color 0.3s;
+	&:hover
+	{
+		color: $mainHover-color;
+	}
+}
 form
 {
 	margin-left: $mainCtnr-margin;

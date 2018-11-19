@@ -54,6 +54,14 @@ p, a, h3, h4, h5, h6, label, input, button, span {
 p {
   margin-bottom: 2rem; }
 
+a {
+  font-size: 1rem;
+  color: #FC6D6D;
+  text-decoration: none;
+  transition: color 0.3s; }
+  a:hover {
+    color: #cb4332; }
+
 form {
   margin-left: 1rem;
   margin-right: 1rem; }
@@ -174,14 +182,9 @@ nav {
       margin-right: 0; }
   .menu-burger a {
     padding: 0.5rem;
-    display: inline-block;
-    transition: color .3s;
     position: relative;
-    text-decoration: none;
-    font-size: 1rem;
+    display: inline-block;
     color: #404040; }
-    .menu-burger a:hover {
-      color: #cb4332; }
     .menu-burger a::before {
       content: "";
       position: absolute;
@@ -266,7 +269,7 @@ nav {
       transform: rotate(-45deg) translateX(-50%); } }
 .readMore-container {
   margin: 0 auto;
-  max-width: 1000px;
+  max-width: 1280px;
   position: relative;
   text-align: center; }
   .readMore-container .readMore-content {
@@ -317,9 +320,6 @@ nav {
   .readMore-container .prix {
     font-weight: bold;
     color: #cb4332; }
-
-.restaurant-carte h2 {
-  margin-bottom: 2rem; }
 
 @media screen and (max-width: 880px) {
   li {
@@ -406,12 +406,13 @@ nav {
         background-color: #cb4332; }
 
 .alertCookies-container {
+  border-top: 1px solid #404040;
   position: fixed;
   bottom: 0;
   width: 100vw;
   text-align: center;
-  color: white;
-  background-color: #333333; }
+  color: #FFF;
+  background-color: #272727; }
   .alertCookies-container p {
     margin: 0 auto;
     padding: 1rem;
@@ -624,6 +625,8 @@ section:nth-child(2n+1) .big-Parag {
   position: relative;
   justify-content: flex-start;
   z-index: 0; }
+  .restaurant-intro h1, .restaurant-intro h2 {
+    margin: 1rem 0 0.5rem; }
   .restaurant-intro > div {
     margin: 0; }
     .restaurant-intro > div:last-child {
@@ -633,10 +636,28 @@ section:nth-child(2n+1) .big-Parag {
       align-items: center;
       flex: 1; }
       .restaurant-intro > div:last-child p {
-        margin-bottom: 0;
         text-align: center;
         font-style: 1.2rem;
         color: #FFF; }
+
+.restaurant-cartes > div {
+  margin-top: 0;
+  margin-bottom: 0; }
+.restaurant-cartes h2 {
+  text-align: left; }
+.restaurant-cartes > h3 {
+  margin: 1rem auto 0.5rem;
+  width: 100%;
+  max-width: 1280px;
+  text-align: left;
+  letter-spacing: 0.3rem; }
+.restaurant-cartes h4 {
+  margin-top: 1rem; }
+.restaurant-cartes img {
+  width: 100%;
+  max-width: 1280px; }
+.restaurant-cartes a.btn {
+  margin-top: 2rem; }
 
 @media screen and (max-width: 1010px) {
   .restaurant-intro {
@@ -647,6 +668,9 @@ section:nth-child(2n+1) .big-Parag {
     margin-top: 0;
     padding-top: 0;
     min-height: calc(100vh - 64px);
-    z-index: 1; } }
+    z-index: 1; }
+
+  .restaurant-cartes h2, .restaurant-cartes > h3 {
+    text-align: center; } }
 
 /*# sourceMappingURL=style.css.map */

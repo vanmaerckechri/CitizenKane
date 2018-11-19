@@ -320,6 +320,10 @@ section
 	position: relative;
 	justify-content: flex-start;
 	z-index: 0;
+	h1, h2
+	{
+		margin: 1rem 0 0.5rem;
+	}
 	& > div
 	{
 		margin: 0;
@@ -332,12 +336,44 @@ section
 			flex: 1;
 			p
 			{
-				margin-bottom: 0;
 				text-align: center;
 				font-style: 1.2rem;
 				color: $font-colorLighter;
 			}
 		}
+	}
+}
+.restaurant-cartes
+{
+	& > div
+	{
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+	h2
+	{
+		text-align: left;
+	}
+	& > h3
+	{
+		margin: 1rem auto 0.5rem;
+		width: 100%;
+		max-width: $mainCtnr-maxWidth;
+		text-align: left;
+		letter-spacing: 0.3rem;
+	}
+	h4
+	{
+		margin-top: 1rem;
+	}
+	img
+	{
+		width: 100%;
+		max-width: $mainCtnr-maxWidth;
+	}
+	a.btn
+	{
+		margin-top: 2rem;
 	}
 }
 
@@ -357,5 +393,12 @@ section
 		padding-top: 0;
 		min-height: calc(100vh - #{$header-smallHeight});
 		z-index: 1;
+	}
+	.restaurant-cartes
+	{
+		h2, & > h3
+		{
+			text-align: center;
+		}
 	}
 }

@@ -1,11 +1,12 @@
 .alertCookies-container
 {
+	border-top: 1px solid $font-colorDarker;
 	position: fixed;
 	bottom: 0;
 	width: 100vw;
 	text-align: center;
-	color: white;
-	background-color: #333333;
+	color: $font-colorLighter;
+	background-color: $footer-bgColor;
 	p
 	{
 		margin: 0 auto;

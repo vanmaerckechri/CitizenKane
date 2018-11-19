@@ -1,7 +1,7 @@
 .readMore-container
 {
 	margin: 0 auto;
-	max-width: 1000px;
+	max-width: $mainCtnr-maxWidth;
 	position: relative;
 	text-align: center;
 	.readMore-content
@@ -75,13 +75,6 @@
 	{
 		font-weight: bold;
 		color: $mainHover-color;
-	}
-}
-.restaurant-carte
-{
-	h2
-	{
-		margin-bottom: 2rem;
 	}
 }
 
