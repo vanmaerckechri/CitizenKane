@@ -1,4 +1,4 @@
-// Main Commun
+// COMMON PAGES -->
 section
 {
 	padding: 2rem 1rem;
@@ -54,7 +54,8 @@ section
 		}
 	}
 }
-// Home Page
+
+// HOME PAGE -->
 .home-intro
 {
 	color: white;
@@ -276,6 +277,7 @@ section
 		max-width: calc(100vw - 2rem);
 	}
 }
+
  @media screen and (max-width: 880px)
 {
 	section
@@ -309,7 +311,8 @@ section
 		}
 	}
 }
-// Retaurant Page
+
+// RESTAURANT PAGE -->
 .restaurant-intro
 {
 	margin-top: $header-middleHeight;
