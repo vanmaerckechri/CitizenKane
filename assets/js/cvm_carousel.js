@@ -1,6 +1,6 @@
  "use strict";
 
-document.addEventListener("DOMContentLoaded", function(event)
+window.addEventListener("load", function(event)
 {
 	let loadCarousel = function(id, imageList, imageLength)
 	{
@@ -44,6 +44,7 @@ document.addEventListener("DOMContentLoaded", function(event)
 		let arrows = carouselContainer.querySelectorAll("button");
 		for (let i = arrows.length - 1; i >= 0; i--)
 		{
+			arrows[i].classList.remove("displayNone");
 			let directionIndex = i === 1 ? 1 : -1;
 			arrows[i].addEventListener("click", function()
 			{
