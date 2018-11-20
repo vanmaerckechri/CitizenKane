@@ -450,10 +450,6 @@ nav {
 .selected {
   background-color: #1e9e6b; }
 
-.extend {
-  width: 100%;
-  height: 100%; }
-
 section {
   padding: 2rem 1rem;
   width: 100%;
