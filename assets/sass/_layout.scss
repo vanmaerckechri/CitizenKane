@@ -381,11 +381,14 @@ section
 	img
 	{
 		width: 100%;
+		height: 330px;
+		object-fit: cover;
 		max-width: $mainCtnr-maxWidth;
 	}
 	a.btn
 	{
 		margin-top: 2rem;
+		width: initial;
 	}
 }
 
@@ -467,6 +470,10 @@ section
 		h2, h3, & > p
 		{
 			text-align: center;
+		}
+		img
+		{
+			height: 200px;
 		}
 	}
 	.cafe-chouffes

@@ -303,9 +303,6 @@ nav {
       margin-bottom: 1rem;
       border-bottom: 1px solid #8f8f8f;
       padding-bottom: 2rem; }
-  .readMore-container img {
-    width: 100%;
-    height: auto; }
   .readMore-container h3 {
     margin-top: 1rem;
     font-size: 1.4rem;
@@ -452,6 +449,10 @@ nav {
 
 .selected {
   background-color: #1e9e6b; }
+
+.extend {
+  width: 100%;
+  height: 100%; }
 
 section {
   padding: 2rem 1rem;
@@ -666,9 +667,12 @@ section:nth-child(2n+1) .big-Parag {
   letter-spacing: 0.3rem; }
 .restaurant-cartes img {
   width: 100%;
+  height: 330px;
+  object-fit: cover;
   max-width: 1280px; }
 .restaurant-cartes a.btn {
-  margin-top: 2rem; }
+  margin-top: 2rem;
+  width: initial; }
 
 .cafe-intro ul {
   text-align: center; }
@@ -716,6 +720,8 @@ section:nth-child(2n+1) .big-Parag {
 
   .restaurant-cartes h2, .restaurant-cartes h3, .restaurant-cartes > p {
     text-align: center; }
+  .restaurant-cartes img {
+    height: 200px; }
 
   .cafe-chouffes {
     flex-direction: column;
