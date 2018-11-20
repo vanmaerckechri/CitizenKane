@@ -46,6 +46,11 @@ h2 {
   font-size: 2rem; }
 
 h3 {
+  margin: 1.5rem auto 0.5rem;
+  width: 100%;
+  max-width: 1280px;
+  text-align: left;
+  letter-spacing: 0.2rem;
   font-size: 1.2rem; }
 
 p, a, h3, h4, h5, h6, label, input, button, span {
@@ -303,11 +308,6 @@ nav {
       margin-bottom: 1rem;
       border-bottom: 1px solid #8f8f8f;
       padding-bottom: 2rem; }
-  .readMore-container h3 {
-    margin-top: 1rem;
-    font-size: 1.4rem;
-    letter-spacing: 0.3rem;
-    text-align: center; }
   .readMore-container .plat {
     font-weight: bold; }
   .readMore-container .platCompo {
@@ -434,18 +434,23 @@ nav {
 .displayNone {
   display: none; }
 
-.underline {
+.underline, .aboveline {
   margin: 1rem 0;
   padding-bottom: 1rem;
   position: relative; }
-  .underline::before {
+  .underline::before, .aboveline::before {
     content: "";
     position: absolute;
-    bottom: 0;
     left: 33%;
     width: 33%;
     height: 2px;
     background-color: #FC6D6D; }
+
+.underline::before {
+  bottom: 0; }
+
+.aboveline::before {
+  top: 0; }
 
 .selected {
   background-color: #1e9e6b; }
@@ -525,6 +530,8 @@ section {
       background-color: #1e9e6b; }
     .home-cafeResto div:last-child img:hover {
       border-color: #1e9e6b; }
+  .home-cafeResto h3 {
+    text-align: center; }
 
 .home-presentation {
   display: flex;
@@ -650,12 +657,6 @@ section:nth-child(2n+1) .big-Parag {
   text-align: left; }
 .restaurant-cartes h2 {
   text-align: left; }
-.restaurant-cartes h3 {
-  margin: 1.5rem auto 0.5rem;
-  width: 100%;
-  max-width: 1280px;
-  text-align: left;
-  letter-spacing: 0.3rem; }
 .restaurant-cartes h4 {
   margin-top: 1rem;
   text-align: center;
@@ -670,6 +671,8 @@ section:nth-child(2n+1) .big-Parag {
   margin-top: 2rem;
   width: initial; }
 
+.cafe-intro h1 {
+  margin-top: 2rem; }
 .cafe-intro ul {
   text-align: center; }
 .cafe-intro li {
@@ -703,6 +706,62 @@ section:nth-child(2n+1) .big-Parag {
     color: #404040 !important;
     font-weight: normal; }
 
+.beerproject-editions h2 {
+  text-align: left; }
+.beerproject-editions h3 {
+  margin-top: 0;
+  margin-bottom: 2rem; }
+.beerproject-editions div {
+  margin-left: 0;
+  margin-right: 0; }
+.beerproject-editions > div {
+  padding: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.75); }
+
+.beerproject-brasserie {
+  margin-top: 0;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 400px;
+  flex: 1;
+  max-width: 33%; }
+  .beerproject-brasserie img {
+    border-radius: 0.5rem;
+    width: 150px;
+    height: 150px; }
+  .beerproject-brasserie div {
+    padding-top: 1rem;
+    height: 150px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; }
+  .beerproject-brasserie p {
+    margin-bottom: 0; }
+  .beerproject-brasserie h4, .beerproject-brasserie p {
+    text-align: center; }
+  .beerproject-brasserie .aboveline:before {
+    left: 25%;
+    width: 50%;
+    background-color: #3ab0e2; }
+
+@media screen and (max-width: 1295px) {
+  .beerproject-editions {
+    padding-left: 0;
+    padding-right: 0; }
+    .beerproject-editions h2, .beerproject-editions h3 {
+      text-align: center; }
+    .beerproject-editions > div {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: center; } }
 @media screen and (max-width: 1010px) {
   .restaurant-intro {
     margin-top: 130px;
@@ -714,7 +773,7 @@ section:nth-child(2n+1) .big-Parag {
     min-height: calc(100vh - 64px);
     z-index: 1; }
 
-  .restaurant-cartes h2, .restaurant-cartes h3, .restaurant-cartes > p {
+  .restaurant-cartes h2, .restaurant-cartes h3, .restaurant-cartes h4, .restaurant-cartes p {
     text-align: center; }
   .restaurant-cartes img {
     height: 200px; }

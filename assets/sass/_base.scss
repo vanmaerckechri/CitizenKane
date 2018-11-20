@@ -7,7 +7,7 @@
 {
 	display: none;
 }
-.underline
+.underline, .aboveline
 {
 	margin: 1rem 0;
 	padding-bottom: 1rem;
@@ -16,11 +16,24 @@
 	{
 		content: "";
 		position: absolute;
-		bottom: 0;
 		left: 33%;
 		width: 33%;
 		height: 2px;
 		background-color: $main-color;
+	}
+}
+.underline
+{
+	&::before
+	{
+		bottom: 0;
+	}
+}
+.aboveline
+{
+	&::before
+	{
+		top: 0;
 	}
 }
 .selected
