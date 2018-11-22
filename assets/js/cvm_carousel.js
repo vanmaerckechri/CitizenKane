@@ -5,7 +5,7 @@ window.addEventListener("load", function(event)
 	let loadCarousel = function(id, imageList, imageLength)
 	{
 		let carouselContainer = document.getElementById(id);
-		let carouselIndex = -1;
+		let carouselIndex = 0;
 
 		//clean navigation buttons
 		let updateSelectedNavBtn = function(index)
@@ -23,21 +23,54 @@ window.addEventListener("load", function(event)
 
 		let changeImage = function(imageIndex)
 		{
-			let lastImage = carouselContainer.querySelector("img");
-			let imageLastIndex = fileName.length - 1;
-			if (imageIndex < 0)
+			let imgLenght = carouselContainer.querySelectorAll("img").length;
+			console.log(imgLenght)
+			if (imgLenght <= 1)
 			{
-				imageIndex = imageLastIndex;
-			}
-			else if (imageIndex > imageLastIndex)
-			{
-				imageIndex = 0;
-			}
-			carouselIndex = imageIndex;
-			carouselContainer.insertBefore(imageList[carouselIndex], lastImage);
-			lastImage.remove();
+				let lastImage = carouselContainer.querySelector("img");
+				let imageLengthIndex = fileName.length - 1;
 
-			updateSelectedNavBtn(imageIndex);
+				let removeOldImg = function()
+				{
+					let deleteTiming = setTimeout(function()
+					{
+						lastImage.remove();
+					}, 500);
+				}
+
+				let update = function()
+				{
+					carouselIndex = imageIndex;
+					carouselContainer.insertBefore(imageList[carouselIndex], lastImage);
+					updateSelectedNavBtn(imageIndex);
+				}
+
+				if (imageIndex < 0)
+				{
+					imageIndex = imageLengthIndex;
+				}
+				else if (imageIndex > imageLengthIndex)
+				{
+					imageIndex = 0;
+				}
+
+				if (imageIndex > carouselIndex)
+				{
+					imageList[imageIndex].className = "";
+					imageList[imageIndex].classList.add("moveNewImgToRight");
+					lastImage.classList.add("moveOldImgToRight");
+					removeOldImg();
+					update();
+				}
+				else if(imageIndex < carouselIndex)
+				{
+					imageList[imageIndex].className = "";
+					imageList[imageIndex].classList.add("moveNewImgToLeft");
+					lastImage.classList.add("moveOldImgToLeft");
+					removeOldImg();
+					update();
+				}
+			}
 		}
 
 		//initialize arrow nav
@@ -61,10 +94,19 @@ window.addEventListener("load", function(event)
 			button.setAttribute("aria-label", "image" + i);
 			carouselNav.appendChild(button);
 			button.addEventListener("click", changeImage.bind(this, i), false);
+			if (i == 0)
+			{
+				button.classList.add("selected");
+			}
 		}
 
 		//load first image
-		changeImage(0);
+		let img = carouselContainer.querySelector("img");
+		if (img.getAttribute('src') === "")
+		{
+			img.setAttribute("src", imageList[0].src);
+			changeImage(0);
+		}
 
 		// carousel auto
 		let carouselManual = false;

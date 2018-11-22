@@ -347,10 +347,31 @@ nav {
     max-width: 1280px;
     background-color: white; }
 
+@-webkit-keyframes moveNewImgToRight {
+  0% {
+    transform: translate(-150%, -50%); }
+  100% {
+    transform: translate(-50%, -50%); } }
+@-webkit-keyframes moveNewImgToLeft {
+  0% {
+    transform: translate(50%, -50%); }
+  100% {
+    transform: translate(-50%, -50%); } }
+@-webkit-keyframes moveOldImgToRight {
+  0% {
+    transform: translate(-50%, -50%); }
+  100% {
+    transform: translate(50%, -50%); } }
+@-webkit-keyframes moveOldImgToLeft {
+  0% {
+    transform: translate(-50%, -50%); }
+  100% {
+    transform: translate(-150%, -50%); } }
 .carousel-container {
   position: relative;
   width: 100%;
-  height: 50vh; }
+  height: 50vh;
+  overflow: hidden; }
   .carousel-container:hover > button {
     opacity: 1; }
   .carousel-container img {
@@ -362,6 +383,14 @@ nav {
     object-fit: cover;
     transform: translate(-50%, -50%);
     pointer-events: none; }
+  .carousel-container .moveNewImgToRight {
+    animation: moveNewImgToRight 0.5s forwards; }
+  .carousel-container .moveNewImgToLeft {
+    animation: moveNewImgToLeft 0.5s forwards; }
+  .carousel-container .moveOldImgToRight {
+    animation: moveOldImgToRight 0.5s forwards; }
+  .carousel-container .moveOldImgToLeft {
+    animation: moveOldImgToLeft 0.5s forwards; }
   .carousel-container button {
     transition: background-color 0.3s, color 0.3s, opacity 0.5s; }
   .carousel-container > button {

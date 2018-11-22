@@ -1,8 +1,55 @@
+@-webkit-keyframes moveNewImgToRight 
+{
+	0% 
+	{
+		transform: translate(-150%, -50%);
+	}
+	100% 
+	{
+		transform: translate(-50%, -50%);
+	}
+}
+@-webkit-keyframes moveNewImgToLeft
+{
+	0% 
+	{
+		transform: translate(50%, -50%);
+	}
+	100% 
+	{
+		transform: translate(-50%, -50%);
+	}
+}
+@-webkit-keyframes moveOldImgToRight 
+{
+	0% 
+	{
+		transform: translate(-50%, -50%);
+	}
+	100% 
+	{
+		transform: translate(50%, -50%);
+	}
+}
+@-webkit-keyframes moveOldImgToLeft 
+{
+	0% 
+	{
+		transform: translate(-50%, -50%);
+	}
+	100% 
+	{
+		transform: translate(-150%, -50%);
+	}
+}
+
+
 .carousel-container
 {
 	position: relative;
 	width: 100%;
 	height: 50vh;
+	overflow: hidden;
 	&:hover
 	{
 		& > button
@@ -21,6 +68,23 @@
 		transform: translate(-50%, -50%);
 		pointer-events: none;
 	}
+	.moveNewImgToRight
+	{
+		animation: moveNewImgToRight 0.5s forwards;
+	}
+	.moveNewImgToLeft
+	{
+		animation: moveNewImgToLeft 0.5s forwards;
+	}
+	.moveOldImgToRight
+	{
+		animation: moveOldImgToRight 0.5s forwards;
+	}
+	.moveOldImgToLeft
+	{
+		animation: moveOldImgToLeft 0.5s forwards;
+	}
+
 	button
 	{
 		transition: background-color 0.3s, color 0.3s, opacity 0.5s;
