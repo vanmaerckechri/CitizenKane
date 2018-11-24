@@ -15,7 +15,7 @@ section
 		font-size: 1.2rem;
 		line-height: 1.7rem;
 	}
-	& > div, & > h1, & > h2, & > p,
+	& > div, & > h1, & > h2, & > p
 	{
 		max-width: $mainCtnr-maxWidth;
 		width: 100%;
@@ -468,7 +468,9 @@ section
 	}
 	h4, p
 	{
-		margin-bottom: 1rem;	
+		margin-bottom: 1rem;
+		padding-left: 1rem;	
+		padding-right: 1rem;
 		text-align: center;
 	}
 	.aboveline
@@ -491,6 +493,76 @@ section
 		height: 200px;
 		object-fit: cover;
 		//object-position: center bottom;
+	}
+	p
+	{
+		text-align: left;
+	}
+}
+
+// CONTACT -->
+.contact-intro
+{
+	h1
+	{
+		width: 100%;
+	}
+	ul, p
+	{
+		color: $font-colorLighter;
+	}
+	ul
+	{
+		list-style: none;
+		font-family: $main-fontFam;
+		text-align: center;
+		font-weight: lighter;
+	}
+	& > div
+	{
+		&:last-child
+		{
+			flex-direction: row;
+			flex-wrap: wrap;
+			div
+			{
+				margin: 0;
+				width: 100%;
+				flex: 1;
+			}
+		}
+	}
+	iframe
+	{
+		width: 100%;
+	}
+}
+.contact-form
+{
+	form
+	{
+		width: 100%;
+		max-width: 450px;
+	}
+	legend
+	{
+		width: 100%;
+		color: $font-colorDarker;
+	}
+	label
+	{
+		color: $font-colorDark;
+	}
+	input[type="text"], input[type="email"]
+	{
+		background-color: $section-bgColor;
+		color: $font-colorLighter;
+	}
+	textarea
+	{
+		height: 200px;
+		width: 100%;
+		resize: none;
 	}
 }
 
@@ -582,6 +654,39 @@ section
 		img
 		{
 			max-height: 200px;
+		}
+	}
+	.beerproject-brasserie
+	{
+		max-width: none;
+		p
+		{
+			padding-left: 0;
+			padding-right: 0;
+			text-align: center;
+		}
+	}
+	.contact-intro
+	{
+		h1
+		{
+			margin: 2rem 0;
+		}
+		& > div
+		{
+
+			&:last-child
+			{
+				flex-direction: column;
+				div:first-of-type
+				{
+					order: 2;
+				}
+				div:last-of-type
+				{
+					order: 1;
+				}
+			}
 		}
 	}
 }

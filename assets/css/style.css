@@ -755,6 +755,8 @@ section:nth-child(2n+1) .big-Parag {
     width: 100%; }
   .beerproject-brasserie h4, .beerproject-brasserie p {
     margin-bottom: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
     text-align: center; }
   .beerproject-brasserie .aboveline:before {
     left: 25%;
@@ -765,6 +767,43 @@ section:nth-child(2n+1) .big-Parag {
   width: 200px;
   height: 200px;
   object-fit: cover; }
+.agenda-event p {
+  text-align: left; }
+
+.contact-intro h1 {
+  width: 100%; }
+.contact-intro ul, .contact-intro p {
+  color: #FFF; }
+.contact-intro ul {
+  list-style: none;
+  font-family: "Lato", sans-serif;
+  text-align: center;
+  font-weight: lighter; }
+.contact-intro > div:last-child {
+  flex-direction: row;
+  flex-wrap: wrap; }
+  .contact-intro > div:last-child div {
+    margin: 0;
+    width: 100%;
+    flex: 1; }
+.contact-intro iframe {
+  width: 100%; }
+
+.contact-form form {
+  width: 100%;
+  max-width: 450px; }
+.contact-form legend {
+  width: 100%;
+  color: #404040; }
+.contact-form label {
+  color: #6f6f6f; }
+.contact-form input[type="text"], .contact-form input[type="email"] {
+  background-color: #323232;
+  color: #FFF; }
+.contact-form textarea {
+  height: 200px;
+  width: 100%;
+  resize: none; }
 
 @media screen and (max-width: 1295px) {
   .beerproject-editions {
@@ -814,6 +853,22 @@ section:nth-child(2n+1) .big-Parag {
     flex-direction: column;
     flex-wrap: nowrap; }
     .cafe-chouffes img {
-      max-height: 200px; } }
+      max-height: 200px; }
+
+  .beerproject-brasserie {
+    max-width: none; }
+    .beerproject-brasserie p {
+      padding-left: 0;
+      padding-right: 0;
+      text-align: center; }
+
+  .contact-intro h1 {
+    margin: 2rem 0; }
+  .contact-intro > div:last-child {
+    flex-direction: column; }
+    .contact-intro > div:last-child div:first-of-type {
+      order: 2; }
+    .contact-intro > div:last-child div:last-of-type {
+      order: 1; } }
 
 /*# sourceMappingURL=style.css.map */
