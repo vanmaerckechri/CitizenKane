@@ -41,6 +41,7 @@ section
 	}
 	&:nth-child(2n)
 	{
+		background-color: $font-colorLighter;
 		& > p
 		{
 			color: $font-colorDarker;
@@ -282,40 +283,6 @@ section
 	}
 }
 
- @media screen and (max-width: 880px)
-{
-	section
-	{
-		padding-top: 2rem;
-		padding-bottom: 2rem;
-	}
-	h3, p
-	{
-		text-align: center;
-	}
-	.home-intro
-	{
-		position: relative;
-		z-index: 1;
-	}
-	.home-presentation
-	{
-		flex-direction: column;
-	}
-	section
-	{
-		&:nth-child(2n+1)
-		{
-			.big-Parag
-			{
-				font-size: 2.75rem;
-				line-height: 3rem;
-				text-align: center;
-			}
-		}
-	}
-}
-
 // RESTAURANT PAGE -->
 .restaurant-intro
 {
@@ -453,6 +420,7 @@ section
 {
 	h2
 	{
+		margin-bottom: 2rem;
 		text-align: left;
 	}
 	h3
@@ -467,11 +435,12 @@ section
 	}
 	& > div
 	{
-		padding: 2rem;
+		margin: 0;
+		padding: 2rem 2rem 0;
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
-		align-items: center;
+		align-items: flex-start;
 		box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.75);
 	}
 }
@@ -494,18 +463,12 @@ section
 	div
 	{
 		padding-top: 1rem;
-		height: 150px;
+		min-height: 150px;
 		width: 100%;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-around;
-	}
-	p
-	{
-		margin-bottom: 0;	
 	}
 	h4, p
 	{
+		margin-bottom: 1rem;	
 		text-align: center;
 	}
 	.aboveline
@@ -516,6 +479,18 @@ section
 			width: 50%;
 			background-color: $third-color;
 		}
+	}
+}
+
+// AGENDA -->
+.agenda-event
+{
+	img
+	{
+		width: 200px;
+		height: 200px;
+		object-fit: cover;
+		//object-position: center bottom;
 	}
 }
 
@@ -531,10 +506,11 @@ section
 		}
 		& > div
 		{
-			display: flex;
-			flex-wrap: wrap;
 			justify-content: space-around;
-			align-items: center;
+			&:last-child
+			{
+				box-shadow: none;
+			}
 		}
 	}
 }
@@ -546,14 +522,47 @@ section
 		min-height: calc(100vh - #{$header-bigHeight});
 	}
 }
-@media screen and (max-width: 880px)
+
+@media screen and (max-width: 996px)
 {
+	.home-intro
+	{
+		position: relative;
+		z-index: 1;
+	}
 	.restaurant-intro
 	{
 		margin-top: 0;
 		padding-top: 0;
 		min-height: calc(100vh - #{$header-smallHeight});
 		z-index: 1;
+	}
+}
+
+@media screen and (max-width: 880px)
+{
+	section
+	{
+		padding-top: 2rem;
+		padding-bottom: 2rem;
+		&:nth-child(2n+1)
+		{
+			.big-Parag
+			{
+				font-size: 2.75rem;
+				line-height: 3rem;
+				text-align: center;
+			}
+		}
+	}
+	h3, p
+	{
+		text-align: center;
+	}
+
+	.home-presentation
+	{
+		flex-direction: column;
 	}
 	.restaurant-cartes
 	{

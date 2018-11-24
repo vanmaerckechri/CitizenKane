@@ -35,17 +35,11 @@
 	}
 	li
 	{
-		margin-top: 1rem;
+		margin-top: 1.5rem;
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
 		align-items: center;
-		&:last-child
-		{
-			margin-bottom: 1rem;
-			border-bottom: 1px solid $font-colorLight;
-			padding-bottom: 2rem;
-		}
 	}
 	.plat
 	{
@@ -53,6 +47,7 @@
 	}
 	.platCompo
 	{
+		margin-top: 0.5rem;
 		width: 100%;
 		color: $font-colorDark;
 	}

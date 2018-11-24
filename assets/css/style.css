@@ -10,7 +10,8 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 16px; }
+  font-size: 16px;
+  overflow-x: hidden; }
 
 body {
   width: 100%;
@@ -57,7 +58,8 @@ p, a, h3, h4, h5, h6, label, input, button, span {
   font-family: "Lato", sans-serif; }
 
 p {
-  margin-bottom: 2rem; }
+  margin-bottom: 2rem;
+  line-height: 1.5rem; }
 
 a {
   font-size: 1rem;
@@ -182,6 +184,7 @@ nav {
     justify-content: flex-start;
     align-items: center; }
   .menu-burger li {
+    margin: 0 0.5rem;
     list-style: none; }
     .menu-burger li:last-child {
       margin-right: 0; }
@@ -211,7 +214,7 @@ nav {
     width: 80%;
     opacity: 1; }
 
-@media screen and (max-width: 880px) {
+@media screen and (max-width: 996px) {
   header {
     position: relative; }
 
@@ -299,18 +302,15 @@ nav {
   .readMore-container input:checked ~ .readMore-content {
     max-height: 5000px; }
   .readMore-container li {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center; }
-    .readMore-container li:last-child {
-      margin-bottom: 1rem;
-      border-bottom: 1px solid #8f8f8f;
-      padding-bottom: 2rem; }
   .readMore-container .plat {
     font-weight: bold; }
   .readMore-container .platCompo {
+    margin-top: 0.5rem;
     width: 100%;
     color: #6f6f6f; }
   .readMore-container .dots {
@@ -508,10 +508,12 @@ section {
       color: #8f8f8f; }
     section:nth-child(2n+1) h3, section:nth-child(2n+1) h2, section:nth-child(2n+1) > p {
       color: #FFF; }
-  section:nth-child(2n) > p {
-    color: #404040; }
-  section:nth-child(2n) div p {
-    color: #6f6f6f; }
+  section:nth-child(2n) {
+    background-color: #FFF; }
+    section:nth-child(2n) > p {
+      color: #404040; }
+    section:nth-child(2n) div p {
+      color: #6f6f6f; }
 
 .home-intro {
   color: white;
@@ -636,25 +638,6 @@ section:nth-child(2n+1) .big-Parag {
   width: 256px;
   max-width: calc(100vw - 2rem); }
 
-@media screen and (max-width: 880px) {
-  section {
-    padding-top: 2rem;
-    padding-bottom: 2rem; }
-
-  h3, p {
-    text-align: center; }
-
-  .home-intro {
-    position: relative;
-    z-index: 1; }
-
-  .home-presentation {
-    flex-direction: column; }
-
-  section:nth-child(2n+1) .big-Parag {
-    font-size: 2.75rem;
-    line-height: 3rem;
-    text-align: center; } }
 .restaurant-intro {
   margin-top: 78px;
   min-height: calc(100vh - 78px);
@@ -736,6 +719,7 @@ section:nth-child(2n+1) .big-Parag {
     font-weight: normal; }
 
 .beerproject-editions h2 {
+  margin-bottom: 2rem;
   text-align: left; }
 .beerproject-editions h3 {
   margin-top: 0;
@@ -744,11 +728,12 @@ section:nth-child(2n+1) .big-Parag {
   margin-left: 0;
   margin-right: 0; }
 .beerproject-editions > div {
-  padding: 2rem;
+  margin: 0;
+  padding: 2rem 2rem 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.75); }
 
 .beerproject-brasserie {
@@ -766,19 +751,20 @@ section:nth-child(2n+1) .big-Parag {
     height: 150px; }
   .beerproject-brasserie div {
     padding-top: 1rem;
-    height: 150px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around; }
-  .beerproject-brasserie p {
-    margin-bottom: 0; }
+    min-height: 150px;
+    width: 100%; }
   .beerproject-brasserie h4, .beerproject-brasserie p {
+    margin-bottom: 1rem;
     text-align: center; }
   .beerproject-brasserie .aboveline:before {
     left: 25%;
     width: 50%;
     background-color: #3ab0e2; }
+
+.agenda-event img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover; }
 
 @media screen and (max-width: 1295px) {
   .beerproject-editions {
@@ -787,20 +773,37 @@ section:nth-child(2n+1) .big-Parag {
     .beerproject-editions h2, .beerproject-editions h3 {
       text-align: center; }
     .beerproject-editions > div {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      align-items: center; } }
+      justify-content: space-around; }
+      .beerproject-editions > div:last-child {
+        box-shadow: none; } }
 @media screen and (max-width: 1010px) {
   .restaurant-intro {
     margin-top: 130px;
     min-height: calc(100vh - 130px); } }
-@media screen and (max-width: 880px) {
+@media screen and (max-width: 996px) {
+  .home-intro {
+    position: relative;
+    z-index: 1; }
+
   .restaurant-intro {
     margin-top: 0;
     padding-top: 0;
     min-height: calc(100vh - 64px);
-    z-index: 1; }
+    z-index: 1; } }
+@media screen and (max-width: 880px) {
+  section {
+    padding-top: 2rem;
+    padding-bottom: 2rem; }
+    section:nth-child(2n+1) .big-Parag {
+      font-size: 2.75rem;
+      line-height: 3rem;
+      text-align: center; }
+
+  h3, p {
+    text-align: center; }
+
+  .home-presentation {
+    flex-direction: column; }
 
   .restaurant-cartes h2, .restaurant-cartes h3, .restaurant-cartes h4, .restaurant-cartes p {
     text-align: center; }
