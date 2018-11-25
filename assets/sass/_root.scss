@@ -13,7 +13,6 @@ html
 	justify-content: center;
 	align-items: center;
 	font-size: $mainText-fontSize;
-	overflow-x: hidden;
 }
 body
 {
@@ -22,6 +21,7 @@ body
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
+	overflow-x: hidden;
 }
 #main
 {
@@ -68,6 +68,9 @@ h3
 p, a, h3, h4, h5, h6, label, input, button, span, textarea
 {
 	font-family: $main-fontFam;
+	overflow: hidden;
+  	text-overflow: ellipsis; 
+	hyphens: auto;
 }
 p
 {
@@ -102,6 +105,7 @@ fieldset
 		margin-top: 1rem;
 		margin-bottom: 1rem;
 		color: $font-colorLight;
+		text-align: center;
 	}
 }
 legend
@@ -113,6 +117,7 @@ label
 {
 	margin-top: 1rem;
 	margin-bottom: .2rem;
+	text-align: center;
 	color: $font-colorLight;
 }
 input
@@ -122,6 +127,7 @@ input
 }
 input[type="submit"]
 {
+	margin: 0 auto;
 	width: inherit;
 }
 a.button, .btn
@@ -139,11 +145,31 @@ a.button, .btn
 		background-color: $mainHover-color;
 	}
 }
+button:focus
+{
+	outline:none;
+}
 
 @media screen and (max-width: 880px)
 {
 	h1
 	{
-		font-size: 2.5rem
+		font-size: 2.5rem;
+	}
+}
+
+@media screen and (max-width: 350px)
+{
+	h1
+	{
+		font-size: 2rem;
+	}
+	h2
+	{
+		font-size: 1.5rem;
+	}
+	h3
+	{
+		font-size: 1rem;
 	}
 }

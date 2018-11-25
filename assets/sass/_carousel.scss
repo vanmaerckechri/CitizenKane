@@ -144,3 +144,20 @@
 		}
 	}
 }
+
+@media screen and (max-width: 4000px)
+{
+	.carousel-container
+	{
+		.carousel-nav
+		{
+			button
+			{
+				max-height: 24px;
+				max-width: 24px;
+				min-height: 24px;
+				min-width: 24px;				
+			}
+		}
+	}
+}

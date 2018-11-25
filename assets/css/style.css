@@ -10,15 +10,15 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 16px;
-  overflow-x: hidden; }
+  font-size: 16px; }
 
 body {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center; }
+  align-items: center;
+  overflow-x: hidden; }
 
 #main {
   max-width: 100vw;
@@ -55,7 +55,10 @@ h3 {
   font-size: 1.2rem; }
 
 p, a, h3, h4, h5, h6, label, input, button, span, textarea {
-  font-family: "Lato", sans-serif; }
+  font-family: "Lato", sans-serif;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  hyphens: auto; }
 
 p {
   margin-bottom: 2rem;
@@ -82,7 +85,8 @@ fieldset {
   fieldset p {
     margin-top: 1rem;
     margin-bottom: 1rem;
-    color: #8f8f8f; }
+    color: #8f8f8f;
+    text-align: center; }
 
 legend {
   font-size: 1.2rem;
@@ -91,6 +95,7 @@ legend {
 label {
   margin-top: 1rem;
   margin-bottom: .2rem;
+  text-align: center;
   color: #8f8f8f; }
 
 input {
@@ -98,6 +103,7 @@ input {
   width: 100%; }
 
 input[type="submit"] {
+  margin: 0 auto;
   width: inherit; }
 
 a.button, .btn {
@@ -112,9 +118,21 @@ a.button, .btn {
     cursor: pointer;
     background-color: #cb4332; }
 
+button:focus {
+  outline: none; }
+
 @media screen and (max-width: 880px) {
   h1 {
     font-size: 2.5rem; } }
+@media screen and (max-width: 350px) {
+  h1 {
+    font-size: 2rem; }
+
+  h2 {
+    font-size: 1.5rem; }
+
+  h3 {
+    font-size: 1rem; } }
 footer {
   max-width: 100vw;
   width: 100%;
@@ -277,7 +295,6 @@ nav {
       margin-top: 22px;
       transform: rotate(-45deg) translateX(-50%); } }
 .readMore-container {
-  margin: 0 auto;
   max-width: 1280px;
   position: relative;
   text-align: center; }
@@ -435,6 +452,12 @@ nav {
         cursor: pointer;
         background-color: #cb4332; }
 
+@media screen and (max-width: 4000px) {
+  .carousel-container .carousel-nav button {
+    max-height: 24px;
+    max-width: 24px;
+    min-height: 24px;
+    min-width: 24px; } }
 .alertCookies-container {
   border-top: 1px solid #404040;
   position: fixed;
@@ -714,9 +737,9 @@ section:nth-child(2n+1) .big-Parag {
     width: 100%; }
   .cafe-chouffes div {
     margin: 0 1rem 0 0;
-    flex: 2; }
+    flex: 1; }
   .cafe-chouffes img {
-    flex: 1;
+    width: 400px;
     height: auto;
     object-fit: cover; }
   .cafe-chouffes p {
@@ -855,6 +878,8 @@ section.beerproject-intro {
       font-size: 2.75rem;
       line-height: 3rem;
       text-align: center; }
+    section div {
+      margin: 1rem 0; }
 
   h3, p {
     text-align: center; }
@@ -870,8 +895,14 @@ section.beerproject-intro {
   .cafe-chouffes {
     flex-direction: column;
     flex-wrap: nowrap; }
+    .cafe-chouffes div {
+      order: 2; }
     .cafe-chouffes img {
-      max-height: 200px; }
+      margin-bottom: 1rem;
+      border-radius: 50%;
+      width: 200px;
+      height: 200px;
+      order: 1; }
 
   .beerproject-brasserie {
     max-width: none; }
@@ -888,5 +919,8 @@ section.beerproject-intro {
       order: 2; }
     .contact-intro > div:last-child div:last-of-type {
       order: 1; } }
+@media screen and (max-width: 450px) {
+  .beerproject-brasserie {
+    min-width: 240px; } }
 
 /*# sourceMappingURL=style.css.map */
