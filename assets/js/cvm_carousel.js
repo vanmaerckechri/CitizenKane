@@ -2,7 +2,7 @@
 
 window.addEventListener("load", function(event)
 {
-	let loadCarousel = function(id, imageList, imageLength)
+	let loadCarousel = function(id, path, fileName, imgAlt, imageList, imageLength)
 	{
 		let carouselContainer = document.getElementById(id);
 		let carouselIndex = 0;
@@ -24,7 +24,6 @@ window.addEventListener("load", function(event)
 		let changeImage = function(imageIndex)
 		{
 			let imgLenght = carouselContainer.querySelectorAll("img").length;
-			console.log(imgLenght)
 			if (imgLenght <= 1)
 			{
 				let lastImage = carouselContainer.querySelector("img");
@@ -142,7 +141,7 @@ window.addEventListener("load", function(event)
 			imgLoadedLength += 1;
 			if (imgLoadedLength === imgLength)
 			{
-				loadCarousel(id, imageList, imgLength);
+				loadCarousel(id, path, fileName, imgAlt, imageList, imgLength);
 			}
 		}
 
@@ -157,5 +156,8 @@ window.addEventListener("load", function(event)
 			imageList.push(img);
 		}
 	}
-	loadImages("carouselDemo01", path, fileName, imgAlt)
+	for (let i = carouselList.length - 1; i >= 0; i--)
+	{
+		loadImages(carouselList[i]["id"], carouselList[i]["path"], carouselList[i]["fileName"], carouselList[i]["imgAlt"])
+	}
 });

@@ -54,7 +54,7 @@ h3 {
   letter-spacing: 0.2rem;
   font-size: 1.2rem; }
 
-p, a, h3, h4, h5, h6, label, input, button, span {
+p, a, h3, h4, h5, h6, label, input, button, span, textarea {
   font-family: "Lato", sans-serif; }
 
 p {
@@ -182,7 +182,8 @@ nav {
     padding-left: 0;
     display: flex;
     justify-content: flex-start;
-    align-items: center; }
+    align-items: center;
+    overflow: hidden; }
   .menu-burger li {
     margin: 0 0.5rem;
     list-style: none; }
@@ -502,42 +503,51 @@ section {
     width: 100%; }
   section div {
     margin: 1rem; }
-  section:nth-child(2n+1) {
+  section:nth-of-type(2n+1) {
     background-color: #323232; }
-    section:nth-child(2n+1) div p {
+    section:nth-of-type(2n+1) div p {
       color: #8f8f8f; }
-    section:nth-child(2n+1) h3, section:nth-child(2n+1) h2, section:nth-child(2n+1) > p {
+    section:nth-of-type(2n+1) h3, section:nth-of-type(2n+1) h2, section:nth-of-type(2n+1) > p {
       color: #FFF; }
-  section:nth-child(2n) {
+  section:nth-of-type(2n) {
     background-color: #FFF; }
-    section:nth-child(2n) > p {
+    section:nth-of-type(2n) > p {
       color: #404040; }
-    section:nth-child(2n) div p {
+    section:nth-of-type(2n) div p {
       color: #6f6f6f; }
-
-.home-intro {
-  color: white;
-  background: url("../img/terrasse.jpg");
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center;
-  z-index: 0; }
-  .home-intro h1 {
-    padding: 1rem;
+  section:nth-of-type(1) div p {
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.5); }
-  .home-intro div {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center; }
-  .home-intro a {
-    margin: 0.5rem; }
-    .home-intro a:last-child {
-      background-color: #1e9e6b; }
-      .home-intro a:last-child:hover {
-        background-color: #069059; }
+    font-size: 1.1rem;
+    color: #FFF; }
+
+.bg-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1; }
+
+section.home-intro {
+  background-color: transparent; }
+
+.home-intro h1 {
+  padding: 1rem;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5); }
+.home-intro div {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center; }
+.home-intro a {
+  margin: 0.5rem; }
+  .home-intro a:last-child {
+    background-color: #1e9e6b; }
+    .home-intro a:last-child:hover {
+      background-color: #069059; }
 
 .home-cafeResto {
   display: flex;
@@ -654,10 +664,6 @@ section:nth-child(2n+1) .big-Parag {
       justify-content: center;
       align-items: center;
       flex: 1; }
-      .restaurant-intro > div:last-child p {
-        text-align: center;
-        font-style: 1.2rem;
-        color: #FFF; }
   .restaurant-intro p {
     line-height: 1.5rem;
     font-weight: lighter; }
@@ -718,6 +724,18 @@ section:nth-child(2n+1) .big-Parag {
     color: #404040 !important;
     font-weight: normal; }
 
+section.beerproject-intro {
+  background-color: transparent; }
+  section.beerproject-intro > div {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5); }
+  section.beerproject-intro h1 {
+    padding: 1rem; }
+
 .beerproject-editions h2 {
   margin-bottom: 2rem;
   text-align: left; }
@@ -754,7 +772,7 @@ section:nth-child(2n+1) .big-Parag {
     min-height: 150px;
     width: 100%; }
   .beerproject-brasserie h4, .beerproject-brasserie p {
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     padding-left: 1rem;
     padding-right: 1rem;
     text-align: center; }
@@ -797,13 +815,15 @@ section:nth-child(2n+1) .big-Parag {
   color: #404040; }
 .contact-form label {
   color: #6f6f6f; }
-.contact-form input[type="text"], .contact-form input[type="email"] {
+.contact-form input[type="text"], .contact-form input[type="email"], .contact-form textarea {
   background-color: #323232;
   color: #FFF; }
 .contact-form textarea {
   height: 200px;
   width: 100%;
   resize: none; }
+.contact-form input.btn {
+  margin-top: 1rem; }
 
 @media screen and (max-width: 1295px) {
   .beerproject-editions {
@@ -821,14 +841,12 @@ section:nth-child(2n+1) .big-Parag {
     min-height: calc(100vh - 130px); } }
 @media screen and (max-width: 996px) {
   .home-intro {
-    position: relative;
-    z-index: 1; }
+    position: relative; }
 
   .restaurant-intro {
     margin-top: 0;
     padding-top: 0;
-    min-height: calc(100vh - 64px);
-    z-index: 1; } }
+    min-height: calc(100vh - 64px); } }
 @media screen and (max-width: 880px) {
   section {
     padding-top: 2rem;

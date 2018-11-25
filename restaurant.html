@@ -34,7 +34,7 @@
 	</header>
 	<div id="main" class="main">
 		<section class="restaurant-intro">
-			<div id="carouselDemo01" class="carousel-container">
+			<div id="carousel" class="carousel-container">
 	   			<img src="assets/img/restaurant_facade_small.jpg" alt="photo de la facade">
 	   			<button class="displayNone"><<</button>
 	   			<button class="displayNone">>></button>
@@ -374,9 +374,14 @@
     	<p>Ce site utilise des cookies pour vous assurer d'obtenir la meilleure expérience sur notre site <a href="" target="_blank" rel="noopener">Plus d'infos</a><button id="alertCookiesCloseBtn" class="btn">Compris!</button></p>
     </div>
     <script type="text/javascript">
-		let path = "assets/img/";
-		let fileName = ["restaurant_facade.jpg", "restaurant_interieur01.jpg", "restaurant_plat01.jpg", "terrasse.jpg" , "restaurant_interieur02.jpg", "restaurant_plat02.jpg", "restaurant_deco.jpg"];
-		let imgAlt = ["photo de la facade", "photo de l'intérieur", "photo de roulades de légumes", "photo de la terrasse", "photo de l'intérieur", "photo d'un plat à base de viande", "photo de la décoration d'intérieur"];
+	    let carousel = 
+	    {
+	    	id: "carousel",
+			path: "assets/img/",
+			fileName: ["restaurant_facade.jpg", "restaurant_interieur01.jpg", "restaurant_plat01.jpg", "terrasse.jpg" , "restaurant_interieur02.jpg", "restaurant_plat02.jpg", "restaurant_deco.jpg"],
+			imgAlt: ["photo de la facade", "photo de l'intérieur", "photo de roulades de légumes", "photo de la terrasse", "photo de l'intérieur", "photo d'un plat à base de viande", "photo de la décoration d'intérieur"]
+		}
+		let carouselList = [carousel];
     </script>
     <script type="text/javascript" src="assets/js/cvm_alertcookies.js"></script>
     <script type="text/javascript" src="assets/js/cvm_optimg.js"></script>

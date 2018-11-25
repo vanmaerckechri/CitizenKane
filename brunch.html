@@ -34,6 +34,13 @@
 	</header>
 	<div id="main" class="main">
 		<section class="restaurant-intro cafe-intro">
+			<div id="carousel" class="carousel-container">
+	   			<img src="assets/img/brunch_oeufsbacon_small.jpg" alt="photo d'une assiette avec divers aliments dont des oeufs et du bacon">
+	   			<button class="displayNone"><<</button>
+	   			<button class="displayNone">>></button>
+		   		<div class="carousel-nav">
+		   		</div>
+	   		</div>
 	   		<div>
 				<h1>P’tits déjs & Brunchs</h1>
 				<p>Le Citizen Kane vous accueille pour le p’tit déj tous les jours & pour le brunch tous les dimanches et les jours fériés.</p>
@@ -182,7 +189,18 @@
     <div id="alertCookies" class="alertCookies-container">
     	<p>Ce site utilise des cookies pour vous assurer d'obtenir la meilleure expérience sur notre site <a href="" target="_blank" rel="noopener">Plus d'infos</a><button id="alertCookiesCloseBtn" class="btn">Compris!</button></p>
     </div>
+    <script type="text/javascript">
+	    let carousel = 
+	    {
+	    	id: "carousel",
+			path : "assets/img/",
+			fileName : ["brunch_oeufsbacon.jpg", "brunch_saumon.jpg"],
+			imgAlt : ["photo d'une assiette avec divers aliments dont des oeufs et du bacon", "photo d'une assiette avec divers aliments dont du saumon et du fromage frais"]
+		}
+		let carouselList = [carousel];
+    </script>
     <script type="text/javascript" src="assets/js/cvm_alertcookies.js"></script>
     <script type="text/javascript" src="assets/js/cvm_optimg.js"></script>
+    <script type="text/javascript" src="assets/js/cvm_carousel.js"></script>
 </body>
 </html>

@@ -24,7 +24,7 @@ section
 	{
 		margin: 1rem;
 	}
-	&:nth-child(2n+1)
+	&:nth-of-type(2n+1)
 	{
 		background-color: $section-bgColor;
 		div
@@ -39,7 +39,7 @@ section
 			color: $font-colorLighter;
 		}
 	}
-	&:nth-child(2n)
+	&:nth-of-type(2n)
 	{
 		background-color: $font-colorLighter;
 		& > p
@@ -54,17 +54,36 @@ section
 			}
 		}
 	}
+	&:nth-of-type(1)
+	{
+		div
+		{
+			p
+			{
+				text-align: center;
+				font-size: 1.1rem;
+				color: $font-colorLighter;
+			}
+		}
+	}
 }
-
+.bg-image
+{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	object-fit: cover;
+	z-index: -1;
+}
 // HOME PAGE -->
+section.home-intro
+{
+	background-color: transparent;
+}
 .home-intro
 {
-	color: white;
-	background: url("../img/terrasse.jpg");
-	background-size: cover;
-    background-attachment: fixed;
-    background-position: center;
-    z-index: 0;
     h1
     {
     	padding: $mainCtnr-margin;
@@ -307,9 +326,7 @@ section
 			flex: 1;
 			p
 			{
-				text-align: center;
-				font-style: 1.2rem;
-				color: $font-colorLighter;
+
 			}
 		}
 	}
@@ -416,6 +433,23 @@ section
 }
 
 // BEER DISCOVERY PROJECT -->
+section.beerproject-intro
+{
+	background-color: transparent;
+    & > div
+    {
+    	width: 100%;
+    	display: flex;
+    	flex-wrap: wrap;
+    	justify-content: center;
+    	align-items: center;
+    	background-color: rgba(0, 0, 0, 0.5);
+    }
+    h1
+    {
+    	padding: $mainCtnr-margin;
+    }
+}
 .beerproject-editions
 {
 	h2
@@ -468,7 +502,7 @@ section
 	}
 	h4, p
 	{
-		margin-bottom: 1rem;
+		margin-bottom: 0.5rem;
 		padding-left: 1rem;	
 		padding-right: 1rem;
 		text-align: center;
@@ -553,7 +587,7 @@ section
 	{
 		color: $font-colorDark;
 	}
-	input[type="text"], input[type="email"]
+	input[type="text"], input[type="email"], textarea
 	{
 		background-color: $section-bgColor;
 		color: $font-colorLighter;
@@ -563,6 +597,10 @@ section
 		height: 200px;
 		width: 100%;
 		resize: none;
+	}
+	input.btn
+	{
+		margin-top: 1rem;
 	}
 }
 
@@ -600,14 +638,12 @@ section
 	.home-intro
 	{
 		position: relative;
-		z-index: 1;
 	}
 	.restaurant-intro
 	{
 		margin-top: 0;
 		padding-top: 0;
 		min-height: calc(100vh - #{$header-smallHeight});
-		z-index: 1;
 	}
 }
 
