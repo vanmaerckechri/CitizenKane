@@ -1,0 +1,40 @@
+.anime-display
+{
+	transition: opacity 2s;
+}
+
+.anime-moveRight
+{
+	transition: transform 1s, opacity 1s;
+	transform: translateX(0);
+}
+
+.anime-moveLeft
+{
+	transition: transform 1s, opacity 1s;
+	transform: translateX(0);
+}
+
+.anime-moveRightWait
+{
+	opacity: 0;
+	transform: translateX(-100%);
+}
+
+.anime-moveLeftWait
+{
+	opacity: 0;
+	transform: translateX(+100%);
+}
+
+.anime-scaleUp
+{
+	transition: transform 1s, opacity 1s;
+	transform: scale(1);
+}
+
+.anime-scaleUpWait
+{
+	opacity: 0;
+	transform: scale(0);
+}

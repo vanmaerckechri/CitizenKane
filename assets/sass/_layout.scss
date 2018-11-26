@@ -175,6 +175,10 @@ section.home-intro
 	{
 		flex: 1;
 	}
+	h3
+	{
+		margin-top: 0;
+	}
 }
 section
 {
@@ -346,6 +350,10 @@ section
 	{
 		text-align: left;
 	}
+	p
+	{
+		margin-bottom: 0;
+	}
 	h2
 	{
 		text-align: left;
@@ -366,6 +374,7 @@ section
 	}
 	a.btn
 	{
+		margin-top: 1.5rem;
 		width: initial;
 	}
 }

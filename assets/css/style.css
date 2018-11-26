@@ -38,7 +38,7 @@ h2, h3 {
 
 h3, h4, h5, h6 {
   text-transform: uppercase;
-  font-size: bold; }
+  font-weight: bold; }
 
 h1 {
   font-size: 3.5rem; }
@@ -612,6 +612,8 @@ section.home-intro {
   align-items: flex-start; }
   .home-presentation div {
     flex: 1; }
+  .home-presentation h3 {
+    margin-top: 0; }
 
 section:nth-child(2n+1) .big-Parag {
   font-size: 3.75rem;
@@ -704,6 +706,8 @@ section:nth-child(2n+1) .big-Parag {
   margin: 0; }
 .restaurant-cartes > p {
   text-align: left; }
+.restaurant-cartes p {
+  margin-bottom: 0; }
 .restaurant-cartes h2 {
   text-align: left; }
 .restaurant-cartes h4 {
@@ -717,6 +721,7 @@ section:nth-child(2n+1) .big-Parag {
   object-fit: cover;
   max-width: 1280px; }
 .restaurant-cartes a.btn {
+  margin-top: 1.5rem;
   width: initial; }
 
 .cafe-intro h1 {
@@ -929,5 +934,31 @@ section.beerproject-intro {
 @media screen and (max-width: 450px) {
   .beerproject-brasserie {
     min-width: 240px; } }
+.anime-display {
+  transition: opacity 2s; }
+
+.anime-moveRight {
+  transition: transform 1s, opacity 1s;
+  transform: translateX(0); }
+
+.anime-moveLeft {
+  transition: transform 1s, opacity 1s;
+  transform: translateX(0); }
+
+.anime-moveRightWait {
+  opacity: 0;
+  transform: translateX(-100%); }
+
+.anime-moveLeftWait {
+  opacity: 0;
+  transform: translateX(100%); }
+
+.anime-scaleUp {
+  transition: transform 1s, opacity 1s;
+  transform: scale(1); }
+
+.anime-scaleUpWait {
+  opacity: 0;
+  transform: scale(0); }
 
 /*# sourceMappingURL=style.css.map */
