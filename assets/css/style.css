@@ -935,7 +935,7 @@ section.beerproject-intro {
   .beerproject-brasserie {
     min-width: 240px; } }
 .anime-display {
-  transition: opacity 2s; }
+  transition: opacity 1.5s; }
 
 .anime-moveRight {
   transition: transform 1s, opacity 1s;
