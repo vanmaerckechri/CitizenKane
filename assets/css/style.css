@@ -319,6 +319,11 @@ nav {
       cursor: pointer; }
   .readMore-container input:checked ~ .readMore-content {
     max-height: 5000px; }
+  .readMore-container img {
+    border: 3px solid transparent;
+    transition: border-color 0.2s; }
+  .readMore-container input:hover ~ img {
+    border-color: #cb4332; }
   .readMore-container ul {
     margin-bottom: 2rem; }
   .readMore-container li {
@@ -716,10 +721,14 @@ section:nth-child(2n+1) .big-Parag {
   font-size: 1.2rem;
   letter-spacing: 0.3rem; }
 .restaurant-cartes img {
+  border: 3px solid transparent;
   width: 100%;
   height: 330px;
   object-fit: cover;
-  max-width: 1280px; }
+  max-width: 1280px;
+  transition: border-color 0.2s; }
+.restaurant-cartes a img:hover {
+  border-color: #cb4332; }
 .restaurant-cartes a.btn {
   margin-top: 1.5rem;
   width: initial; }

@@ -32,6 +32,18 @@
 	{
 		max-height: 5000px;
 	}
+	img
+	{
+		border: 3px solid transparent;
+		transition: border-color 0.2s;
+	}
+	input:hover
+	{
+		& ~ img
+		{
+			border-color: $mainHover-color;
+		}
+	}
 	ul
 	{
 		margin-bottom: 2rem;
