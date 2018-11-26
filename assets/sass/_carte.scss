@@ -11,7 +11,7 @@
 		height: 100%;
 		overflow: hidden;
 		text-align: left;
-		transition: max-height .3s;
+		transition: max-height 0.5s;
 	}
 	input
 	{
@@ -31,6 +31,10 @@
 	input:checked ~ .readMore-content
 	{
 		max-height: 5000px;
+	}
+	ul
+	{
+		margin-bottom: 2rem;
 	}
 	li
 	{
@@ -72,5 +76,14 @@
 	.plat, .platCompo
 	{
 		text-align: center;
+	}
+	.platCompo
+	{
+		order: 1;
+	}
+	.prix
+	{
+		margin-top: 0.5rem;
+		order: 2;
 	}
 }

@@ -305,7 +305,7 @@ nav {
     height: 100%;
     overflow: hidden;
     text-align: left;
-    transition: max-height .3s; }
+    transition: max-height 0.5s; }
   .readMore-container input {
     opacity: 0;
     position: absolute;
@@ -319,6 +319,8 @@ nav {
       cursor: pointer; }
   .readMore-container input:checked ~ .readMore-content {
     max-height: 5000px; }
+  .readMore-container ul {
+    margin-bottom: 2rem; }
   .readMore-container li {
     margin-top: 1.5rem;
     display: flex;
@@ -344,7 +346,14 @@ nav {
     flex-direction: column; }
 
   .plat, .platCompo {
-    text-align: center; } }
+    text-align: center; }
+
+  .platCompo {
+    order: 1; }
+
+  .prix {
+    margin-top: 0.5rem;
+    order: 2; } }
 .modal-container {
   width: 100vw;
   height: 100vh;
@@ -691,9 +700,8 @@ section:nth-child(2n+1) .big-Parag {
     line-height: 1.5rem;
     font-weight: lighter; }
 
-.restaurant-cartes > div {
-  margin-top: 0;
-  margin-bottom: 0; }
+.restaurant-cartes div {
+  margin: 0; }
 .restaurant-cartes > p {
   text-align: left; }
 .restaurant-cartes h2 {
@@ -709,7 +717,6 @@ section:nth-child(2n+1) .big-Parag {
   object-fit: cover;
   max-width: 1280px; }
 .restaurant-cartes a.btn {
-  margin-top: 1rem;
   width: initial; }
 
 .cafe-intro h1 {
