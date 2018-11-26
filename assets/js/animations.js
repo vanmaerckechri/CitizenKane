@@ -39,7 +39,7 @@ window.addEventListener("load", function(event)
 	{
 		let displayAnimeContainerList = document.querySelectorAll(".anime-container");
 		let headerHeight = document.getElementsByTagName("header")[0].offsetHeight;
-		let scrollTop = window.pageYOffset + headerHeight;
+		let scrollTop = window.pageYOffset + headerHeight + window.innerHeight / 2;
 
 		for (let animeContainer of displayAnimeContainerList)
 		{
@@ -47,7 +47,7 @@ window.addEventListener("load", function(event)
 			let disAnContainerTop = animeContainer.offsetTop;
 			let disAnContainerBot = disAnContainerTop + disAnContainerHeight;
 
-			if (scrollTop >= disAnContainerTop && scrollTop < disAnContainerTop + (disAnContainerHeight / 4))
+			if (scrollTop >= disAnContainerTop && scrollTop < disAnContainerBot)
 			{
 				launchAnime(animeContainer);
 			}
