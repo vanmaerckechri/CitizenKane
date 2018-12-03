@@ -1,0 +1,30 @@
+.h4
+{
+	text-transform: uppercase;
+	font-weight: bold;
+	font-family: $main-fontFam;
+	overflow: hidden;
+  	text-overflow: ellipsis; 
+	hyphens: auto;
+}
+
+.restaurant-cartes
+{
+	.h4
+	{
+		margin-top: 1rem;
+		text-align: center;
+		font-size: 1.2rem;
+		letter-spacing: 0.3rem;
+	}
+}
+
+.moveOrderButton
+{
+	padding: 1rem;
+	background-color: pink;
+	&:hover
+	{
+		cursor: grab;
+	}
+}

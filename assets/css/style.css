@@ -306,7 +306,7 @@ nav {
     overflow: hidden;
     text-align: left;
     transition: max-height 0.5s; }
-  .readMore-container input {
+  .readMore-container .openCarteButton {
     opacity: 0;
     position: absolute;
     top: 0;
@@ -315,14 +315,14 @@ nav {
     width: 100%;
     z-index: 0;
     transform: translateX(-50%); }
-    .readMore-container input:hover {
+    .readMore-container .openCarteButton:hover {
       cursor: pointer; }
-  .readMore-container input:checked ~ .readMore-content {
+  .readMore-container .openCarteButton:checked ~ .readMore-content {
     max-height: 5000px; }
   .readMore-container img {
     border: 3px solid transparent;
     transition: border-color 0.2s; }
-  .readMore-container input:hover ~ img {
+  .readMore-container .openCarteButton:hover ~ img {
     border-color: #cb4332; }
   .readMore-container ul {
     margin-bottom: 2rem; }
@@ -330,7 +330,7 @@ nav {
     margin-top: 1.5rem;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center; }
   .readMore-container .plat {
     font-weight: bold; }
@@ -345,6 +345,11 @@ nav {
   .readMore-container .prix {
     font-weight: bold;
     color: #cb4332; }
+  .readMore-container input.plat {
+    width: auto;
+    flex: 1; }
+  .readMore-container input.prix {
+    max-width: 70px; }
 
 @media screen and (max-width: 880px) {
   li {
@@ -969,5 +974,25 @@ section.beerproject-intro {
 .anime-scaleUpWait {
   opacity: 0;
   transform: scale(0); }
+
+.h4 {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-family: "Lato", sans-serif;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  hyphens: auto; }
+
+.restaurant-cartes .h4 {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 1.2rem;
+  letter-spacing: 0.3rem; }
+
+.moveOrderButton {
+  padding: 1rem;
+  background-color: pink; }
+  .moveOrderButton:hover {
+    cursor: grab; }
 
 /*# sourceMappingURL=style.css.map */
