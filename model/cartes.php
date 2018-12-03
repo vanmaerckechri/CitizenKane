@@ -54,6 +54,26 @@ class cartes
 			$upd->execute();
 		}
 	}
+	public function updatePlatsOrder($cartes)
+	{
+		$dbh = $this->dbh;
+		// select all const id
+		$sth = $dbh->prepare('SELECT id from rel_cartes_plats WHERE id_carte = :id_carte');
+		$upt = $dbh->prepare('UPDATE rel_cartes_plats SET id_plat = :newId_plat WHERE id = :id');
+		foreach ($cartes as $keyCarte => $carte)
+		{
+			$sth->bindParam(':id_carte', $keyCarte, PDO::PARAM_STR);
+			$sth->execute();
+			$ids = $sth->fetchAll(PDO::FETCH_COLUMN);
+
+			foreach ($carte as $keyPlat => $idPlat) 
+			{
+				$upt->bindParam(':newId_plat', $idPlat, PDO::PARAM_INT);
+				$upt->bindParam(':id', $ids[$keyPlat], PDO::PARAM_INT);
+				$upt->execute();
+			}
+		}
+	}
 
 	public function getCartes($page)
 	{
@@ -61,7 +81,7 @@ class cartes
 		// cartes Family
 		$sth = $dbh->prepare('SELECT id_carte, family from pages WHERE name = :name');
 		$carte = [];
-		$sth->bindValue(':name', $page, PDO::PARAM_STR);
+		$sth->bindParam(':name', $page, PDO::PARAM_STR);
 		$sth->execute();
 		$carte = $sth->fetchAll(PDO::FETCH_ASSOC);
 
@@ -78,7 +98,7 @@ class cartes
 		{
 			foreach ($family as $keyCarte => $carte)
 			{
-				$sth->bindValue(':id', $keyCarte, PDO::PARAM_INT);
+				$sth->bindParam(':id', $keyCarte, PDO::PARAM_INT);
 				$sth->execute();
 				$cartesSorted[$keyFamily][$keyCarte]["description"] = $sth->fetchAll(PDO::FETCH_ASSOC)[0];
 			}
@@ -90,7 +110,7 @@ class cartes
 		{
 			foreach ($family as $keyCarte => $carte)
 			{
-				$sth->bindValue(':id', $keyCarte, PDO::PARAM_INT);
+				$sth->bindParam(':id', $keyCarte, PDO::PARAM_INT);
 				$sth->execute();
 				$cartesSorted[$keyFamily][$keyCarte]["plats"] = $sth->fetchAll(PDO::FETCH_ASSOC);
 			}

@@ -17,15 +17,27 @@ window.addEventListener("load", function(event)
 
 	let recordChanges = function()
 	{
+		let formAction = "index.php?action=" + page;
+		let form = createElem(["form"], [["action", "method"]], [[formAction, "post"]]);
+
 		if (checkObjectEmpty(updatePlats) === true)
 		{
 			updatePlats = JSON.stringify(updatePlats);
-			let formAction = "index.php?action=" + page;
-			let form = createElem(["form"], [["action", "method"]], [[formAction, "post"]]);
-			let input = createElem(["input"], [["type", "value", "name"]], [["text", updatePlats, "updatePlats"]]);
-			form.appendChild(input);
+			let plats = createElem(["input"], [["type", "value", "name"]], [["text", updatePlats, "updatePlats"]]);
+			form.appendChild(plats);
+		}
+
+		if (checkObjectEmpty(updatePlatsOrder) === true)
+		{
+			updatePlatsOrder = JSON.stringify(updatePlatsOrder);
+			let platsOrder = createElem(["input"], [["type", "value", "name"]], [["text", updatePlatsOrder, "updatePlatsOrder"]]);
+			form.appendChild(platsOrder);
+		}
+
+		if (checkObjectEmpty(updatePlats) === true || checkObjectEmpty(updatePlatsOrder) === true)
+		{
 			document.body.appendChild(form);
-			form.submit();
+			form.submit();			
 		}
 	}
 
@@ -42,9 +54,36 @@ window.addEventListener("load", function(event)
 	let moveOrder = function(event)
 	{
 		let li = event.target.parentNode;
+		let liBrother;
 		let ul = li.parentNode;
 		let oldMouseY = 0;
 		li.style.border = "1px solid grey";
+
+		let saveNewOrder = function(li, liBrother)
+		{
+			let ul = li.parentNode;
+			let ulId = ul.id;
+			ulId = ulId.slice(7, ulId.length);
+			let liList = ul.querySelectorAll("li");
+
+			// create skeleton of carte after first move
+			if (!updatePlatsOrder[ulId])
+			{
+				updatePlatsOrder[ulId] = {};
+    		}
+
+			for (let i = liList.length - 1; i >= 0; i--)
+			{
+				let id = liList[i].id;
+				let idPlatsExist = id.indexOf("plats__");
+				if (idPlatsExist != -1)
+				{
+					id = id.slice(7, id.length);
+					updatePlatsOrder[ulId][i] = parseInt(id, 10);
+				}
+			}
+		}
+
 		let detectMouseDirection = function(mouseY)
 		{
 			let result = "top";
@@ -64,17 +103,20 @@ window.addEventListener("load", function(event)
 				{
 					if (detectMouseDirection(mouseY) == "top")
 					{
-						ul.insertBefore(li, event.target)
+						liBrother = event.target;
+						ul.insertBefore(li, liBrother)
 					}
 					else
 					{
-						ul.insertBefore(li, event.target.nextSibling)
+						liBrother = event.target.nextSibling;
+						ul.insertBefore(li, liBrother)
 					}
 				}
 			}
 		}
 		document.body.onmouseup = function()
 		{
+			saveNewOrder(li, liBrother);
 			li.style = "";
 			document.body.onmousemove = null;
 			document.body.onmouseup = null;
@@ -91,7 +133,9 @@ window.addEventListener("load", function(event)
 
 			for (let i = cartesButton.length - 1; i >= 0; i--)
 			{
-				cartesButton[i].checked = false;
+				cartesButton[i].checked = true;
+				cartesButton[i].disabled = true;
+				cartesButton[i].style.display = "none";
 				cartesButton[i].addEventListener("change", function()
 				{
 					if (cartesButton[i].checked)
