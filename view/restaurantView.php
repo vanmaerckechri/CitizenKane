@@ -59,7 +59,7 @@
 				if ($admin === true)
 				{
 				?>
-					<input id="title__<?= htmlspecialchars($keyCarte) ?>" class="h4" type="text" value="<?= htmlspecialchars($description["title"]) ?>">
+					<input id="carteTitle__<?= htmlspecialchars($keyCarte) ?>" class="carteTitle h4" type="text" value="<?= htmlspecialchars($description["title"]) ?>">
 				<?php
 				}
 				else

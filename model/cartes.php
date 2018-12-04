@@ -33,7 +33,7 @@ class Cartes
 			if (isset($srcList[$key]) && !empty($srcList[$key]))
 			{
 				$upt->bindParam(':id', $id, PDO::PARAM_INT);
-				$upt->bindParam(':imgSrc', $srcList[$key], PDO::PARAM_INT);
+				$upt->bindParam(':imgSrc', $srcList[$key], PDO::PARAM_STR);
 				$upt->execute();
 			}
 		}
@@ -226,6 +226,22 @@ class Cartes
 			$upd->execute();
 		}
 	}
+
+	public function updateCartesTitle($cartesTitle)
+	{
+		$dbh = $this->dbh;
+		$upt = $dbh->prepare('UPDATE cartes SET title = :title WHERE id = :id');
+		foreach ($cartesTitle as $id => $title)
+		{
+			if (isset($title) && !empty($title))
+			{
+				$upt->bindParam(':id', $id, PDO::PARAM_INT);
+				$upt->bindParam(':title', $title, PDO::PARAM_STR);
+				$upt->execute();
+			}
+		}
+	}
+
 	public function updatePlatsOrder($cartes)
 	{
 		$dbh = $this->dbh;

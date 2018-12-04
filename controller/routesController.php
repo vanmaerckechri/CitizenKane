@@ -5,12 +5,6 @@ require('./model/cartes.php');
 
 function crud()
 {
-	if (isset($_POST["updatePlats"]) && !empty($_POST["updatePlats"]))
-	{
-		$updatePlats = json_decode($_POST["updatePlats"], true);
-		$cartes = new Cartes();
-		$cartes->updatePlats($updatePlats);
-	}
 	if (isset($_FILES) && !empty($_FILES) && isset($_POST["updateCarteImageCartesId"]) && !empty($_POST["updateCarteImageCartesId"]))
 	{
 		$cartesId = json_decode($_POST["updateCarteImageCartesId"], true);
@@ -20,6 +14,21 @@ function crud()
 		$fileNameList = $cartes->uploadImg($oldImgDir, $oldFileNameList);
 		$cartes->updateImg($cartesId, $fileNameList);
 	}
+
+	if (isset($_POST["updateCartesTitle"]) && !empty($_POST["updateCartesTitle"]))
+	{
+		$updateCartesTitle = json_decode($_POST["updateCartesTitle"], true);
+		$cartes = new Cartes();
+		$cartes->updateCartesTitle($updateCartesTitle);
+	}
+
+	if (isset($_POST["updatePlats"]) && !empty($_POST["updatePlats"]))
+	{
+		$updatePlats = json_decode($_POST["updatePlats"], true);
+		$cartes = new Cartes();
+		$cartes->updatePlats($updatePlats);
+	}
+
 	if (isset($_POST["updatePlatsOrder"]) && !empty($_POST["updatePlatsOrder"]))
 	{
 		$updatePlatsOrder = json_decode($_POST["updatePlatsOrder"], true);

@@ -4,6 +4,7 @@ let updatePlats = {};
 let updatePlatsOrder = {};
 let updateCarteImageNewImages = {};
 let updateCarteImageCartesId = [];
+let updateCartesTitle = {};
 
 window.addEventListener("load", function(event)
 {
@@ -22,13 +23,6 @@ window.addEventListener("load", function(event)
 		let formAction = "index.php?action=" + page;
 		let form = createElem(["form"], [["action", "method", "enctype"]], [[formAction, "post", "multipart/form-data"]]);
 
-		if (checkObjectEmpty(updatePlats) === true)
-		{
-			updatePlats = JSON.stringify(updatePlats);
-			let plats = createElem(["input"], [["type", "value", "name"]], [["text", updatePlats, "updatePlats"]]);
-			form.appendChild(plats);
-		}
-
 		if (checkObjectEmpty(updateCarteImageNewImages) === true)
 		{
 			for (let propertyTitle in updateCarteImageNewImages)
@@ -42,6 +36,20 @@ window.addEventListener("load", function(event)
 			form.appendChild(cartesId);
 		}
 
+		if (checkObjectEmpty(updateCartesTitle) === true)
+		{
+			updateCartesTitle = JSON.stringify(updateCartesTitle);
+			let cartesTitle = createElem(["input"], [["type", "value", "name"]], [["text", updateCartesTitle, "updateCartesTitle"]]);
+			form.appendChild(cartesTitle);
+		}
+
+		if (checkObjectEmpty(updatePlats) === true)
+		{
+			updatePlats = JSON.stringify(updatePlats);
+			let plats = createElem(["input"], [["type", "value", "name"]], [["text", updatePlats, "updatePlats"]]);
+			form.appendChild(plats);
+		}
+
 		if (checkObjectEmpty(updatePlatsOrder) === true)
 		{
 			updatePlatsOrder = JSON.stringify(updatePlatsOrder);
@@ -49,7 +57,7 @@ window.addEventListener("load", function(event)
 			form.appendChild(platsOrder);
 		}
 
-		if (checkObjectEmpty(updatePlats) === true || checkObjectEmpty(updatePlatsOrder) === true || checkObjectEmpty(updateCarteImageNewImages) === true)
+		if (checkObjectEmpty(updateCarteImageNewImages) === true || checkObjectEmpty(updateCartesTitle) === true || checkObjectEmpty(updatePlats) === true || checkObjectEmpty(updatePlatsOrder) === true)
 		{
 			document.body.appendChild(form);
 			form.submit();
@@ -60,6 +68,17 @@ window.addEventListener("load", function(event)
 	{
 		let idCarte = event.target.id.slice(10, event.target.id.length);
 		updateCarteImageNewImages[idCarte] = (event.target);
+	}
+
+	let updateCarteTitle = function(item)
+	{
+		let id = item.id;
+		let index = id.indexOf("__");
+		id = id.slice(index + 2, id.length);
+
+		updateCartesTitle[id] = item.value;
+
+		console.log(updateCartesTitle)
 	}
 
 	let updatePlat = function(item, platPropery)
@@ -176,6 +195,15 @@ window.addEventListener("load", function(event)
 			{
 				carteImgList[i].addEventListener("change", updateCarteImg, false);
 			}
+
+			let carteTitle = document.querySelectorAll(".readMore-container .carteTitle");
+			for (let i = carteTitle.length - 1; i >= 0; i--)
+			{
+				carteTitle[i].addEventListener("change", function()
+				{
+					updateCarteTitle(carteTitle[i], "title");
+				}, false);
+			}	
 		}
 
 		let initUpdatePlats = function()
