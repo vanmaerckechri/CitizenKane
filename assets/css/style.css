@@ -983,6 +983,16 @@ section.beerproject-intro {
   text-overflow: ellipsis;
   hyphens: auto; }
 
+.restaurant-cartes .h3 {
+  margin: 1.5rem auto 0.5rem;
+  width: 100%;
+  max-width: 1280px;
+  text-align: left;
+  letter-spacing: 0.2rem;
+  font-size: 1.2rem;
+  color: #404040;
+  text-transform: uppercase;
+  font-weight: bold; }
 .restaurant-cartes .h4 {
   margin-top: 1rem;
   text-align: center;

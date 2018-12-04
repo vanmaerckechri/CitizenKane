@@ -15,6 +15,13 @@ function crud()
 		$cartes->updateImg($cartesId, $fileNameList);
 	}
 
+	if (isset($_POST["familyCarteTitle"]) && !empty($_POST["familyCarteTitle"]))
+	{
+		$familyCarteTitle = json_decode($_POST["familyCarteTitle"], true);
+		$cartes = new Cartes();
+		$cartes->updateFamilyCarteTitle($familyCarteTitle);
+	}
+
 	if (isset($_POST["updateCartesTitle"]) && !empty($_POST["updateCartesTitle"]))
 	{
 		$updateCartesTitle = json_decode($_POST["updateCartesTitle"], true);

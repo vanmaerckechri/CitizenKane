@@ -5,6 +5,7 @@ let updatePlatsOrder = {};
 let updateCarteImageNewImages = {};
 let updateCarteImageCartesId = [];
 let updateCartesTitle = {};
+let updateFamilyCarteTitleList = {};
 
 window.addEventListener("load", function(event)
 {
@@ -22,6 +23,13 @@ window.addEventListener("load", function(event)
 	{
 		let formAction = "index.php?action=" + page;
 		let form = createElem(["form"], [["action", "method", "enctype"]], [[formAction, "post", "multipart/form-data"]]);
+
+		if (checkObjectEmpty(updateFamilyCarteTitleList) === true)
+		{
+			updateFamilyCarteTitleList = JSON.stringify(updateFamilyCarteTitleList);
+			let familyCarteTitleList = createElem(["input"], [["type", "value", "name"]], [["text", updateFamilyCarteTitleList, "familyCarteTitle"]]);
+			form.appendChild(familyCarteTitleList);
+		}
 
 		if (checkObjectEmpty(updateCarteImageNewImages) === true)
 		{
@@ -57,10 +65,20 @@ window.addEventListener("load", function(event)
 			form.appendChild(platsOrder);
 		}
 
-		if (checkObjectEmpty(updateCarteImageNewImages) === true || checkObjectEmpty(updateCartesTitle) === true || checkObjectEmpty(updatePlats) === true || checkObjectEmpty(updatePlatsOrder) === true)
+		if (checkObjectEmpty(updateFamilyCarteTitleList) === true || checkObjectEmpty(updateCarteImageNewImages) === true || checkObjectEmpty(updateCartesTitle) === true || checkObjectEmpty(updatePlats) === true || checkObjectEmpty(updatePlatsOrder) === true)
 		{
 			document.body.appendChild(form);
 			form.submit();
+		}
+	}
+
+	let updateFamilyCarteTitle = function(event)
+	{
+		let idsFam = event.target.id.slice(10, event.target.id.length);
+		idsFam = idsFam.split("_").map(Number);
+		for (let i = idsFam.length - 1; i >= 0; i--)
+		{
+			updateFamilyCarteTitleList[idsFam[i]] = event.target.value;
 		}
 	}
 
@@ -77,8 +95,6 @@ window.addEventListener("load", function(event)
 		id = id.slice(index + 2, id.length);
 
 		updateCartesTitle[id] = item.value;
-
-		console.log(updateCartesTitle)
 	}
 
 	let updatePlat = function(item, platPropery)
@@ -188,6 +204,15 @@ window.addEventListener("load", function(event)
 			}		
 		}
 
+		let initUpdateFamilyCarteTitle = function()
+		{
+			let familyTitle = document.querySelectorAll(".familyTitle");
+			for (let i = familyTitle.length - 1; i >= 0; i--)
+			{
+				familyTitle[i].addEventListener("change", updateFamilyCarteTitle, false);
+			}
+		}
+
 		let initUpdateCartes = function()
 		{
 			let carteImgList = document.querySelectorAll(".carteImg");
@@ -254,6 +279,7 @@ window.addEventListener("load", function(event)
 		initPage();
 		initUpdatePlats();
 		initUpdateCartes();
+		initUpdateFamilyCarteTitle();
 		initChangeOrderButton();
 		initRecordButton();
 	}

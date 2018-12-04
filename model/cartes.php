@@ -79,7 +79,6 @@ class Cartes
 		    {
 			    $r = $width / $height;
 			    $newHeight = ceil($newWidth / $r);
-			    var_dump($ext);
 			    // create file
 			    if ($ext == ".jpg")
 			    {
@@ -180,6 +179,18 @@ class Cartes
 		return $nameList;
     }
 
+    public function updateFamilyCarteTitle($FamilyCarteTitle)
+    {
+ 		$dbh = $this->dbh;
+		$upt = $dbh->prepare('UPDATE pages SET family = :family WHERE id = :id');
+		foreach ($FamilyCarteTitle as $id => $fam)
+		{
+			$upt->bindParam(':id', $id, PDO::PARAM_INT);
+			$upt->bindParam(':family', $fam, PDO::PARAM_STR);
+			$upt->execute();
+		}   	
+    }
+
 	public function updatePlats($plats)
 	{
 		$dbh = $this->dbh;
@@ -267,16 +278,19 @@ class Cartes
 	{
 		$dbh = $this->dbh;
 		// cartes Family
-		$sth = $dbh->prepare('SELECT id_carte, family from pages WHERE name = :name');
-		$carte = [];
+		$sth = $dbh->prepare('SELECT id, id_carte, family from pages WHERE name = :name');
 		$sth->bindParam(':name', $page, PDO::PARAM_STR);
 		$sth->execute();
-		$carte = $sth->fetchAll(PDO::FETCH_ASSOC);
+		$cartes = $sth->fetchAll(PDO::FETCH_ASSOC);
 
 		// reorganize result
 		$cartesSorted = [];
-		foreach ($carte as $key => $carte)
+		$idsFam = [];
+		foreach ($cartes as $key => $carte)
 		{
+			$idsFam[$carte["family"]]["idsFam"] = !isset($idsFam[$carte["family"]]["idsFam"]) ? [] : $idsFam[$carte["family"]]["idsFam"];
+			array_push($idsFam[$carte["family"]]["idsFam"], $carte["id"]);
+
 			$cartesSorted[$carte["family"]][$carte["id_carte"]] = [];
 		}
 
@@ -320,6 +334,8 @@ class Cartes
 				}
 			}
 		}
+		$finalCarte =  array_merge_recursive($finalCarte, $idsFam);
+
 		return $finalCarte;
 	}
 }
