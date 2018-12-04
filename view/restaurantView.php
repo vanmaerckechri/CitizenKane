@@ -32,9 +32,20 @@
 			$description = $carte["description"];
 		?>		
 			<div class="readMore-container">
-				<input class="openCarteButton" type="checkbox" aria-label="<?= htmlspecialchars($description["buttonDescription"]) ?>">
-				<img src="assets/img/test/<?= htmlspecialchars($description["imgSrc"]) ?>" alt="<?= htmlspecialchars($description["imgAlt"]) ?>">
+				<input class="openCarteButton" type="checkbox" aria-label="afficher la carte des <?= htmlspecialchars($description["title"]) ?>">
 				<?php
+				if (!empty($description["imgSrc"]))
+				{
+				?>
+					<img src="assets/img/test/<?= htmlspecialchars($description["imgSrc"]) ?>" alt="photo représentant la carte des <?= htmlspecialchars($description["title"]) ?>">
+				<?php
+				}
+				else
+				{
+				?>
+					<img src="assets/img/test/carte_empty.png" alt="photo représentant la carte des <?= htmlspecialchars($description["title"]) ?>">
+				<?php
+				}
 				if ($admin === true)
 				{
 				?>

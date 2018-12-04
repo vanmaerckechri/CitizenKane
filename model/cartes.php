@@ -30,9 +30,12 @@ class Cartes
 		$upt = $dbh->prepare('UPDATE cartes SET imgSrc = :imgSrc WHERE id = :id');
 		foreach ($cartesId as $key => $id)
 		{
-			$upt->bindParam(':id', $id, PDO::PARAM_INT);
-			$upt->bindParam(':imgSrc', $srcList[$key], PDO::PARAM_INT);
-			$upt->execute();
+			if (isset($srcList[$key]) && !empty($srcList[$key]))
+			{
+				$upt->bindParam(':id', $id, PDO::PARAM_INT);
+				$upt->bindParam(':imgSrc', $srcList[$key], PDO::PARAM_INT);
+				$upt->execute();
+			}
 		}
     }
 
@@ -55,6 +58,11 @@ class Cartes
     	return false; 	
     }
 
+    public function is_alpha_png($file)
+    {
+      	return (ord(@file_get_contents($fn, NULL, NULL, 25, 1)) == 6);
+    }
+
     public function createSmallImg($imgDir, $imgSrc, $newWidth)
     {
     	// detect type img file
@@ -71,13 +79,28 @@ class Cartes
 		    {
 			    $r = $width / $height;
 			    $newHeight = ceil($newWidth / $r);
+			    var_dump($ext);
 			    // create file
-			   	$src = imagecreatefromjpeg($file);
+			    if ($ext == ".jpg")
+			    {
+			   		$src = imagecreatefromjpeg($file);
+			    }
+			    else
+			    {
+			    	$src = imagecreatefrompng($file);
+			    }
 			    $dst = imagecreatetruecolor($newWidth, $newHeight);
 			    imagecopyresampled($dst, $src, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
 			    // save img
 			    $imgSrcSmall = $imgSrcWithoutExt . "_small" . $ext;
-				imagejpeg($dst, $imgDir . $imgSrcSmall);
+			    if ($ext == ".jpg")
+			    {
+					imagejpeg($dst, $imgDir . $imgSrcSmall);
+			    }
+			    else
+			    {
+			    	imagepng($dst, $imgDir . $imgSrcSmall);
+			    }
 				return $imgSrcSmall;
 		    }
 		    else
@@ -94,43 +117,48 @@ class Cartes
 		$index = 0;
 		foreach ($_FILES as $key => $file)
 		{
-		    if ($file["error"] == UPLOAD_ERR_OK)
+		    if ($file["error"] == UPLOAD_ERR_OK && ($file["type"] == "image/jpeg" || $file["type"] == "image/png"))
 		    {
-		    	// -- Delete OldImg Small Version and Move OldImg Original Version to OldImgDir --
-		    	// check if oldImg is the small version
-		    	$oldImg = $oldImgSrc[$index];
-		    	$smallPos = stripos($oldImg, "_small");
-		    	$oldImgSrcSmall;
-		    	// if oldImg is the small version transform oldImg in original version
-		    	if ($smallPos != false)
+		    	/*
+		    	if (isset($oldImgSrc[$index]) && !empty($oldImgSrc[$index]))
 		    	{
-		    		$oldImgSrcSmall = $oldImg;
-		    		$ext = substr($oldImg, $smallPos + 6, strlen($oldImg));
-		    		$oldImg = substr($oldImg, 0, $smallPos);
-		    		$oldImg .= $ext;
-		    	}
-		    	else
-		    	{
-			    	$extPos = $this->detectTypeImgFile($oldImg);
-					if ($extPos != false)
-					{
-			    		$ext = substr($oldImg, $extPos, strlen($oldImg));
-			    		$oldImgSrcSmall = substr($oldImg, 0, $extPos);
-						$oldImgSrcSmall = $oldImgSrcSmall . "_small" . $ext;
-					}
-		    	}
-		    	// delete old smallImg version
-		    	if (file_exists ($uploads_dir.$oldImgSrcSmall))
-		    	{
-					unlink($uploads_dir.$oldImgSrcSmall);
-		    	}
-		    	// move old original version to oldSaveDir
-		    	if (file_exists ($uploads_dir.$oldImg))
-		    	{
-		        	rename($uploads_dir . $oldImg, $uploads_dir . $oldImgDir . $oldImg);
-		    	}
+			    	// -- Delete OldImg Small Version and Move OldImg Original Version to OldImgDir --
+			    	// check if oldImg is the small version
+			    	$oldImg = $oldImgSrc[$index];
+			    	$smallPos = stripos($oldImg, "_small");
+			    	$oldImgSrcSmall;
+			    	// if oldImg is the small version transform oldImg in original version
+			    	if ($smallPos != false)
+			    	{
+			    		$oldImgSrcSmall = $oldImg;
+			    		$ext = substr($oldImg, $smallPos + 6, strlen($oldImg));
+			    		$oldImg = substr($oldImg, 0, $smallPos);
+			    		$oldImg .= $ext;
+			    	}
+			    	else
+			    	{
+				    	$extPos = $this->detectTypeImgFile($oldImg);
+						if ($extPos != false)
+						{
+				    		$ext = substr($oldImg, $extPos, strlen($oldImg));
+				    		$oldImgSrcSmall = substr($oldImg, 0, $extPos);
+							$oldImgSrcSmall = $oldImgSrcSmall . "_small" . $ext;
+						}
+			    	}
+			    	// delete old smallImg version
+			    	if (file_exists ($uploads_dir.$oldImgSrcSmall))
+			    	{
+						unlink($uploads_dir.$oldImgSrcSmall);
+			    	}
+			    	// move old original version to oldSaveDir
+			    	if (file_exists ($uploads_dir.$oldImg))
+			    	{
+			        	rename($uploads_dir . $oldImg, $uploads_dir . $oldImgDir . $oldImg);
+			    	}
+			    }
+			    */
 
-		       	// copy new file into img folder
+			    // -- Copy New File Into Img Folder --
 		       	$tmp_name = $file["tmp_name"];
 		        $name = basename($file["name"]);
 		        move_uploaded_file($tmp_name, "$uploads_dir/$name");
@@ -237,7 +265,7 @@ class Cartes
 		}
 
 		// cartes Description
-		$sth = $dbh->prepare('SELECT title, buttonDescription, imgSrc, imgAlt from cartes WHERE id = :id');
+		$sth = $dbh->prepare('SELECT title, imgSrc from cartes WHERE id = :id');
 		foreach ($cartesSorted as $keyFamily => $family)
 		{
 			foreach ($family as $keyCarte => $carte)

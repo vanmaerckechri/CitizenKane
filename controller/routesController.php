@@ -19,7 +19,6 @@ function crud()
 		$oldFileNameList = $cartes->getImgSrc($cartesId);
 		$fileNameList = $cartes->uploadImg($oldImgDir, $oldFileNameList);
 		$cartes->updateImg($cartesId, $fileNameList);
-		exit;
 	}
 	if (isset($_POST["updatePlatsOrder"]) && !empty($_POST["updatePlatsOrder"]))
 	{
