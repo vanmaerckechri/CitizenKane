@@ -11,6 +11,16 @@ function crud()
 		$cartes = new Cartes();
 		$cartes->updatePlats($updatePlats);
 	}
+	if (isset($_FILES) && !empty($_FILES) && isset($_POST["updateCarteImageCartesId"]) && !empty($_POST["updateCarteImageCartesId"]))
+	{
+		$cartesId = json_decode($_POST["updateCarteImageCartesId"], true);
+		$cartes = new Cartes();
+		$oldImgDir = "oldCartes/";
+		$oldFileNameList = $cartes->getImgSrc($cartesId);
+		$fileNameList = $cartes->uploadImg($oldImgDir, $oldFileNameList);
+		$cartes->updateImg($cartesId, $fileNameList);
+		exit;
+	}
 	if (isset($_POST["updatePlatsOrder"]) && !empty($_POST["updatePlatsOrder"]))
 	{
 		$updatePlatsOrder = json_decode($_POST["updatePlatsOrder"], true);

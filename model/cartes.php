@@ -1,11 +1,155 @@
 <?php
 
-class cartes
+class Cartes
 {
 	function __construct()
 	{
         $this->connect = new Connexion();
         $this->dbh = $this->connect->dbConnect();
+    }
+
+    public function getImgSrc($cartesId)
+    {
+		$dbh = $this->dbh;
+
+		$sth = $dbh->prepare('SELECT imgSrc from cartes WHERE id = :id');
+		$oldImgSrc = [];
+		foreach ($cartesId as $key => $id)
+		{
+			$sth->bindParam(':id', $id, PDO::PARAM_INT);
+			$sth->execute();
+			$src = $sth->fetch(PDO::FETCH_COLUMN);
+			array_push($oldImgSrc, $src);
+		}
+		return $oldImgSrc;
+	}
+
+    public function updateImg($cartesId, $srcList)
+    {
+		$dbh = $this->dbh;
+		$upt = $dbh->prepare('UPDATE cartes SET imgSrc = :imgSrc WHERE id = :id');
+		foreach ($cartesId as $key => $id)
+		{
+			$upt->bindParam(':id', $id, PDO::PARAM_INT);
+			$upt->bindParam(':imgSrc', $srcList[$key], PDO::PARAM_INT);
+			$upt->execute();
+		}
+    }
+
+    public function detectTypeImgFile($file)
+    {
+    	// detect type img file
+    	$types = [".png", ".jpg"];
+    	$index;
+    	$imgSrcWithoutExt;
+    	$ext;
+    	$test = 0;
+    	foreach ($types as $key => $type)
+    	{
+    		$extPos = stripos($file, $type);
+    		if ($extPos != false)
+    		{   
+    			return $extPos;
+    		}
+    	}
+    	return false; 	
+    }
+
+    public function createSmallImg($imgDir, $imgSrc, $newWidth)
+    {
+    	// detect type img file
+    	$extPos = $this->detectTypeImgFile($imgSrc);
+		if ($extPos != false)
+		{
+			// one file for name without ext and one file for ext
+			$ext = substr($imgSrc, $extPos, strlen($imgSrc));
+			$imgSrcWithoutExt = substr($imgSrc, 0, $extPos);
+			// get img file proportions
+			$file = $imgDir . $imgSrc;
+		    list($width, $height) = getimagesize($file);
+		    if ($width > $newWidth)
+		    {
+			    $r = $width / $height;
+			    $newHeight = ceil($newWidth / $r);
+			    // create file
+			   	$src = imagecreatefromjpeg($file);
+			    $dst = imagecreatetruecolor($newWidth, $newHeight);
+			    imagecopyresampled($dst, $src, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+			    // save img
+			    $imgSrcSmall = $imgSrcWithoutExt . "_small" . $ext;
+				imagejpeg($dst, $imgDir . $imgSrcSmall);
+				return $imgSrcSmall;
+		    }
+		    else
+		    {
+		    	return false;
+		    }
+		}
+    }
+
+    public function uploadImg($oldImgDir, $oldImgSrc)
+    {
+		$uploads_dir = './assets/img/test/';
+		$nameList = [];
+		$index = 0;
+		foreach ($_FILES as $key => $file)
+		{
+		    if ($file["error"] == UPLOAD_ERR_OK)
+		    {
+		    	// -- Delete OldImg Small Version and Move OldImg Original Version to OldImgDir --
+		    	// check if oldImg is the small version
+		    	$oldImg = $oldImgSrc[$index];
+		    	$smallPos = stripos($oldImg, "_small");
+		    	$oldImgSrcSmall;
+		    	// if oldImg is the small version transform oldImg in original version
+		    	if ($smallPos != false)
+		    	{
+		    		$oldImgSrcSmall = $oldImg;
+		    		$ext = substr($oldImg, $smallPos + 6, strlen($oldImg));
+		    		$oldImg = substr($oldImg, 0, $smallPos);
+		    		$oldImg .= $ext;
+		    	}
+		    	else
+		    	{
+			    	$extPos = $this->detectTypeImgFile($oldImg);
+					if ($extPos != false)
+					{
+			    		$ext = substr($oldImg, $extPos, strlen($oldImg));
+			    		$oldImgSrcSmall = substr($oldImg, 0, $extPos);
+						$oldImgSrcSmall = $oldImgSrcSmall . "_small" . $ext;
+					}
+		    	}
+		    	// delete old smallImg version
+		    	if (file_exists ($uploads_dir.$oldImgSrcSmall))
+		    	{
+					unlink($uploads_dir.$oldImgSrcSmall);
+		    	}
+		    	// move old original version to oldSaveDir
+		    	if (file_exists ($uploads_dir.$oldImg))
+		    	{
+		        	rename($uploads_dir . $oldImg, $uploads_dir . $oldImgDir . $oldImg);
+		    	}
+
+		       	// copy new file into img folder
+		       	$tmp_name = $file["tmp_name"];
+		        $name = basename($file["name"]);
+		        move_uploaded_file($tmp_name, "$uploads_dir/$name");
+		        // create small img for new img
+		        $imgNewSmall = $this->createSmallImg($uploads_dir, $name, 250);
+		        // prepare array with all new img src for db
+		        // if a imgSmall version exist push it in array else push big version
+		        if ($imgNewSmall != false)
+		        {
+		        	array_push($nameList, $imgNewSmall);
+		        }
+		        else
+		        {
+		       		array_push($nameList, $name);
+		        }
+		    }
+		    $index += 1;
+		}
+		return $nameList;
     }
 
 	public function updatePlats($plats)

@@ -33,15 +33,22 @@
 		?>		
 			<div class="readMore-container">
 				<input class="openCarteButton" type="checkbox" aria-label="<?= htmlspecialchars($description["buttonDescription"]) ?>">
-				<img src="assets/img/<?= $description["imgSrc"] ?>" alt="<?= htmlspecialchars($description["imgAlt"]) ?>">
-				<span></span>
+				<img src="assets/img/test/<?= htmlspecialchars($description["imgSrc"]) ?>" alt="<?= htmlspecialchars($description["imgAlt"]) ?>">
+				<?php
+				if ($admin === true)
+				{
+				?>
+					<input id="carteImg__<?= htmlspecialchars($keyCarte) ?>" class="carteImg" name="carteImg__<?= $keyCarte ?>" type="file" accept="image/png, image/jpeg">
+					<button id="deleteCarte" class="btn btn_delete">X</button>
+				<?php
+				}
+				?>
 				<div class="readMore-content">
 				<?php
 				if ($admin === true)
 				{
 				?>
-					<button id="deleteCarte" class="btn">effacer la carte "<?= htmlspecialchars($description["title"]) ?>"</button>
-					<input class="h4" type="text" value="<?= htmlspecialchars($description["title"]) ?>">
+					<input id="title__<?= htmlspecialchars($keyCarte) ?>" class="h4" type="text" value="<?= htmlspecialchars($description["title"]) ?>">
 				<?php
 				}
 				else
@@ -70,10 +77,10 @@
 						{
 						?>
 							<li>
-								<span class="plat"><?= $plat['name'] ?></span>
+								<span class="plat"><?= htmlspecialchars($plat['name']) ?></span>
 								<span class="dots"></span>
-								<span class="prix"><?= $plat['price'] ?></span>
-								<span class="platCompo"><?= $plat['compo'] ?></span>
+								<span class="prix"><?= number_format(htmlspecialchars($plat['price']), 2, ',', ' ') ?></span>
+								<span class="platCompo"><?= htmlspecialchars($plat['compo']) ?></span>
 							</li>
 						<?php
 						}
@@ -90,13 +97,23 @@
 			</div>
 		<?php
 		}
-		?>
-		</div>
-		<button id="addCarte" class="btn">ajouter une carte à "<?= htmlspecialchars($keyFam) ?>"</button>
-		<?php
+		if ($admin === true)
+		{
+			?>
+			<button id="addCarte" class="btn">ajouter une carte à "<?= htmlspecialchars($keyFam) ?>"</button>
+			<?php
 		}
 		?>
-		<button id="addFamCarte" class="btn">ajouter une famille de cartes</button>
+		</div>
+		<?php
+		}
+		if ($admin === true)
+		{
+			?>
+			<button id="addFamCarte" class="btn">ajouter une famille de cartes</button>
+			<?php
+		}
+		?>
 		<div>
 			<h3>La Carte Boissons</h3>
 			<a href="assets/pdf/boissons.pdf" target="_blank" rel="noopener"><img src="assets/img/cartecafe_boissons_small.jpg" alt="photo d'un cocktail"></a>
