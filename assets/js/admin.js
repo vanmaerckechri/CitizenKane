@@ -6,6 +6,7 @@ let updateCarteImageNewImages = {};
 let updateCarteImageCartesId = [];
 let updateCartesTitle = {};
 let updateFamilyCarteTitleList = {};
+let deletePlatsList = {};
 
 window.addEventListener("load", function(event)
 {
@@ -63,7 +64,7 @@ window.addEventListener("load", function(event)
 			updatePlatsOrder = JSON.stringify(updatePlatsOrder);
 			let platsOrder = createElem(["input"], [["type", "value", "name"]], [["text", updatePlatsOrder, "updatePlatsOrder"]]);
 			form.appendChild(platsOrder);
-		}
+		}	
 
 		let newPlats = document.querySelectorAll(".newPlat");
 		if (newPlats.length > 0)
@@ -97,7 +98,14 @@ window.addEventListener("load", function(event)
 			form.appendChild(newPlatsListInput);
 		}
 
-		if (checkObjectEmpty(updateFamilyCarteTitleList) === true || checkObjectEmpty(updateCarteImageNewImages) === true || checkObjectEmpty(updateCartesTitle) === true || checkObjectEmpty(updatePlats) === true || checkObjectEmpty(updatePlatsOrder) === true || newPlats.length > 0)
+		if (checkObjectEmpty(deletePlatsList) === true)
+		{
+			deletePlatsList = JSON.stringify(deletePlatsList);
+			let deletePlatsInput = createElem(["input"], [["type", "value", "name"]], [["text", deletePlatsList, "deletePlatsList"]]);
+			form.appendChild(deletePlatsInput);
+		}	
+
+		if (checkObjectEmpty(updateFamilyCarteTitleList) === true || checkObjectEmpty(updateCarteImageNewImages) === true || checkObjectEmpty(updateCartesTitle) === true || checkObjectEmpty(updatePlats) === true || checkObjectEmpty(updatePlatsOrder) === true || newPlats.length > 0 || checkObjectEmpty(deletePlatsList) === true)
 		{
 			document.body.appendChild(form);
 			form.submit();
@@ -232,6 +240,17 @@ window.addEventListener("load", function(event)
 		}
 	}
 
+	let deletePlats = function(event)
+	{
+		let id = event.target.parentNode.id;
+		let index = id.indexOf("__");
+		id = id.slice(index + 2, id.length);
+
+		deletePlatsList[id] = "";
+
+		event.target.parentNode.remove();
+	}
+
 	let init = function()
 	{
 		let initPage = function()
@@ -331,6 +350,15 @@ window.addEventListener("load", function(event)
 			}
 		}
 
+		let initDeletePlat = function()
+		{
+			let platDeleteButtons = document.querySelectorAll(".btn_platDelete");
+			for (let i = platDeleteButtons.length - 1; i >= 0; i--)
+			{
+				platDeleteButtons[i].addEventListener("click", deletePlats, false);
+			}			
+		}
+
 		let initRecordButton = function()
 		{
 			let button = document.getElementById("recordChanges");
@@ -343,6 +371,7 @@ window.addEventListener("load", function(event)
 		initUpdateCartes();
 		initUpdateFamilyCarteTitle();
 		initChangeOrderButton();
+		initDeletePlat();
 		initRecordButton();
 	}
 	init();

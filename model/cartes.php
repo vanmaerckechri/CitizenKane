@@ -8,6 +8,22 @@ class Cartes
         $this->dbh = $this->connect->dbConnect();
     }
 
+    public function deletePlats($deletePlatsList)
+    {
+    	$dbh = $this->dbh;
+
+		$delPlat = $dbh->prepare("DELETE FROM plats WHERE id =  :id");
+		$delRel_cartes_plats = $dbh->prepare("DELETE FROM rel_cartes_plats WHERE id_plat =  :id");
+
+		foreach ($deletePlatsList as $idPlat => $empty)
+		{
+			$delPlat->bindParam(':id', $idPlat, PDO::PARAM_INT);   
+			$delPlat->execute();
+			$delRel_cartes_plats->bindParam(':id', $idPlat, PDO::PARAM_INT); 
+			$delRel_cartes_plats->execute();  
+		}
+    }
+
     public function insertPlatsList($newPlatsList)
     {
     	$dbh = $this->dbh;
@@ -23,7 +39,7 @@ class Cartes
 			$insPlat->execute();
 
 			$lastId = $dbh->lastInsertId();
-			
+
 			$insRelId->bindParam(':id_carte', $plat["idCarte"], PDO::PARAM_INT);
 			$insRelId->bindParam(':id_plat', $lastId, PDO::PARAM_INT);
 			$insRelId->execute();
