@@ -1,5 +1,6 @@
  "use strict";
 
+let newFamilyCartes = [];
 let updatePlats = {};
 let updatePlatsOrder = {};
 let updateCarteImageNewImages = {};
@@ -7,6 +8,7 @@ let updateCarteImageCartesId = [];
 let updateCartesTitle = {};
 let updateFamilyCarteTitleList = {};
 let deletePlatsList = {};
+let deleteCartesList = {};
 
 window.addEventListener("load", function(event)
 {
@@ -105,27 +107,115 @@ window.addEventListener("load", function(event)
 			form.appendChild(deletePlatsInput);
 		}	
 
-		if (checkObjectEmpty(updateFamilyCarteTitleList) === true || checkObjectEmpty(updateCarteImageNewImages) === true || checkObjectEmpty(updateCartesTitle) === true || checkObjectEmpty(updatePlats) === true || checkObjectEmpty(updatePlatsOrder) === true || newPlats.length > 0 || checkObjectEmpty(deletePlatsList) === true)
+		if (checkObjectEmpty(deleteCartesList) === true)
+		{
+			deleteCartesList = JSON.stringify(deleteCartesList);
+			let deleteCartesInput = createElem(["input"], [["type", "value", "name"]], [["text", deleteCartesList, "deleteCartesList"]]);
+			form.appendChild(deleteCartesInput);
+		}	
+
+		if (checkObjectEmpty(updateFamilyCarteTitleList) === true || checkObjectEmpty(updateCarteImageNewImages) === true || checkObjectEmpty(updateCartesTitle) === true || checkObjectEmpty(updatePlats) === true || checkObjectEmpty(updatePlatsOrder) === true || newPlats.length > 0 || checkObjectEmpty(deletePlatsList) === true || checkObjectEmpty(deleteCartesList) === true)
 		{
 			document.body.appendChild(form);
 			form.submit();
 		}
 	}
 
+	let updateNewFamTitle = function(addCarteButton, event)
+	{
+		let idFamTemp = event.target.id;
+		let index = idFamTemp.indexOf("__");
+		idFamTemp = idFamTemp.slice(index + 2, idFamTemp.length);
+
+		newFamilyCartes[idFamTemp]["title"] = event.target.value;
+
+		addCarteButton.innerHTML = "Ajouter une Carte à la Famille \"" + event.target.value + "\"";
+	}
+
+	let addFamilyCarte = function(event)
+	{
+		let divParent = document.createElement("div");
+		newFamilyCartes.push({});
+		let famiTitleInput = createElem(["input"], [["type", "class", "id", "placeholder"]], [["text", "familyTitle h3", "newFamId__" + (newFamilyCartes.length - 1), "Nouvelle Famille de Cartes"]]);
+		let addCarteButton = createElem(["button"], [["id", "class"]], [["addCarteForNewFam__" + (newFamilyCartes.length - 1), "btn"]]);
+		addCarteButton.innerHTML = "Ajouter une Carte à la Famille \"Nouvelle Famille de Cartes\"";
+		divParent.appendChild(famiTitleInput);
+		divParent.appendChild(addCarteButton);
+		event.target.parentNode.insertBefore(divParent, event.target);
+
+		famiTitleInput.addEventListener("change", updateNewFamTitle.bind(this, addCarteButton), false);
+		//addCarteButton.addEventListener("change", addCarteOnNewFam.bind(this, addCarteButton), false);
+	}
+
 	let addPlat = function(event)
 	{
-		let idCarte = event.target.id;
-		let index = idCarte.indexOf("__");
-		idCarte = idCarte.slice(index + 2, idCarte.length);
-
 		let li = createElem(["li"], [["class"]], [["newPlat"]]);
 		let plat = createElem(["input"], [["class", "type", "placeholder", "autocomplete"]], [["plat", "text", "Titre du Plat", "off"]]);
 		let prix = createElem(["input"], [["class","type", "min", "step", "placeholder", "autocomplete"]], [["prix", "number", 0, 0.1, "Prix du Plat", "off"]]);
+		let delButton = createElem(["button"], [["class"]], [["btn_platDelete"]]);
+		delButton.innerHTML = "X";
 		let compo = createElem(["input"], [["class","type", "placeholder", "autocomplete"]], [["platCompo", "text", "Composition du Plat", "off"]]);
 		li.appendChild(plat);
 		li.appendChild(prix);
+		li.appendChild(delButton);
 		li.appendChild(compo);
-		document.getElementById("carte__" + idCarte).insertBefore(li, event.target.parentNode);
+		event.target.parentNode.parentNode.insertBefore(li, event.target.parentNode);
+
+		delButton.addEventListener("click", function()
+		{
+			this.parentNode.remove();
+		}, false);
+	}
+
+	let addCarte = function(event)
+	{
+		let divContainer = createElem(["div"], [["class"]], [["readMore-container newCarte"]]);
+		let openCarteButton = createElem(["input"], [["type", "class", "aria-label"]], [["checkbox", "openCarteButton", "afficher la carte"]]);
+		let imgCarte = createElem(["img"], [["src", "alt"]], [["./assets/img/test/carte_empty.png", "photo représentant la carte"]]);
+		let inputUploadImg = createElem(["input"], [["type", "class", "accept"]], [["file", "carteImg", "image/png, image/jpeg"]]);
+		let deleteCarte = createElem(["button"], [["class"]], [["btn_carteDelete"]]);
+		deleteCarte.innerHTML = "X"
+
+		divContainer.appendChild(openCarteButton);
+		divContainer.appendChild(imgCarte);
+		divContainer.appendChild(inputUploadImg);
+		divContainer.appendChild(deleteCarte);
+
+		let divContent = createElem(["div"], [["class"]], [["readMore-content"]]);
+		let carteTitle = createElem(["input"], [["type", "class", "placeholder"]], [["text", "carteTitle h4", "titre de la carte"]]);
+		let ul = document.createElement("ul");
+		let li = document.createElement("li");
+		let addPlatButton = createElem(["button"], [["class"]], [["addPlat btn btn_add"]]);
+		addPlatButton.innerHTML = "ajouter un plat";
+
+
+		li.appendChild(addPlatButton);
+		ul.appendChild(li);
+		divContent.appendChild(carteTitle);
+		divContent.appendChild(ul);
+		divContainer.appendChild(divContent);
+
+		event.target.parentNode.insertBefore(divContainer, event.target);
+
+		deleteCarte.addEventListener("click", function()
+		{
+			this.parentNode.remove();
+		}, false);
+
+		openCarteButton.checked = true;
+		openCarteButton.addEventListener("change", function()
+		{
+			if (openCarteButton.checked)
+			{
+				openCarteButton.style.height = imgCarte.offsetHeight + "px" ;
+			}
+			else
+			{
+				openCarteButton.style = "" ;
+			}
+		}, false);
+
+		addPlatButton.addEventListener("click", addPlat, false);
 	}
 
 	let updateFamilyCarteTitle = function(event)
@@ -251,6 +341,16 @@ window.addEventListener("load", function(event)
 		event.target.parentNode.remove();
 	}
 
+	let deleteCartes = function(event)
+	{
+		let id = event.target.id;
+		let index = id.indexOf("__");
+		id = id.slice(index + 2, id.length);
+
+		deleteCartesList[id] = "";
+		event.target.parentNode.remove();		
+	}
+
 	let init = function()
 	{
 		let initPage = function()
@@ -273,6 +373,21 @@ window.addEventListener("load", function(event)
 					}
 				}, false);
 			}		
+		}
+
+		let initAddFamilyCartes = function()
+		{
+			let addFamCarteButton = document.getElementById("addFamCarte");
+			addFamCarteButton.addEventListener("click", addFamilyCarte, false);
+		}
+
+		let initAddCarte = function()
+		{
+			let addCarteButtons = document.querySelectorAll(".addCarte");
+			for (let i = addCarteButtons.length - 1; i >= 0; i--)
+			{			
+				addCarteButtons[i].addEventListener("click", addCarte, false);
+			}
 		}
 
 		let initAddPlat = function()
@@ -359,6 +474,15 @@ window.addEventListener("load", function(event)
 			}			
 		}
 
+		let initDeleteCarte = function()
+		{
+			let deleteCartesButton = document.querySelectorAll(".btn_carteDelete");
+			for (let i = deleteCartesButton.length - 1; i >= 0; i--)
+			{
+				deleteCartesButton[i].addEventListener("click", deleteCartes, false);
+			}	
+		}
+
 		let initRecordButton = function()
 		{
 			let button = document.getElementById("recordChanges");
@@ -366,12 +490,15 @@ window.addEventListener("load", function(event)
 		}
 
 		initPage();
+		initAddFamilyCartes();
+		initAddCarte();
 		initAddPlat();
 		initUpdatePlats();
 		initUpdateCartes();
 		initUpdateFamilyCarteTitle();
 		initChangeOrderButton();
 		initDeletePlat();
+		initDeleteCarte();
 		initRecordButton();
 	}
 	init();

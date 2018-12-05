@@ -113,7 +113,12 @@ input.prix
 	}
 }
 
-.btn_add
+.addCarte
+{
+	width: 100%;
+}
+
+.btn_add, .addCarte
 {
 	margin: 0 auto;
 	background-color: $second-color;

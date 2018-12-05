@@ -8,6 +8,39 @@ class Cartes
         $this->dbh = $this->connect->dbConnect();
     }
 
+    public function deleteCartes($deleteCartesList)
+    {
+    	$dbh = $this->dbh;
+
+		$delCarteInRel_cartes_plats = $dbh->prepare("DELETE FROM rel_cartes_plats WHERE id_carte = :id");
+		$delCarteInPage = $dbh->prepare("DELETE FROM pages WHERE id_carte = :id");
+		$delCarteInCartes = $dbh->prepare("DELETE FROM cartes WHERE id = :id");
+
+		$sth = $dbh->prepare('SELECT id_plat from rel_cartes_plats WHERE id_carte = :id_carte');
+    	$delPlat = $dbh->prepare("DELETE FROM plats WHERE id = :id");
+
+		foreach ($deleteCartesList as $idCarte => $empty)
+		{
+			// select plats to delete them with id cartes
+			$sth->bindParam(':id_carte', $idCarte, PDO::PARAM_INT);
+			$sth->execute();
+			$idPlats = $sth->fetchAll(PDO::FETCH_COLUMN);
+			foreach ($idPlats as $key => $idPlat)
+			{
+				$delPlat->bindParam(':id', $idPlat, PDO::PARAM_INT);   
+				$delPlat->execute();
+			}
+			// delete rest
+			$delCarteInRel_cartes_plats->bindParam(':id', $idCarte, PDO::PARAM_INT);
+			$delCarteInPage->bindParam(':id', $idCarte, PDO::PARAM_INT);   
+			$delCarteInCartes->bindParam(':id', $idCarte, PDO::PARAM_INT);
+
+			$delCarteInRel_cartes_plats->execute();
+			$delCarteInPage->execute();
+			$delCarteInCartes->execute();
+		}
+    }
+
     public function deletePlats($deletePlatsList)
     {
     	$dbh = $this->dbh;

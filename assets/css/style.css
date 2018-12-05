@@ -1058,10 +1058,13 @@ input.prix {
     cursor: pointer;
     background-color: red; }
 
-.btn_add {
+.addCarte {
+  width: 100%; }
+
+.btn_add, .addCarte {
   margin: 0 auto;
   background-color: #1e9e6b; }
-  .btn_add:hover {
+  .btn_add:hover, .addCarte:hover {
     background-color: #069059; }
 
 /*# sourceMappingURL=style.css.map */

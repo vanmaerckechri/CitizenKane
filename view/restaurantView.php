@@ -23,17 +23,22 @@
 		<?php
 		foreach ($cartes as $keyFam => $family)
 		{
-		?>
-			<div>
-				<?php
-				if ($admin === true)
-				{
-					$idsFam = implode("_", $family["idsFam"]);
-				?>
+			if ($admin === true)
+			{
+				$idsFam = implode("_", $family["idsFam"]);
+			?>
+				<div id="familyContainer__<?= htmlspecialchars($idsFam) ?>">
 					<input id="familyId__<?= htmlspecialchars($idsFam) ?>" class="familyTitle h3" type="text" value="<?= htmlspecialchars($keyFam) ?>">
-				<?php
-				}
-				?>
+			<?php
+			}
+			else
+			{
+			?>
+				<div>
+					<h3><?= htmlspecialchars($keyFam) ?></h3>
+			<?php
+			}
+			?>
 				<?php
 				foreach ($family as $keyCarte => $carte)
 				{
@@ -60,7 +65,7 @@
 							{
 							?>
 								<input id="carteImg__<?= htmlspecialchars($keyCarte) ?>" class="carteImg" name="carteImg__<?= $keyCarte ?>" type="file" accept="image/png, image/jpeg">
-								<button id="deleteCarte" class="btn_carteDelete">X</button>
+								<button id="deleteCarte__<?= htmlspecialchars($keyCarte) ?>" class="btn_carteDelete">X</button>
 							<?php
 							}
 							?>
@@ -81,30 +86,33 @@
 								?>
 								<ul id="carte__<?= htmlspecialchars($keyCarte) ?>">
 								<?php
-								foreach ($carte["plats"] as $keyPlat => $plat)
+								if (isset($carte["plats"]) && !empty($carte["plats"]))
 								{
-									if ($admin === true)
+									foreach ($carte["plats"] as $keyPlat => $plat)
 									{
-									?>
-										<li id="plats__<?= htmlspecialchars($keyPlat) ?>">
-											<button class="moveOrderButton">MOVE</button>
-											<input class="plat" type="text" placeholder="Titre du Plat" value="<?= htmlspecialchars($plat['name']) ?>" autocomplete="off">
-											<input class="prix" type="number" min="0" step="0.1" placeholder="Prix du Plat" value="<?= htmlspecialchars($plat['price']) ?>" autocomplete="off">
-											<button class="btn_platDelete">X</button>
-											<input class="platCompo" type="text" placeholder="Composition du Plat" value="<?= htmlspecialchars($plat['compo']) ?>" autocomplete="off">
-										</li>
-									<?php			
-									}
-									else
-									{
-									?>
-										<li>
-											<span class="plat"><?= htmlspecialchars($plat['name']) ?></span>
-											<span class="dots"></span>
-											<span class="prix"><?= number_format(htmlspecialchars($plat['price']), 2, ',', ' ') ?></span>
-											<span class="platCompo"><?= htmlspecialchars($plat['compo']) ?></span>
-										</li>
-									<?php
+										if ($admin === true)
+										{
+										?>
+											<li id="plats__<?= htmlspecialchars($keyPlat) ?>">
+												<button class="moveOrderButton">MOVE</button>
+												<input class="plat" type="text" placeholder="Titre du Plat" value="<?= htmlspecialchars($plat['name']) ?>" autocomplete="off">
+												<input class="prix" type="number" min="0" step="0.1" placeholder="Prix du Plat" value="<?= htmlspecialchars($plat['price']) ?>" autocomplete="off">
+												<button class="btn_platDelete">X</button>
+												<input class="platCompo" type="text" placeholder="Composition du Plat" value="<?= htmlspecialchars($plat['compo']) ?>" autocomplete="off">
+											</li>
+										<?php			
+										}
+										else
+										{
+										?>
+											<li>
+												<span class="plat"><?= htmlspecialchars($plat['name']) ?></span>
+												<span class="dots"></span>
+												<span class="prix"><?= number_format(htmlspecialchars($plat['price']), 2, ',', ' ') ?></span>
+												<span class="platCompo"><?= htmlspecialchars($plat['compo']) ?></span>
+											</li>
+										<?php
+										}
 									}
 								}
 								if ($admin === true)
@@ -123,7 +131,7 @@
 				if ($admin === true)
 				{
 					?>
-					<button id="addCarte" class="btn">ajouter une carte à "<?= htmlspecialchars($keyFam) ?>"</button>
+					<button id="addCarte__<?= htmlspecialchars($idsFam) ?>" class="btn addCarte">ajouter une carte à la famille"<?= htmlspecialchars($keyFam) ?>"</button>
 					<?php
 				}
 			?>

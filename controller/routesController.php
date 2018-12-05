@@ -56,6 +56,13 @@ function crud()
 		$cartes = new Cartes();
 		$cartes->deletePlats($deletePlatsList);
 	}	
+
+	if (isset($_POST["deleteCartesList"]) && !empty($_POST["deleteCartesList"]))
+	{
+		$deleteCartesList = json_decode($_POST["deleteCartesList"], true);
+		$cartes = new Cartes();
+		$cartes->deleteCartes($deleteCartesList);
+	}	
 }
 
 function loadHome()
