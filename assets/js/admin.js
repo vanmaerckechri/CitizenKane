@@ -65,11 +65,59 @@ window.addEventListener("load", function(event)
 			form.appendChild(platsOrder);
 		}
 
-		if (checkObjectEmpty(updateFamilyCarteTitleList) === true || checkObjectEmpty(updateCarteImageNewImages) === true || checkObjectEmpty(updateCartesTitle) === true || checkObjectEmpty(updatePlats) === true || checkObjectEmpty(updatePlatsOrder) === true)
+		let newPlats = document.querySelectorAll(".newPlat");
+		if (newPlats.length > 0)
+		{
+			let newPlatsList = [];
+			for (let i = newPlats.length - 1; i >= 0; i--)
+			{
+				let idCarte = newPlats[i].parentNode.id;
+				let index = idCarte.indexOf("__");
+
+				idCarte = idCarte.slice(index + 2, idCarte.length);
+				let name = newPlats[i].querySelector(".plat").value;
+				let prix = newPlats[i].querySelector(".prix").value;
+				if (isNaN(parseInt(prix)))
+				{
+					prix = 0;
+				}
+				let compo = newPlats[i].querySelector(".platCompo").value;
+				let plat =
+				{
+					idCarte: idCarte,
+					name: name,
+					prix: prix,
+					compo: compo
+				}
+				newPlatsList.push(plat)
+			}
+
+			newPlatsList = JSON.stringify(newPlatsList);
+			let newPlatsListInput = createElem(["input"], [["type", "value", "name"]], [["text", newPlatsList, "newPlatsList"]]);
+			form.appendChild(newPlatsListInput);
+		}
+
+		if (checkObjectEmpty(updateFamilyCarteTitleList) === true || checkObjectEmpty(updateCarteImageNewImages) === true || checkObjectEmpty(updateCartesTitle) === true || checkObjectEmpty(updatePlats) === true || checkObjectEmpty(updatePlatsOrder) === true || newPlats.length > 0)
 		{
 			document.body.appendChild(form);
 			form.submit();
 		}
+	}
+
+	let addPlat = function(event)
+	{
+		let idCarte = event.target.id;
+		let index = idCarte.indexOf("__");
+		idCarte = idCarte.slice(index + 2, idCarte.length);
+
+		let li = createElem(["li"], [["class"]], [["newPlat"]]);
+		let plat = createElem(["input"], [["class", "type", "placeholder", "autocomplete"]], [["plat", "text", "Titre du Plat", "off"]]);
+		let prix = createElem(["input"], [["class","type", "min", "step", "placeholder", "autocomplete"]], [["prix", "number", 0, 0.1, "Prix du Plat", "off"]]);
+		let compo = createElem(["input"], [["class","type", "placeholder", "autocomplete"]], [["platCompo", "text", "Composition du Plat", "off"]]);
+		li.appendChild(plat);
+		li.appendChild(prix);
+		li.appendChild(compo);
+		document.getElementById("carte__" + idCarte).insertBefore(li, event.target.parentNode);
 	}
 
 	let updateFamilyCarteTitle = function(event)
@@ -104,6 +152,10 @@ window.addEventListener("load", function(event)
 		idPlat = idPlat.slice(index + 2, idPlat.length);
 
 		updatePlats[idPlat] = !updatePlats[idPlat] ? {} : updatePlats[idPlat];
+		if (isNaN(parseInt(item.value)))
+		{
+			item.value = 0;
+		}
 		updatePlats[idPlat][platPropery] = item.value;
 	}
 
@@ -155,7 +207,7 @@ window.addEventListener("load", function(event)
 			let mouseY = event.clientY;
 			ul.onmouseover = function(event)
 			{
-				if (event.target.nodeName == "LI")
+				if (event.target.nodeName == "LI" && event.target.id.indexOf("plats__") != -1)
 				{
 					if (detectMouseDirection(mouseY) == "top")
 					{
@@ -202,6 +254,15 @@ window.addEventListener("load", function(event)
 					}
 				}, false);
 			}		
+		}
+
+		let initAddPlat = function()
+		{
+			let addPlatButtons = document.querySelectorAll(".addPlat");
+			for (let i = addPlatButtons.length - 1; i >= 0; i--)
+			{
+				addPlatButtons[i].addEventListener("click", addPlat, false);
+			}			
 		}
 
 		let initUpdateFamilyCarteTitle = function()
@@ -277,6 +338,7 @@ window.addEventListener("load", function(event)
 		}
 
 		initPage();
+		initAddPlat();
 		initUpdatePlats();
 		initUpdateCartes();
 		initUpdateFamilyCarteTitle();

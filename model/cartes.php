@@ -8,6 +8,28 @@ class Cartes
         $this->dbh = $this->connect->dbConnect();
     }
 
+    public function insertPlatsList($newPlatsList)
+    {
+    	$dbh = $this->dbh;
+
+		$insPlat = $dbh->prepare("INSERT INTO plats (name, price, compo) VALUES (:name, :prix, :compo)");
+		$insRelId = $dbh->prepare("INSERT INTO rel_cartes_plats (id_carte, id_plat) VALUES (:id_carte, :id_plat)");
+
+		foreach ($newPlatsList as $key => $plat)
+		{
+			$insPlat->bindParam(':name', $plat["name"], PDO::PARAM_STR);
+			$insPlat->bindParam(':prix', $plat["prix"], PDO::PARAM_INT);
+			$insPlat->bindParam(':compo', $plat["compo"], PDO::PARAM_STR);
+			$insPlat->execute();
+
+			$lastId = $dbh->lastInsertId();
+			
+			$insRelId->bindParam(':id_carte', $plat["idCarte"], PDO::PARAM_INT);
+			$insRelId->bindParam(':id_plat', $lastId, PDO::PARAM_INT);
+			$insRelId->execute();
+		}
+    }
+
     public function getImgSrc($cartesId)
     {
 		$dbh = $this->dbh;

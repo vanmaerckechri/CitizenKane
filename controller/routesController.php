@@ -42,6 +42,13 @@ function crud()
 		$cartes = new Cartes();
 		$cartes->updatePlatsOrder($updatePlatsOrder);
 	}
+
+	if (isset($_POST["newPlatsList"]) && !empty($_POST["newPlatsList"]))
+	{
+		$newPlatsList = json_decode($_POST["newPlatsList"], true);
+		$cartes = new Cartes();
+		$cartes->insertPlatsList($newPlatsList);
+	}
 }
 
 function loadHome()

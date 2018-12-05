@@ -60,7 +60,7 @@
 							{
 							?>
 								<input id="carteImg__<?= htmlspecialchars($keyCarte) ?>" class="carteImg" name="carteImg__<?= $keyCarte ?>" type="file" accept="image/png, image/jpeg">
-								<button id="deleteCarte" class="btn btn_delete">X</button>
+								<button id="deleteCarte" class="btn_carteDelete">X</button>
 							<?php
 							}
 							?>
@@ -90,6 +90,7 @@
 											<button class="moveOrderButton">MOVE</button>
 											<input class="plat" type="text" placeholder="Titre du Plat" value="<?= htmlspecialchars($plat['name']) ?>" autocomplete="off">
 											<input class="prix" type="number" min="0" step="0.1" placeholder="Prix du Plat" value="<?= htmlspecialchars($plat['price']) ?>" autocomplete="off">
+											<button class="btn_platDelete">X</button>
 											<input class="platCompo" type="text" placeholder="Composition du Plat" value="<?= htmlspecialchars($plat['compo']) ?>" autocomplete="off">
 										</li>
 									<?php			
@@ -109,7 +110,7 @@
 								if ($admin === true)
 								{
 									?>
-									<li><button id="addPlat" class="btn">ajouter un plat à "<?= htmlspecialchars($description["title"]) ?>"</button></li>
+									<li><button id="addPlat__<?= htmlspecialchars($keyCarte) ?>" class="addPlat btn btn_add">ajouter un plat à "<?= htmlspecialchars($description["title"]) ?>"</button></li>
 								<?php
 								}
 								?>
