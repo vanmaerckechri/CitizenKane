@@ -121,32 +121,6 @@ window.addEventListener("load", function(event)
 		}
 	}
 
-	let updateNewFamTitle = function(addCarteButton, event)
-	{
-		let idFamTemp = event.target.id;
-		let index = idFamTemp.indexOf("__");
-		idFamTemp = idFamTemp.slice(index + 2, idFamTemp.length);
-
-		newFamilyCartes[idFamTemp]["title"] = event.target.value;
-
-		addCarteButton.innerHTML = "Ajouter une Carte à la Famille \"" + event.target.value + "\"";
-	}
-
-	let addFamilyCarte = function(event)
-	{
-		let divParent = document.createElement("div");
-		newFamilyCartes.push({});
-		let famiTitleInput = createElem(["input"], [["type", "class", "id", "placeholder"]], [["text", "familyTitle h3", "newFamId__" + (newFamilyCartes.length - 1), "Nouvelle Famille de Cartes"]]);
-		let addCarteButton = createElem(["button"], [["id", "class"]], [["addCarteForNewFam__" + (newFamilyCartes.length - 1), "btn"]]);
-		addCarteButton.innerHTML = "Ajouter une Carte à la Famille \"Nouvelle Famille de Cartes\"";
-		divParent.appendChild(famiTitleInput);
-		divParent.appendChild(addCarteButton);
-		event.target.parentNode.insertBefore(divParent, event.target);
-
-		famiTitleInput.addEventListener("change", updateNewFamTitle.bind(this, addCarteButton), false);
-		//addCarteButton.addEventListener("change", addCarteOnNewFam.bind(this, addCarteButton), false);
-	}
-
 	let addPlat = function(event)
 	{
 		let li = createElem(["li"], [["class"]], [["newPlat"]]);
@@ -203,11 +177,12 @@ window.addEventListener("load", function(event)
 		}, false);
 
 		openCarteButton.checked = true;
+		openCarteButton.style.height = imgCarte.offsetHeight + "px" ;
 		openCarteButton.addEventListener("change", function()
 		{
 			if (openCarteButton.checked)
 			{
-				openCarteButton.style.height = imgCarte.offsetHeight + "px" ;
+				openCarteButton.style.height = imgCarte.offsetHeight + "px";
 			}
 			else
 			{
@@ -216,6 +191,24 @@ window.addEventListener("load", function(event)
 		}, false);
 
 		addPlatButton.addEventListener("click", addPlat, false);
+	}
+
+	let addFamilyCarte = function(event)
+	{
+		let divParent = createElem(["div"], [["class"]], [["newFam"]]);
+		let famiTitleInput = createElem(["input"], [["type", "class", "placeholder"]], [["text", "familyTitle h3", "Nouvelle Famille de Cartes"]]);
+		let addCarteButton = createElem(["button"], [["class"]], [["btn addCarte"]]);
+		addCarteButton.innerHTML = "Ajouter une Carte à la Famille \"Nouvelle Famille de Cartes\"";
+		divParent.appendChild(famiTitleInput);
+		divParent.appendChild(addCarteButton);
+		event.target.parentNode.insertBefore(divParent, event.target);
+
+		famiTitleInput.addEventListener("change", function()
+		{
+			addCarteButton.innerHTML = "Ajouter une Carte à la Famille \"" + famiTitleInput.value + "\"";
+		}, false);
+
+		addCarteButton.addEventListener("click", addCarte, false);
 	}
 
 	let updateFamilyCarteTitle = function(event)
