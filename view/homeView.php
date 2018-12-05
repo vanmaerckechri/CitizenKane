@@ -1,5 +1,5 @@
-<?php $description = 'Restaurant, Café & Bar à Wavre. Ouvert tous les jours, y compris les jours fériés et les dimanches'; ?>
-<?php $pageTitle = 'Restaurant & Café-Bar Citizen Kane - Un espace unique au coeur de Wavre'; ?>
+<?php $headDescription = 'Restaurant, Café & Bar à Wavre. Ouvert tous les jours, y compris les jours fériés et les dimanches'; ?>
+<?php $headTitle = 'Restaurant & Café-Bar Citizen Kane - Un espace unique au coeur de Wavre'; ?>
 
 <?php ob_start(); ?>
 <div id="main" class="main">
