@@ -131,7 +131,7 @@
 				if ($admin === true)
 				{
 					?>
-					<button id="addCarte__<?= htmlspecialchars($idsFam) ?>" class="btn addCarte">ajouter une carte à la famille"<?= htmlspecialchars($keyFam) ?>"</button>
+					<button id="addCarte__<?= htmlspecialchars($idsFam) ?>" class="btn addCarte">ajouter une carte à la famille: "<?= htmlspecialchars($keyFam) ?>"</button>
 					<?php
 				}
 			?>

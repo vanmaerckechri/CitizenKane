@@ -259,14 +259,14 @@ window.addEventListener("load", function(event)
 		let divParent = createElem(["div"], [["class"]], [["newFam"]]);
 		let famiTitleInput = createElem(["input"], [["type", "class", "placeholder"]], [["text", "familyTitle h3", "Nouvelle Famille de Cartes"]]);
 		let addCarteButton = createElem(["button"], [["class"]], [["btn addCarte"]]);
-		addCarteButton.innerHTML = "Ajouter une Carte à la Famille \"Nouvelle Famille de Cartes\"";
+		addCarteButton.innerHTML = "Ajouter une Carte à la Famille: \"Nouvelle Famille de Cartes\"";
 		divParent.appendChild(famiTitleInput);
 		divParent.appendChild(addCarteButton);
 		event.target.parentNode.insertBefore(divParent, event.target);
 
 		famiTitleInput.addEventListener("change", function()
 		{
-			addCarteButton.innerHTML = "Ajouter une Carte à la Famille \"" + famiTitleInput.value + "\"";
+			addCarteButton.innerHTML = "Ajouter une Carte à la Famille: \"" + famiTitleInput.value + "\"";
 		}, false);
 
 		addCarteButton.addEventListener("click", addCarte, false);
