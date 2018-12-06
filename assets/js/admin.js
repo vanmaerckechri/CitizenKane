@@ -12,6 +12,63 @@ let deleteCartesList = {};
 
 window.addEventListener("load", function(event)
 {
+	let incrStr = function(str)
+	{
+		let splitIndex = 0;
+		let word;
+		let num;
+		let isNum = new RegExp(/^\d+$/);
+		
+		for (let i = str.length - 1; i >= 0; i--)
+		{
+			if (isNum.test(str[i]) === false)
+			{
+				splitIndex = i;
+				break;
+			}
+		}
+
+		word = str.slice(0, splitIndex + 1);
+		num = str.slice(splitIndex + 1, str.length);
+		num = num == "" ? 0 : parseInt(num, 10) + 1;
+
+		return word + num;
+	}
+
+	let checkDup = function(array, string)
+	{
+		for (let i = array.length - 1; i >= 0; i--)
+		{
+			if (array[i].toUpperCase() === string.toUpperCase())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	let fixDupTitle = function(className, item)
+	{
+		let title = item.value;
+		// if title already exist incr it
+		let carteTitleList = [];
+		let cartesTitle = document.querySelectorAll("." + className);
+		for (let i = cartesTitle.length - 1; i >= 0; i--)
+		{
+			if (cartesTitle[i] != item)
+			{
+				carteTitleList.push(cartesTitle[i].value)
+			}
+		}
+
+		while (checkDup(carteTitleList , title))
+		{
+			title = incrStr(title);
+		}
+		item.value = title;
+		return title;
+	}
+
 	let checkObjectEmpty = function(object)
 	{
 		let result = false;
@@ -309,7 +366,9 @@ window.addEventListener("load", function(event)
 		let index = id.indexOf("__");
 		id = id.slice(index + 2, id.length);
 
-		updateCartesTitle[id] = item.value;
+		let dubClassName = "carteTitle";
+		let titleDomElem = item;
+		updateCartesTitle[id] = fixDupTitle(dubClassName, titleDomElem);
 	}
 
 	let updatePlat = function(item, platPropery)
