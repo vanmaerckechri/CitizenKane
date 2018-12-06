@@ -5,11 +5,17 @@ require('./model/cartes.php');
 
 function crud()
 {
+	$newCartesId;
+
 	if (isset($_POST["newCartes"]) && !empty($_POST["newCartes"]))
 	{
 		$newCartes = json_decode($_POST["newCartes"], true);
 		$cartes = new Cartes();
-		$cartes->insertCartes($newCartes);
+		$newCartesId = $cartes->insertCartes($newCartes);
+
+		// img in new carte
+		$newImages = $cartes->uploadImg("onNewCarte");
+		$cartes->updateImg($newCartesId, $newImages);
 	}
 
 	if (isset($_POST["newPlats"]) && !empty($_POST["newPlats"]))
@@ -23,9 +29,10 @@ function crud()
 	{
 		$cartesId = json_decode($_POST["updateCarteImageCartesId"], true);
 		$cartes = new Cartes();
-		$oldImgDir = "oldCartes/";
-		$oldFileNameList = $cartes->getImgSrc($cartesId);
-		$fileNameList = $cartes->uploadImg($oldImgDir, $oldFileNameList);
+		//$oldImgDir = "oldCartes/";
+		//$oldFileNameList = $cartes->getImgSrc($cartesId);
+		//$fileNameList = $cartes->uploadImg($oldImgDir, $oldFileNameList);
+		$fileNameList = $cartes->uploadImg("onAlreadyExistCarte");
 		$cartes->updateImg($cartesId, $fileNameList);
 	}
 

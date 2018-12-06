@@ -2,7 +2,8 @@
 
 let updatePlats = {};
 let updatePlatsOrder = {};
-let updateCarteImageNewImages = {};
+let newCarteImg = {};
+let newImageInNewCarte = [];
 let updateCarteImageCartesId = [];
 let updateCartesTitle = {};
 let updateFamilyCarteTitleList = {};
@@ -86,6 +87,15 @@ window.addEventListener("load", function(event)
 		{
 			newCartes = JSON.stringify(newCartes);
 			let newCartesList = createElem(["input"], [["type", "value", "name"]], [["text", newCartes, "newCartes"]]);
+
+			// new img
+			let newImgList = document.querySelectorAll(".newImage");
+			for (let i = newImgList.length - 1; i >= 0; i--)
+			{
+				newImgList[i].setAttribute("name", "onNewCarte" + i)
+				form.appendChild(newImgList[i]);
+			}
+
 			form.appendChild(newCartesList);
 		}
 
@@ -103,13 +113,16 @@ window.addEventListener("load", function(event)
 			form.appendChild(familyCarteTitleList);
 		}
 
-		if (checkObjectEmpty(updateCarteImageNewImages) === true)
+		if (checkObjectEmpty(newCarteImg) === true)
 		{
-			for (let propertyTitle in updateCarteImageNewImages)
+			let index = 0;
+			for (let propertyTitle in newCarteImg)
 			{
-				let newImg = updateCarteImageNewImages[propertyTitle];
+				let newImg = newCarteImg[propertyTitle];
+				newImg.setAttribute("name", "onAlreadyExistCarte" + index)
 				updateCarteImageCartesId.push(propertyTitle);
 				form.appendChild(newImg);
+				index += 1;
 			}
 			updateCarteImageCartesId = JSON.stringify(updateCarteImageCartesId);
 			let cartesId = createElem(["input"], [["type", "value", "name"]], [["text", updateCarteImageCartesId, "updateCarteImageCartesId"]]);
@@ -151,7 +164,7 @@ window.addEventListener("load", function(event)
 			form.appendChild(deleteCartesInput);
 		}	
 
-		if (checkObjectEmpty(newCartes) === true || checkObjectEmpty(newPlats) === true || checkObjectEmpty(updateFamilyCarteTitleList) === true || checkObjectEmpty(updateCarteImageNewImages) === true || checkObjectEmpty(updateCartesTitle) === true || checkObjectEmpty(updatePlats) === true || checkObjectEmpty(updatePlatsOrder) === true || checkObjectEmpty(deletePlatsList) === true || checkObjectEmpty(deleteCartesList) === true)
+		if (checkObjectEmpty(newCartes) === true || checkObjectEmpty(newPlats) === true || checkObjectEmpty(updateFamilyCarteTitleList) === true || checkObjectEmpty(newCarteImg) === true || newImageInNewCarte.length > 0 || checkObjectEmpty(updateCartesTitle) === true || checkObjectEmpty(updatePlats) === true || checkObjectEmpty(updatePlatsOrder) === true || checkObjectEmpty(deletePlatsList) === true || checkObjectEmpty(deleteCartesList) === true)
 		{
 			document.body.appendChild(form);
 			form.submit();
@@ -191,7 +204,7 @@ window.addEventListener("load", function(event)
 		let divContainer = createElem(["div"], [["class"]], [["readMore-container newCarte"]]);
 		let openCarteButton = createElem(["input"], [["type", "class", "aria-label"]], [["checkbox", "openCarteButton", "afficher la carte"]]);
 		let imgCarte = createElem(["img"], [["src", "alt"]], [["./assets/img/test/carte_empty.png", "photo représentant la carte"]]);
-		let inputUploadImg = createElem(["input"], [["type", "class", "accept"]], [["file", "carteImg", "image/png, image/jpeg"]]);
+		let inputUploadImg = createElem(["input"], [["type", "class", "accept"]], [["file", "carteImg newImage", "image/png, image/jpeg"]]);
 		let deleteCarte = createElem(["button"], [["class"]], [["btn_carteDelete"]]);
 		deleteCarte.innerHTML = "X"
 
@@ -287,7 +300,7 @@ window.addEventListener("load", function(event)
 	let updateCarteImg = function(event)
 	{
 		let idCarte = event.target.id.slice(10, event.target.id.length);
-		updateCarteImageNewImages[idCarte] = (event.target);
+		newCarteImg[idCarte] = (event.target);
 	}
 
 	let updateCarteTitle = function(item)

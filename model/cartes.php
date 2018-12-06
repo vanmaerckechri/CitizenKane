@@ -37,8 +37,9 @@ class Cartes
     {
     	$dbh = $this->dbh;
 
-		$insCarte = $dbh->prepare("INSERT INTO cartes (title) VALUES (:title)");
+    	$newCarteId = [];
 
+		$insCarte = $dbh->prepare("INSERT INTO cartes (title) VALUES (:title)");
 		$insPage = $dbh->prepare("INSERT INTO pages (name, family, id_carte) VALUES (:name, :family, :id_carte)");
 
 		foreach ($newCartes as $pageName => $fams)
@@ -52,6 +53,7 @@ class Cartes
 					$insCarte->execute();
 
 					$idCarte = $dbh->lastInsertId();
+					array_push($newCarteId, $idCarte);
 
 					$platsInCarteId = [];
 					$platsInCarteId[$idCarte] = $plats;
@@ -64,6 +66,7 @@ class Cartes
 				}
 			}
 		}
+		return($newCarteId);
     }
 
     public function deleteCartes($deleteCartesList)
@@ -157,7 +160,7 @@ class Cartes
     	foreach ($types as $key => $type)
     	{
     		$extPos = stripos($file, $type);
-    		if ($extPos != false)
+    		if ($extPos !== false)
     		{   
     			return $extPos;
     		}
@@ -216,14 +219,15 @@ class Cartes
 		}
     }
 
-    public function uploadImg($oldImgDir, $oldImgSrc)
+    //public function uploadImg($oldImgDir, $oldImgSrc = false)
+    public function uploadImg($serie)
     {
 		$uploads_dir = './assets/img/test/';
 		$nameList = [];
 		$index = 0;
 		foreach ($_FILES as $key => $file)
 		{
-		    if ($file["error"] == UPLOAD_ERR_OK && ($file["type"] == "image/jpeg" || $file["type"] == "image/png"))
+		    if ($file["error"] == UPLOAD_ERR_OK && ($file["type"] == "image/jpeg" || $file["type"] == "image/png") && stripos($key, $serie) !== false)
 		    {
 		    	/*
 		    	if (isset($oldImgSrc[$index]) && !empty($oldImgSrc[$index]))
@@ -234,7 +238,7 @@ class Cartes
 			    	$smallPos = stripos($oldImg, "_small");
 			    	$oldImgSrcSmall;
 			    	// if oldImg is the small version transform oldImg in original version
-			    	if ($smallPos != false)
+			    	if ($smallPos !== false)
 			    	{
 			    		$oldImgSrcSmall = $oldImg;
 			    		$ext = substr($oldImg, $smallPos + 6, strlen($oldImg));
@@ -280,6 +284,7 @@ class Cartes
 		        {
 		       		array_push($nameList, $name);
 		        }
+		        unset($_FILES[$key]);
 		    }
 		    $index += 1;
 		}
