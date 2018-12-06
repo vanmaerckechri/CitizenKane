@@ -5,14 +5,6 @@ require('./model/cartes.php');
 
 function crud()
 {
-
-	if (isset($_POST["newFams"]) && !empty($_POST["newFams"]))
-	{
-		$newFams = json_decode($_POST["newFams"], true);
-		$cartes = new Cartes();
-		$cartes->insertFams($newFams);
-	}
-
 	if (isset($_POST["newCartes"]) && !empty($_POST["newCartes"]))
 	{
 		$newCartes = json_decode($_POST["newCartes"], true);
@@ -78,6 +70,15 @@ function crud()
 		$cartes = new Cartes();
 		$cartes->deleteCartes($deleteCartesList);
 	}	
+
+}
+
+function cleanPost($page)
+{
+	if ($_POST)
+	{
+		header("Location: ./index.php?action=" . $page);
+	}
 }
 
 function loadHome()
@@ -90,7 +91,8 @@ function loadRestaurant($admin)
 	$page = "restaurant";
 	$cartes = new Cartes();
 	$cartes = $cartes->getCartes($page);
-	$restoPage = 'class="active"';
+	cleanPost($page);
 
+	$restoPage = 'class="active"';
     require('./view/restaurantView.php');
 }

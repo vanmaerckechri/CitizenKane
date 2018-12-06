@@ -60,36 +60,18 @@ window.addEventListener("load", function(event)
 		let newCartes = family.querySelectorAll(".newCarte");
 		let newCarteContent = {};
 		newCarteContent[page] = {};
+
 		for (let i = 0, length = newCartes.length; i < length; i++)
 		{
 			newCartes[i].classList.remove("newCarte");
 			let newCarteTitle = newCartes[i].querySelector(".carteTitle").value;
 			// new carte in family who already exist
-			if (family === document)
-			{
-				let famName = newCartes[i].parentNode.querySelector(".familyTitle").value;
-				newCarteContent[page][famName] = !newCarteContent[page][famName] ? {} : newCarteContent[page][famName];
-				newCarteContent[page][famName][newCarteTitle] = detectNewPlats(newCartes[i]);
-			}
-			// new carte in new family
-			else
-			{
-				newCarteContent[newCarteTitle] = detectNewPlats(newCartes[i]);
-			}
+			let famName = newCartes[i].parentNode.querySelector(".familyTitle").value;
+			newCarteContent[page][famName] = !newCarteContent[page][famName] ? {} : newCarteContent[page][famName];
+			newCarteContent[page][famName][newCarteTitle] = detectNewPlats(newCartes[i]);
 		}
-		return newCarteContent;	
-	}
 
-	let detectNewFam = function()
-	{
-		let newFams = document.querySelectorAll(".newFam");
-		let newFamContent = {};
-		for (let i = 0, length = newFams.length; i < length; i++)
-		{
-			newFams[i].classList.remove("newFam");
-			newFamContent[newFams[i].querySelector(".familyTitle ").value] = detectNewCartes(newFams[i]);
-		}
-		return newFamContent;
+		return newCarteContent;	
 	}
 
 	let recordChanges = function()
@@ -97,18 +79,8 @@ window.addEventListener("load", function(event)
 		let formAction = "index.php?action=" + page;
 		let form = createElem(["form"], [["action", "method", "enctype"]], [[formAction, "post", "multipart/form-data"]]);
 
-		let newFams = detectNewFam();
 		let newCartes = detectNewCartes();
 		let newPlats = detectNewPlats();
-
-		console.log(newCartes)
-
-		if (checkObjectEmpty(newFams) === true)
-		{
-			newFams = JSON.stringify(newFams);
-			let newFamsList = createElem(["input"], [["type", "value", "name"]], [["text", newFams, "newFams"]]);
-			form.appendChild(newFamsList);
-		}		
 
 		if (checkObjectEmpty(newCartes) === true)
 		{
@@ -179,7 +151,7 @@ window.addEventListener("load", function(event)
 			form.appendChild(deleteCartesInput);
 		}	
 
-		if (checkObjectEmpty(newFams) === true || checkObjectEmpty(newCartes) === true || checkObjectEmpty(newPlats) === true || checkObjectEmpty(updateFamilyCarteTitleList) === true || checkObjectEmpty(updateCarteImageNewImages) === true || checkObjectEmpty(updateCartesTitle) === true || checkObjectEmpty(updatePlats) === true || checkObjectEmpty(updatePlatsOrder) === true || checkObjectEmpty(deletePlatsList) === true || checkObjectEmpty(deleteCartesList) === true)
+		if (checkObjectEmpty(newCartes) === true || checkObjectEmpty(newPlats) === true || checkObjectEmpty(updateFamilyCarteTitleList) === true || checkObjectEmpty(updateCarteImageNewImages) === true || checkObjectEmpty(updateCartesTitle) === true || checkObjectEmpty(updatePlats) === true || checkObjectEmpty(updatePlatsOrder) === true || checkObjectEmpty(deletePlatsList) === true || checkObjectEmpty(deleteCartesList) === true)
 		{
 			document.body.appendChild(form);
 			form.submit();
@@ -214,7 +186,7 @@ window.addEventListener("load", function(event)
 		}, false);
 	}
 
-	let addCarte = function(event)
+	let addCarte = function(event, firstCarteForNewFam = false)
 	{
 		let divContainer = createElem(["div"], [["class"]], [["readMore-container newCarte"]]);
 		let openCarteButton = createElem(["input"], [["type", "class", "aria-label"]], [["checkbox", "openCarteButton", "afficher la carte"]]);
@@ -242,7 +214,14 @@ window.addEventListener("load", function(event)
 		divContent.appendChild(ul);
 		divContainer.appendChild(divContent);
 
-		event.target.parentNode.insertBefore(divContainer, event.target);
+		if (firstCarteForNewFam === false)
+		{
+			event.target.parentNode.insertBefore(divContainer, event.target);
+		}
+		else
+		{
+			firstCarteForNewFam.parentNode.insertBefore(divContainer, firstCarteForNewFam);
+		}
 
 		deleteCarte.addEventListener("click", function()
 		{
@@ -282,6 +261,8 @@ window.addEventListener("load", function(event)
 		}, false);
 
 		addCarteButton.addEventListener("click", addCarte, false);
+
+		addCarte(this, addCarteButton);
 	}
 
 	let updateFamilyCarteTitle = function(event)
