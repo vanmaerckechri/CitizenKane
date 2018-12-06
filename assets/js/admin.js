@@ -1,6 +1,5 @@
  "use strict";
 
-let newFamilyCartes = [];
 let updatePlats = {};
 let updatePlatsOrder = {};
 let updateCarteImageNewImages = {};
@@ -22,10 +21,108 @@ window.addEventListener("load", function(event)
 		return result;
 	}
 
+	let detectNewPlats = function(cartes= document)
+	{
+		let newPlats = cartes.querySelectorAll(".newPlat");
+		let newPlatsContent = {};
+		for (let i = 0, length = newPlats.length; i < length; i ++)
+		{
+			newPlats[i].classList.remove("newPlat");
+			let title = newPlats[i].querySelector(".plat").value;
+			let prix = newPlats[i].querySelector(".prix").value;
+			let compo = newPlats[i].querySelector(".platCompo").value;
+
+			// new plat in carte who already exist
+			if (cartes === document)
+			{
+				let carteId = newPlats[i].parentNode.id;
+				let index = carteId.indexOf("__");
+				carteId = carteId.slice(index + 2, carteId.length);
+
+				newPlatsContent[carteId] = !newPlatsContent[carteId] ? {} : newPlatsContent[carteId];
+				newPlatsContent[carteId][title] = !newPlatsContent[title] ? {} : newPlatsContent[title];
+				newPlatsContent[carteId][title]["price"] = prix;
+				newPlatsContent[carteId][title]["compo"] = compo;
+			}
+			// new plat in new carte
+			else
+			{
+				newPlatsContent[title] = !newPlatsContent[title] ? {} : newPlatsContent[title];
+				newPlatsContent[title]["price"] = prix;
+				newPlatsContent[title]["compo"] = compo;
+			}
+		}
+		return newPlatsContent;	
+	}
+
+	let detectNewCartes = function(family = document)
+	{
+		let newCartes = family.querySelectorAll(".newCarte");
+		let newCarteContent = {};
+		newCarteContent[page] = {};
+		for (let i = 0, length = newCartes.length; i < length; i++)
+		{
+			newCartes[i].classList.remove("newCarte");
+			let newCarteTitle = newCartes[i].querySelector(".carteTitle").value;
+			// new carte in family who already exist
+			if (family === document)
+			{
+				let famName = newCartes[i].parentNode.querySelector(".familyTitle").value;
+				newCarteContent[page][famName] = !newCarteContent[page][famName] ? {} : newCarteContent[page][famName];
+				newCarteContent[page][famName][newCarteTitle] = detectNewPlats(newCartes[i]);
+			}
+			// new carte in new family
+			else
+			{
+				newCarteContent[newCarteTitle] = detectNewPlats(newCartes[i]);
+			}
+		}
+		return newCarteContent;	
+	}
+
+	let detectNewFam = function()
+	{
+		let newFams = document.querySelectorAll(".newFam");
+		let newFamContent = {};
+		for (let i = 0, length = newFams.length; i < length; i++)
+		{
+			newFams[i].classList.remove("newFam");
+			newFamContent[newFams[i].querySelector(".familyTitle ").value] = detectNewCartes(newFams[i]);
+		}
+		return newFamContent;
+	}
+
 	let recordChanges = function()
 	{
 		let formAction = "index.php?action=" + page;
 		let form = createElem(["form"], [["action", "method", "enctype"]], [[formAction, "post", "multipart/form-data"]]);
+
+		let newFams = detectNewFam();
+		let newCartes = detectNewCartes();
+		let newPlats = detectNewPlats();
+
+		console.log(newCartes)
+
+		if (checkObjectEmpty(newFams) === true)
+		{
+			newFams = JSON.stringify(newFams);
+			let newFamsList = createElem(["input"], [["type", "value", "name"]], [["text", newFams, "newFams"]]);
+			form.appendChild(newFamsList);
+		}		
+
+		if (checkObjectEmpty(newCartes) === true)
+		{
+			newCartes = JSON.stringify(newCartes);
+			let newCartesList = createElem(["input"], [["type", "value", "name"]], [["text", newCartes, "newCartes"]]);
+			form.appendChild(newCartesList);
+		}
+
+		if (checkObjectEmpty(newPlats) === true)
+		{
+			newPlats = JSON.stringify(newPlats);
+			let newPlatsList = createElem(["input"], [["type", "value", "name"]], [["text", newPlats, "newPlats"]]);
+			form.appendChild(newPlatsList);
+		}	
 
 		if (checkObjectEmpty(updateFamilyCarteTitleList) === true)
 		{
@@ -68,38 +165,6 @@ window.addEventListener("load", function(event)
 			form.appendChild(platsOrder);
 		}	
 
-		let newPlats = document.querySelectorAll(".newPlat");
-		if (newPlats.length > 0)
-		{
-			let newPlatsList = [];
-			for (let i = newPlats.length - 1; i >= 0; i--)
-			{
-				let idCarte = newPlats[i].parentNode.id;
-				let index = idCarte.indexOf("__");
-
-				idCarte = idCarte.slice(index + 2, idCarte.length);
-				let name = newPlats[i].querySelector(".plat").value;
-				let prix = newPlats[i].querySelector(".prix").value;
-				if (isNaN(parseInt(prix)))
-				{
-					prix = 0;
-				}
-				let compo = newPlats[i].querySelector(".platCompo").value;
-				let plat =
-				{
-					idCarte: idCarte,
-					name: name,
-					prix: prix,
-					compo: compo
-				}
-				newPlatsList.push(plat)
-			}
-
-			newPlatsList = JSON.stringify(newPlatsList);
-			let newPlatsListInput = createElem(["input"], [["type", "value", "name"]], [["text", newPlatsList, "newPlatsList"]]);
-			form.appendChild(newPlatsListInput);
-		}
-
 		if (checkObjectEmpty(deletePlatsList) === true)
 		{
 			deletePlatsList = JSON.stringify(deletePlatsList);
@@ -114,7 +179,7 @@ window.addEventListener("load", function(event)
 			form.appendChild(deleteCartesInput);
 		}	
 
-		if (checkObjectEmpty(updateFamilyCarteTitleList) === true || checkObjectEmpty(updateCarteImageNewImages) === true || checkObjectEmpty(updateCartesTitle) === true || checkObjectEmpty(updatePlats) === true || checkObjectEmpty(updatePlatsOrder) === true || newPlats.length > 0 || checkObjectEmpty(deletePlatsList) === true || checkObjectEmpty(deleteCartesList) === true)
+		if (checkObjectEmpty(newFams) === true || checkObjectEmpty(newCartes) === true || checkObjectEmpty(newPlats) === true || checkObjectEmpty(updateFamilyCarteTitleList) === true || checkObjectEmpty(updateCarteImageNewImages) === true || checkObjectEmpty(updateCartesTitle) === true || checkObjectEmpty(updatePlats) === true || checkObjectEmpty(updatePlatsOrder) === true || checkObjectEmpty(deletePlatsList) === true || checkObjectEmpty(deleteCartesList) === true)
 		{
 			document.body.appendChild(form);
 			form.submit();
@@ -125,7 +190,7 @@ window.addEventListener("load", function(event)
 	{
 		let li = createElem(["li"], [["class"]], [["newPlat"]]);
 		let plat = createElem(["input"], [["class", "type", "placeholder", "autocomplete"]], [["plat", "text", "Titre du Plat", "off"]]);
-		let prix = createElem(["input"], [["class","type", "min", "step", "placeholder", "autocomplete"]], [["prix", "number", 0, 0.1, "Prix du Plat", "off"]]);
+		let prix = createElem(["input"], [["class", "value", "type", "min", "step", "placeholder", "autocomplete"]], [["prix", "0", "number", 0, 0.1, "Prix du Plat", "off"]]);
 		let delButton = createElem(["button"], [["class"]], [["btn_platDelete"]]);
 		delButton.innerHTML = "X";
 		let compo = createElem(["input"], [["class","type", "placeholder", "autocomplete"]], [["platCompo", "text", "Composition du Plat", "off"]]);
@@ -138,6 +203,14 @@ window.addEventListener("load", function(event)
 		delButton.addEventListener("click", function()
 		{
 			this.parentNode.remove();
+		}, false);
+	
+		prix.addEventListener("change", function()
+		{
+			if (isNaN(parseInt(prix.value)))
+			{
+				prix.value = 0;
+			}
 		}, false);
 	}
 

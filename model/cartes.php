@@ -8,6 +8,64 @@ class Cartes
         $this->dbh = $this->connect->dbConnect();
     }
 
+    public function insertPlats($newPlats)
+    {
+    	$dbh = $this->dbh;
+
+		$insPlat = $dbh->prepare("INSERT INTO plats (name, price, compo) VALUES (:name, :prix, :compo)");
+		$insRelId = $dbh->prepare("INSERT INTO rel_cartes_plats (id_carte, id_plat) VALUES (:id_carte, :id_plat)");
+
+		foreach ($newPlats as $carteId => $carte)
+		{
+			foreach ($carte as $platTitle => $plat) 
+			{
+				$insPlat->bindParam(':name', $platTitle, PDO::PARAM_STR);
+				$insPlat->bindParam(':prix', $plat["price"], PDO::PARAM_INT);
+				$insPlat->bindParam(':compo', $plat["compo"], PDO::PARAM_STR);
+				$insPlat->execute();
+
+				$lastId = $dbh->lastInsertId();
+
+				$insRelId->bindParam(':id_carte', $carteId, PDO::PARAM_INT);
+				$insRelId->bindParam(':id_plat', $lastId, PDO::PARAM_INT);
+				$insRelId->execute();
+			}
+		}
+    }
+
+    public function insertCartes($newCartes)
+    {
+    	$dbh = $this->dbh;
+
+		$insCarte = $dbh->prepare("INSERT INTO cartes (title) VALUES (:title)");
+
+		$insPage = $dbh->prepare("INSERT INTO pages (name, family, id_carte) VALUES (:name, :family, :id_carte)");
+
+		foreach ($newCartes as $pageName => $fams)
+		{
+			foreach ($fams as $famTitle => $cartes)
+			{
+				foreach ($cartes as $carteTitle => $plats) 
+				{
+
+					$insCarte->bindParam(':title', $carteTitle, PDO::PARAM_STR);
+					$insCarte->execute();
+
+					$idCarte = $dbh->lastInsertId();
+
+					$platsInCarteId = [];
+					$platsInCarteId[$idCarte] = $plats;
+					$this->insertPlats($platsInCarteId);
+
+					$insPage->bindParam(':name', $pageName, PDO::PARAM_STR);
+					$insPage->bindParam(':family', $famTitle, PDO::PARAM_STR);
+					$insPage->bindParam(':id_carte', $idCarte, PDO::PARAM_INT);
+					$insPage->execute();
+				}
+			}
+		}
+    }
+
     public function deleteCartes($deleteCartesList)
     {
     	$dbh = $this->dbh;
@@ -54,28 +112,6 @@ class Cartes
 			$delPlat->execute();
 			$delRel_cartes_plats->bindParam(':id', $idPlat, PDO::PARAM_INT); 
 			$delRel_cartes_plats->execute();  
-		}
-    }
-
-    public function insertPlatsList($newPlatsList)
-    {
-    	$dbh = $this->dbh;
-
-		$insPlat = $dbh->prepare("INSERT INTO plats (name, price, compo) VALUES (:name, :prix, :compo)");
-		$insRelId = $dbh->prepare("INSERT INTO rel_cartes_plats (id_carte, id_plat) VALUES (:id_carte, :id_plat)");
-
-		foreach ($newPlatsList as $key => $plat)
-		{
-			$insPlat->bindParam(':name', $plat["name"], PDO::PARAM_STR);
-			$insPlat->bindParam(':prix', $plat["prix"], PDO::PARAM_INT);
-			$insPlat->bindParam(':compo', $plat["compo"], PDO::PARAM_STR);
-			$insPlat->execute();
-
-			$lastId = $dbh->lastInsertId();
-
-			$insRelId->bindParam(':id_carte', $plat["idCarte"], PDO::PARAM_INT);
-			$insRelId->bindParam(':id_plat', $lastId, PDO::PARAM_INT);
-			$insRelId->execute();
 		}
     }
 

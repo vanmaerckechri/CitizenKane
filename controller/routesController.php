@@ -5,6 +5,28 @@ require('./model/cartes.php');
 
 function crud()
 {
+
+	if (isset($_POST["newFams"]) && !empty($_POST["newFams"]))
+	{
+		$newFams = json_decode($_POST["newFams"], true);
+		$cartes = new Cartes();
+		$cartes->insertFams($newFams);
+	}
+
+	if (isset($_POST["newCartes"]) && !empty($_POST["newCartes"]))
+	{
+		$newCartes = json_decode($_POST["newCartes"], true);
+		$cartes = new Cartes();
+		$cartes->insertCartes($newCartes);
+	}
+
+	if (isset($_POST["newPlats"]) && !empty($_POST["newPlats"]))
+	{
+		$newPlats = json_decode($_POST["newPlats"], true);
+		$cartes = new Cartes();
+		$cartes->insertPlats($newPlats);
+	}
+
 	if (isset($_FILES) && !empty($_FILES) && isset($_POST["updateCarteImageCartesId"]) && !empty($_POST["updateCarteImageCartesId"]))
 	{
 		$cartesId = json_decode($_POST["updateCarteImageCartesId"], true);
@@ -41,13 +63,6 @@ function crud()
 		$updatePlatsOrder = json_decode($_POST["updatePlatsOrder"], true);
 		$cartes = new Cartes();
 		$cartes->updatePlatsOrder($updatePlatsOrder);
-	}
-
-	if (isset($_POST["newPlatsList"]) && !empty($_POST["newPlatsList"]))
-	{
-		$newPlatsList = json_decode($_POST["newPlatsList"], true);
-		$cartes = new Cartes();
-		$cartes->insertPlatsList($newPlatsList);
 	}
 
 	if (isset($_POST["deletePlatsList"]) && !empty($_POST["deletePlatsList"]))
