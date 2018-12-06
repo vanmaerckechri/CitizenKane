@@ -141,7 +141,7 @@
 		if ($admin === true)
 		{
 			?>
-			<button id="addFamCarte" class="btn">ajouter une famille de cartes</button>
+			<button id="addFamCarte" class="btn btn_addFam">créer une nouvelle famille de cartes</button>
 			<?php
 		}
 		?>

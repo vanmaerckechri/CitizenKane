@@ -69,8 +69,14 @@ function crud()
 		$deleteCartesList = json_decode($_POST["deleteCartesList"], true);
 		$cartes = new Cartes();
 		$cartes->deleteCartes($deleteCartesList);
-	}	
+	}
 
+	if (isset($_POST["deleteFamList"]) && !empty($_POST["deleteFamList"]))
+	{
+		$deleteFamList = json_decode($_POST["deleteFamList"], true);
+		$cartes = new Cartes();
+		$cartes->deleteFam($deleteFamList);
+	}	
 }
 
 function cleanPost($page)

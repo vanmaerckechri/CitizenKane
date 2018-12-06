@@ -225,7 +225,16 @@ window.addEventListener("load", function(event)
 
 		deleteCarte.addEventListener("click", function()
 		{
-			this.parentNode.remove();
+			let carte = this.parentNode;
+			let fam = carte.parentNode;
+			carte.remove();
+
+			// delete family if family does'nt have carte
+			let famCartes = fam.querySelectorAll(".readMore-container");
+			if (famCartes.length === 0)
+			{
+				fam.remove();
+			}
 		}, false);
 
 		openCarteButton.checked = true;
@@ -394,8 +403,17 @@ window.addEventListener("load", function(event)
 		let index = id.indexOf("__");
 		id = id.slice(index + 2, id.length);
 
+		let fam = event.target.parentNode.parentNode;
+
 		deleteCartesList[id] = "";
-		event.target.parentNode.remove();		
+		event.target.parentNode.remove();
+
+		// delete family if family does'nt have carte
+		let famCartes = fam.querySelectorAll(".readMore-container");
+		if (famCartes.length === 0)
+		{
+			fam.remove();
+		}
 	}
 
 	let init = function()
