@@ -16,6 +16,11 @@ function crud()
 		// img in new carte
 		$newImages = $cartes->uploadImg("onNewCarte");
 		$cartes->updateCartes($newCartesId, $newImages);
+
+		// img in new carte
+		$newPdf = $cartes->uploadPdf("pdfOnNewCarte");
+
+		$cartes->updateCartes($newCartesId, $newPdf, "link");
 	}
 
 	if (isset($_POST["newPlats"]) && !empty($_POST["newPlats"]))
@@ -34,6 +39,16 @@ function crud()
 		//$fileNameList = $cartes->uploadImg($oldImgDir, $oldFileNameList);
 		$fileNameList = $cartes->uploadImg("onAlreadyExistCarte");
 		$cartes->updateCartes($cartesId, $fileNameList);
+	}
+
+	if (isset($_FILES) && !empty($_FILES) && isset($_POST["updateCartePdfId"]) && !empty($_POST["updateCartePdfId"]))
+	{
+		$cartesId = json_decode($_POST["updateCartePdfId"], true);
+		$cartes = new Cartes();
+
+		$fileNameList = $cartes->uploadPdf("pdfOnAlreadyExistCarte");
+
+		$cartes->updateCartes($cartesId, $fileNameList, "link");
 	}
 
 	if (isset($_POST["familyCarteTitle"]) && !empty($_POST["familyCarteTitle"]))

@@ -1,8 +1,12 @@
  "use strict";
 
+let bodyAtLoad = document.body.innerHTML;
+
 let updatePlats = {};
 let updatePlatsOrder = {};
 let newCarteImg = {};
+let newCartePdf = {};
+let updateCartePdfId = [];
 let newImageInNewCarte = [];
 let updateCarteImageCartesId = [];
 let updateCartesTitle = {};
@@ -176,6 +180,14 @@ window.addEventListener("load", function(event)
 				form.appendChild(newImgList[i]);
 			}
 
+			// new pdf (for carte link style)
+			let newPdfList = document.querySelectorAll(".uploadPdf");
+			for (let i = 0, length = newPdfList.length; i < length; i++)
+			{
+				newPdfList[i].setAttribute("name", "pdfOnNewCarte" + i)
+				form.appendChild(newPdfList[i]);
+			}
+
 			form.appendChild(newCartesList);
 		}
 
@@ -206,6 +218,24 @@ window.addEventListener("load", function(event)
 			}
 			updateCarteImageCartesId = JSON.stringify(updateCarteImageCartesId);
 			let cartesId = createElem(["input"], [["type", "value", "name"]], [["text", updateCarteImageCartesId, "updateCarteImageCartesId"]]);
+			form.appendChild(cartesId);
+		}
+
+		if (checkObjectEmpty(newCartePdf) === true)
+		{
+			let index = 0;
+			for (let propertyTitle in newCartePdf)
+			{
+				let newPdf = newCartePdf[propertyTitle];
+				newPdf.setAttribute("name", "pdfOnAlreadyExistCarte" + index)
+				updateCartePdfId.push(propertyTitle);
+				form.appendChild(newPdf);
+				index += 1;
+
+				console.log(newPdf)
+			}
+			updateCartePdfId = JSON.stringify(updateCartePdfId);
+			let cartesId = createElem(["input"], [["type", "value", "name"]], [["text", updateCartePdfId, "updateCartePdfId"]]);
 			form.appendChild(cartesId);
 		}
 
@@ -244,7 +274,7 @@ window.addEventListener("load", function(event)
 			form.appendChild(deleteCartesInput);
 		}	
 
-		if (checkObjectEmpty(newCartes) === true || checkObjectEmpty(newPlats) === true || checkObjectEmpty(updateFamilyCarteTitleList) === true || checkObjectEmpty(newCarteImg) === true || newImageInNewCarte.length > 0 || checkObjectEmpty(updateCartesTitle) === true || checkObjectEmpty(updatePlats) === true || checkObjectEmpty(updatePlatsOrder) === true || checkObjectEmpty(deletePlatsList) === true || checkObjectEmpty(deleteCartesList) === true)
+		if (checkObjectEmpty(newCartes) === true || checkObjectEmpty(newPlats) === true || checkObjectEmpty(updateFamilyCarteTitleList) === true || checkObjectEmpty(newCarteImg) === true || newImageInNewCarte.length > 0 || checkObjectEmpty(updateCartesTitle) === true || checkObjectEmpty(newCartePdf) === true || checkObjectEmpty(updatePlats) === true || checkObjectEmpty(updatePlatsOrder) === true || checkObjectEmpty(deletePlatsList) === true || checkObjectEmpty(deleteCartesList) === true)
 		{
 			document.body.appendChild(form);
 			form.submit();
@@ -455,6 +485,12 @@ window.addEventListener("load", function(event)
 		newCarteImg[idCarte] = (event.target);
 	}
 
+	let updateCartePdf = function(event)
+	{
+		let idCarte = event.target.id.slice(10, event.target.id.length);
+		newCartePdf[idCarte] = (event.target);
+	}
+
 	let updateCarteTitle = function(item)
 	{
 		/*let id = item.id;
@@ -661,6 +697,12 @@ window.addEventListener("load", function(event)
 			for (let i = carteImgList.length - 1; i >= 0; i--)
 			{
 				carteImgList[i].addEventListener("change", updateCarteImg, false);
+			}
+
+			let uploadPdf = document.querySelectorAll(".uploadPdf");
+			for (let i = uploadPdf.length - 1; i >= 0; i--)
+			{
+				uploadPdf[i].addEventListener("change", updateCartePdf, false);
 			}
 
 			let carteTitle = document.querySelectorAll(".readMore-container .carteTitle");

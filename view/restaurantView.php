@@ -154,7 +154,7 @@
 								<div class="readMore-content cartePdf-content">
 									<div class="uploadPdf-container">
 										<p>PDF: </p>
-										<input type="file" class="uploadPdf" accept="application/pdf">
+										<input id="cartePdf__<?= htmlspecialchars($keyCarte) ?>" class="uploadPdf" name="cartePdf__<?= $keyCarte ?>" type="file" accept="application/pdf">
 									</div>
 								</div>
 								<?php
