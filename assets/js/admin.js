@@ -1,5 +1,7 @@
  "use strict";
 
+let inputsValueAtStart = [];
+let mainContentValues = [];
 let updatePlats = {};
 let updatePlatsOrder = {};
 let newCarteImg = {};
@@ -283,41 +285,24 @@ window.addEventListener("load", function(event)
 
 	let detectBodyUpdate = function()
 	{
-		// check input file have a file in waiting
-		let inputFileImg = document.querySelectorAll(".carteImg");
-		let inputFilePdf = document.querySelectorAll(".uploadPdf");
-		let fileWaitingExist = false;
+		let currentInputsList = document.querySelectorAll("input");
+		let haveChange = false;
 
-		for (let i = inputFileImg.length - 1; i >= 0; i--)
+		for (let i = 0, length = currentInputsList.length; i < length; i++)
 		{
-			if (inputFileImg[i].value != "")
+			if (inputsValueAtStart[i] != currentInputsList[i].value)
 			{
-				fileWaitingExist = true;
+				haveChange = true;
 				break;
 			}
 		}
 
-		if (fileWaitingExist === false)
-		{
-			for (let i = inputFilePdf.length - 1; i >= 0; i--)
-			{
-				if (inputFilePdf[i].value != "")
-				{
-					fileWaitingExist = true;
-					break;
-				}
-			}
-		}
-
-		// compare main content
-		let currentMainContent = document.getElementById("main").textContent;
 		let recordChangesButton = document.getElementById("recordChanges");
-
-		if ((mainContent !== currentMainContent || fileWaitingExist === true) && recordChangesButton.classList.contains("displayNone"))
+		if (haveChange === true && recordChangesButton.classList.contains("displayNone"))
 		{
 			recordChangesButton.classList.remove("displayNone");
 		}
-		else if (mainContent === currentMainContent && fileWaitingExist === false && !recordChangesButton.classList.contains("displayNone"))
+		else if (haveChange === false && !recordChangesButton.classList.contains("displayNone"))
 		{
 			recordChangesButton.classList.add("displayNone");
 		}
@@ -719,7 +704,7 @@ window.addEventListener("load", function(event)
 						cartesButton[i].style = "" ;
 					}
 				}, false);
-			}		
+			}
 		}
 
 		let initAddFamilyCartes = function()
@@ -849,10 +834,24 @@ window.addEventListener("load", function(event)
 			}	
 		}
 
+
 		let initRecordButton = function()
 		{
 			let button = document.getElementById("recordChanges");
 			button.addEventListener("click", recordChanges, false);
+
+			let mainContentInputs = document.querySelectorAll("input");
+			for (let i = 0, length = mainContentInputs.length; i < length; i++)
+			{
+				mainContentValues.push(mainContentInputs[i].value);
+			}
+
+			let inputsList = document.querySelectorAll("input");
+
+			for (let i = 0, length = inputsList.length; i < length; i++)
+			{
+				inputsValueAtStart.push(inputsList[i].value);
+			}
 		}
 
 		initPage();
@@ -868,5 +867,5 @@ window.addEventListener("load", function(event)
 		initRecordButton();
 	}
 	init();
-	const mainContent = document.getElementById("main").textContent;
+						
 });

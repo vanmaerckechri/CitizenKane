@@ -5,9 +5,8 @@ window.addEventListener("load", function(event)
 	let replaceImgLowByHigh = function()
 	{
 		let imgList = document.querySelectorAll("img");
-		let onlyLowImgListLength = 0;
-		let imgHdList = [];
-		for (let i = 0, length = imgList.length; i < length; i++)
+		let countDown = imgList.length;
+		for (let i = 0, length = countDown; i < length; i++)
 		{
 			let lowImg = imgList[i];
 			let lowSrc = imgList[i].src;
@@ -17,6 +16,11 @@ window.addEventListener("load", function(event)
 				imgHd.onload = function()
 				{
 					lowImg.src = this.src;
+					countDown -= 1;
+					if (countDown == 0)
+					{
+						mainContent = document.getElementById("carteResto").innerHTML
+					}
 				}
 				imgHd.src = lowSrc.replace("_small", "");
 			}
