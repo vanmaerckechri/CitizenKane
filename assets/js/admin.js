@@ -283,13 +283,41 @@ window.addEventListener("load", function(event)
 
 	let detectBodyUpdate = function()
 	{
+		// check input file have a file in waiting
+		let inputFileImg = document.querySelectorAll(".carteImg");
+		let inputFilePdf = document.querySelectorAll(".uploadPdf");
+		let fileWaitingExist = false;
+
+		for (let i = inputFileImg.length - 1; i >= 0; i--)
+		{
+			if (inputFileImg[i].value != "")
+			{
+				fileWaitingExist = true;
+				break;
+			}
+		}
+
+		if (fileWaitingExist === false)
+		{
+			for (let i = inputFilePdf.length - 1; i >= 0; i--)
+			{
+				if (inputFilePdf[i].value != "")
+				{
+					fileWaitingExist = true;
+					break;
+				}
+			}
+		}
+
+		// compare main content
+		let currentMainContent = document.getElementById("main").textContent;
 		let recordChangesButton = document.getElementById("recordChanges");
 
-		if (bodyAtLoad !== document.body.textContent && recordChangesButton.classList.contains("displayNone"))
+		if ((mainContent !== currentMainContent || fileWaitingExist === true) && recordChangesButton.classList.contains("displayNone"))
 		{
 			recordChangesButton.classList.remove("displayNone");
 		}
-		else if (bodyAtLoad === document.body.textContent && !recordChangesButton.classList.contains("displayNone"))
+		else if (mainContent === currentMainContent && fileWaitingExist === false && !recordChangesButton.classList.contains("displayNone"))
 		{
 			recordChangesButton.classList.add("displayNone");
 		}
@@ -518,7 +546,7 @@ window.addEventListener("load", function(event)
 		let idCarte = event.target.id.slice(10, event.target.id.length);
 		newCarteImg[idCarte] = (event.target);
 
-		detectBodyUpdate();
+		detectBodyUpdate(event.target.value);
 	}
 
 	let updateCartePdf = function(event)
@@ -745,6 +773,7 @@ window.addEventListener("load", function(event)
 			for (let i = carteImgList.length - 1; i >= 0; i--)
 			{
 				carteImgList[i].addEventListener("change", updateCarteImg, false);
+				carteImgList[i].value = "";
 			}
 
 			let uploadPdf = document.querySelectorAll(".uploadPdf");
@@ -839,5 +868,5 @@ window.addEventListener("load", function(event)
 		initRecordButton();
 	}
 	init();
-	let bodyAtLoad = document.body.textContent;
+	const mainContent = document.getElementById("main").textContent;
 });
