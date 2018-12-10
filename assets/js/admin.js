@@ -1,7 +1,5 @@
  "use strict";
 
-let bodyAtLoad = document.body.innerHTML;
-
 let updatePlats = {};
 let updatePlatsOrder = {};
 let newCarteImg = {};
@@ -283,6 +281,20 @@ window.addEventListener("load", function(event)
 
 	// -- Manage Cartes --
 
+	let detectBodyUpdate = function()
+	{
+		let recordChangesButton = document.getElementById("recordChanges");
+
+		if (bodyAtLoad !== document.body.textContent && recordChangesButton.classList.contains("displayNone"))
+		{
+			recordChangesButton.classList.remove("displayNone");
+		}
+		else if (bodyAtLoad === document.body.textContent && !recordChangesButton.classList.contains("displayNone"))
+		{
+			recordChangesButton.classList.add("displayNone");
+		}
+	}
+
 	let addPlat = function(event)
 	{
 		let li = createElem(["li"], [["class"]], [["newPlat"]]);
@@ -300,6 +312,8 @@ window.addEventListener("load", function(event)
 		delButton.addEventListener("click", function()
 		{
 			this.parentNode.remove();
+
+			detectBodyUpdate();
 		}, false);
 	
 		prix.addEventListener("change", function()
@@ -307,8 +321,12 @@ window.addEventListener("load", function(event)
 			if (isNaN(parseInt(prix.value)))
 			{
 				prix.value = 0;
+
+				detectBodyUpdate();
 			}
 		}, false);
+
+		detectBodyUpdate();
 	}
 
 	let switchNewCarteStyle = function(radio)
@@ -407,6 +425,8 @@ window.addEventListener("load", function(event)
 			{
 				fam.remove();
 			}
+
+			detectBodyUpdate();
 		}, false);
 
 		// limit unfold button to the height of the image
@@ -434,8 +454,12 @@ window.addEventListener("load", function(event)
 			carteTitle.addEventListener("change", function()
 			{
 				carteTitle.value = fixDupTitle("carteTitle", carteTitle);
+
+				detectBodyUpdate();
 			}, false);
 		}
+
+		detectBodyUpdate();
 	}
 
 	let addFamilyCarte = function(event)
@@ -455,14 +479,22 @@ window.addEventListener("load", function(event)
 		famiTitleInput.addEventListener("change", function()
 		{
 			addCarteButtonContainer.innerHTML = "Ajouter une Carte à la Famille: \"" + famiTitleInput.value + "\"";
+
+			detectBodyUpdate();
 		}, false);
 
 		let addCarteButton = addCarteButtonContainer.querySelector(".addCarte");
 		addCarteButton.id = "";
 
 		addCarteButton.addEventListener("click", addCarte, false);
+		let radioLink = addCarteButtonContainer.querySelector(".radioLink_container");
+		let radioFolder = addCarteButtonContainer.querySelector(".radioFolder_container");
+		radioLink.addEventListener("click", switchNewCarteStyle.bind(this, radioLink), false);
+		radioFolder.addEventListener("click", switchNewCarteStyle.bind(this, radioFolder), false);
 
 		addCarte(this, addCarteButton);
+
+		detectBodyUpdate();
 	}
 
 	let updateFamilyCarteTitle = function(event)
@@ -477,18 +509,24 @@ window.addEventListener("load", function(event)
 		{
 			updateFamilyCarteTitleList[idsFam[i]] = event.target.value;
 		}
+
+		detectBodyUpdate();
 	}
 
 	let updateCarteImg = function(event)
 	{
 		let idCarte = event.target.id.slice(10, event.target.id.length);
 		newCarteImg[idCarte] = (event.target);
+
+		detectBodyUpdate();
 	}
 
 	let updateCartePdf = function(event)
 	{
 		let idCarte = event.target.id.slice(10, event.target.id.length);
 		newCartePdf[idCarte] = (event.target);
+
+		detectBodyUpdate();
 	}
 
 	let updateCarteTitle = function(item)
@@ -501,6 +539,8 @@ window.addEventListener("load", function(event)
 		let dubClassName = "carteTitle";
 		let titleDomElem = item;
 		updateCartesTitle[id] = fixDupTitle(dubClassName, titleDomElem);
+
+		detectBodyUpdate();
 	}
 
 	let updatePlat = function(item, platPropery)
@@ -516,6 +556,8 @@ window.addEventListener("load", function(event)
 			item.value = 0;
 		}
 		updatePlats[idPlat][platPropery] = item.value;
+
+		detectBodyUpdate();
 	}
 
 	let moveOrder = function(event)
@@ -588,6 +630,8 @@ window.addEventListener("load", function(event)
 			document.body.onmousemove = null;
 			document.body.onmouseup = null;
 			ul.onmouseover = null;
+
+			detectBodyUpdate();
 		}
 	}
 
@@ -601,6 +645,8 @@ window.addEventListener("load", function(event)
 		deletePlatsList[id] = "";
 
 		event.target.parentNode.remove();
+
+		detectBodyUpdate();
 	}
 
 	let deleteCartes = function(event)
@@ -620,6 +666,8 @@ window.addEventListener("load", function(event)
 		{
 			fam.remove();
 		}
+
+		detectBodyUpdate();
 	}
 
 	let init = function()
@@ -791,4 +839,5 @@ window.addEventListener("load", function(event)
 		initRecordButton();
 	}
 	init();
+	let bodyAtLoad = document.body.textContent;
 });

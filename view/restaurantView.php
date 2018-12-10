@@ -223,7 +223,7 @@
 		if ($admin === true)
 		{
 	?>
-			<button id="recordChanges" class="btn" style="position: fixed; left: 0; bottom:0; z-index: 10">Enregistrer les Modifiactions</button>
+			<button id="recordChanges" class="btn displayNone" style="position: fixed; left: 0; bottom:0; z-index: 10">Enregistrer les Modifiactions</button>
 	<?php
 		}
 	?>
