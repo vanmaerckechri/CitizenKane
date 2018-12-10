@@ -33,13 +33,52 @@ class Cartes
 		}
     }
 
+    public function uploadPdf($serie)
+    {
+		$uploads_dir = './assets/pdf/';
+		$nameList = [];
+		$index = 0;
+		/*foreach ($_FILES as $key => $file)
+		{
+		    if ($file["error"] == UPLOAD_ERR_OK && ($file["type"] == "image/jpeg" || $file["type"] == "image/png") && stripos($key, $serie) !== false)
+		    {
+			    // -- Copy New File Into Img Folder --
+		       	$tmp_name = $file["tmp_name"];
+		        $name = basename($file["name"]);
+		        move_uploaded_file($tmp_name, "$uploads_dir/$name");
+		        // create small img for new img
+		        $imgNewSmall = $this->createSmallImg($uploads_dir, $name, 250);
+		        // prepare array with all new img src for db
+		        // if a imgSmall version exist push it in array else push big version
+		        if ($imgNewSmall != false)
+		        {
+		        	array_push($nameList, $imgNewSmall);
+		        }
+		        else
+		        {
+		       		array_push($nameList, $name);
+		        }
+		        unset($_FILES[$key]);
+		    }
+		    $index += 1;
+		}
+		return $nameList;*/
+    }
+
     public function insertCartes($newCartes)
     {
     	$dbh = $this->dbh;
 
     	$newCarteId = [];
+    	$newCarteLinkStyleId = [];
 
+    	$styleCarte = "folder";
+		$cartePdfId = [];
+
+		$insPdfCarte = $dbh->prepare("INSERT INTO cartes (title, style, link) VALUES (:title, :style, :link)");
 		$insCarte = $dbh->prepare("INSERT INTO cartes (title) VALUES (:title)");
+
+
 		$insPage = $dbh->prepare("INSERT INTO pages (name, family, id_carte) VALUES (:name, :family, :id_carte)");
 
 		foreach ($newCartes as $pageName => $fams)
@@ -48,16 +87,40 @@ class Cartes
 			{
 				foreach ($cartes as $carteTitle => $plats) 
 				{
+					if (stripos($carteTitle, "link") === 0)
+					{
+						$styleCarte = "link";
+					}
 
-					$insCarte->bindParam(':title', $carteTitle, PDO::PARAM_STR);
-					$insCarte->execute();
+					if ($styleCarte == "link")
+					{
+						$link = "temp.pdf";//temp
+						$insPdfCarte->bindParam(':title', $carteTitle, PDO::PARAM_STR);			
+						$insPdfCarte->bindParam(':style', $styleCarte, PDO::PARAM_STR);
+						$insPdfCarte->bindParam(':link', $link, PDO::PARAM_STR);
+						$insPdfCarte->execute();
+					}
+					else
+					{					
+						$insCarte->bindParam(':title', $carteTitle, PDO::PARAM_STR);
+						$insCarte->execute();
+					}
 
 					$idCarte = $dbh->lastInsertId();
+
 					array_push($newCarteId, $idCarte);
 
-					$platsInCarteId = [];
-					$platsInCarteId[$idCarte] = $plats;
-					$this->insertPlats($platsInCarteId);
+
+					if ($styleCarte == "link")
+					{
+						array_push($cartePdfId, $idCarte);
+					}
+					else
+					{
+						$platsInCarteId = [];
+						$platsInCarteId[$idCarte] = $plats;
+						$this->insertPlats($platsInCarteId);
+					}
 
 					$insPage->bindParam(':name', $pageName, PDO::PARAM_STR);
 					$insPage->bindParam(':family', $famTitle, PDO::PARAM_STR);
@@ -65,6 +128,11 @@ class Cartes
 					$insPage->execute();
 				}
 			}
+		}
+
+		if (!empty($cartePdfId))
+		{
+			$this->uploadPdf($cartePdfId);	
 		}
 		return($newCarteId);
     }
@@ -134,10 +202,11 @@ class Cartes
 		return $oldImgSrc;
 	}
 
-    public function updateImg($cartesId, $srcList)
+    public function updateCartes($cartesId, $srcList)
     {
 		$dbh = $this->dbh;
 		$upt = $dbh->prepare('UPDATE cartes SET imgSrc = :imgSrc WHERE id = :id');
+
 		foreach ($cartesId as $key => $id)
 		{
 			if (isset($srcList[$key]) && !empty($srcList[$key]))
@@ -225,6 +294,8 @@ class Cartes
 		$uploads_dir = './assets/img/test/';
 		$nameList = [];
 		$index = 0;
+				var_dump($_FILES);
+
 		foreach ($_FILES as $key => $file)
 		{
 		    if ($file["error"] == UPLOAD_ERR_OK && ($file["type"] == "image/jpeg" || $file["type"] == "image/png") && stripos($key, $serie) !== false)

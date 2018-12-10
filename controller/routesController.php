@@ -15,7 +15,7 @@ function crud()
 
 		// img in new carte
 		$newImages = $cartes->uploadImg("onNewCarte");
-		$cartes->updateImg($newCartesId, $newImages);
+		$cartes->updateCartes($newCartesId, $newImages);
 	}
 
 	if (isset($_POST["newPlats"]) && !empty($_POST["newPlats"]))
@@ -33,7 +33,7 @@ function crud()
 		//$oldFileNameList = $cartes->getImgSrc($cartesId);
 		//$fileNameList = $cartes->uploadImg($oldImgDir, $oldFileNameList);
 		$fileNameList = $cartes->uploadImg("onAlreadyExistCarte");
-		$cartes->updateImg($cartesId, $fileNameList);
+		$cartes->updateCartes($cartesId, $fileNameList);
 	}
 
 	if (isset($_POST["familyCarteTitle"]) && !empty($_POST["familyCarteTitle"]))

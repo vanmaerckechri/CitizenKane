@@ -148,6 +148,17 @@
 								</div>
 								<?php
 							}
+							elseif ($description["style"] == "link")
+							{
+								?>
+								<div class="readMore-content cartePdf-content">
+									<div class="uploadPdf-container">
+										<p>PDF: </p>
+										<input type="file" class="uploadPdf" accept="application/pdf">
+									</div>
+								</div>
+								<?php
+							}
 							?>
 						</div>
 					<?php
@@ -170,7 +181,7 @@
 								<span class="radioLink">
 								</span>
 							</span>
-							<p>carte lien vers pdf</p>
+							<p>carte vers un lien pdf</p>
 						</div>
 					</div>
 					<?php

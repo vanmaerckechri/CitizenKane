@@ -80,6 +80,17 @@ input.prix {
     .addCarte_btnContainer .radioLink_container:hover .radioLink {
       background-color: #FC6D6D; }
 
+.readMore-container .cartePdf-content {
+  max-height: none; }
+
+.uploadPdf {
+  width: auto; }
+
+.uploadPdf-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center; }
+
 .btn_carteDelete {
   border: 1px solid white;
   border-radius: 50%;
