@@ -46,6 +46,40 @@ input.prix {
 .newPlat {
   border: 1px dotted grey; }
 
+.addCarte_btnContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center; }
+  .addCarte_btnContainer .radioFolder_container, .addCarte_btnContainer .radioLink_container {
+    margin-left: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    .addCarte_btnContainer .radioFolder_container > span, .addCarte_btnContainer .radioLink_container > span {
+      margin-right: 0.5rem;
+      border: 1px solid black;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center; }
+    .addCarte_btnContainer .radioFolder_container .radioFolder, .addCarte_btnContainer .radioFolder_container .radioLink, .addCarte_btnContainer .radioLink_container .radioFolder, .addCarte_btnContainer .radioLink_container .radioLink {
+      border-radius: 50%;
+      width: 32px;
+      height: 32px; }
+  .addCarte_btnContainer .radio_selected .radioFolder, .addCarte_btnContainer .radio_selected .radioLink {
+    background-color: #FC6D6D; }
+  .addCarte_btnContainer .radioFolder_container:hover {
+    cursor: pointer; }
+    .addCarte_btnContainer .radioFolder_container:hover .radioFolder {
+      background-color: #FC6D6D; }
+  .addCarte_btnContainer .radioLink_container:hover {
+    cursor: pointer; }
+    .addCarte_btnContainer .radioLink_container:hover .radioLink {
+      background-color: #FC6D6D; }
+
 .btn_carteDelete {
   border: 1px solid white;
   border-radius: 50%;

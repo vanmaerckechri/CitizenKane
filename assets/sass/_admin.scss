@@ -69,6 +69,67 @@ input.prix
 	border: 1px dotted grey;
 }
 
+.addCarte_btnContainer
+{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: center;
+	.radioFolder_container, .radioLink_container
+	{
+		margin-left: 1rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		& > span
+		{
+			margin-right: 0.5rem;
+			border: 1px solid black;
+			border-radius: 50%;
+			width: 48px;
+			height: 48px;
+			display: inline-flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.radioFolder, .radioLink
+		{
+			border-radius: 50%;
+			width: 32px;
+			height: 32px;	
+		}
+	}
+	.radio_selected
+	{
+		.radioFolder, .radioLink
+		{	
+			background-color: $main-color;
+		}
+	}
+	.radioFolder_container
+	{
+		&:hover
+		{
+			cursor: pointer;
+			.radioFolder
+			{
+				background-color: $main-color;
+			}
+		}
+	}
+	.radioLink_container
+	{
+		&:hover
+		{
+			cursor: pointer;
+			.radioLink
+			{
+				background-color: $main-color;
+			}
+		}
+	}
+}
+
 .btn_carteDelete
 {
 	border: 1px solid white;

@@ -27,7 +27,7 @@
 			{
 				$idsFam = implode("_", $family["idsFam"]);
 			?>
-				<div id="familyContainer__<?= htmlspecialchars($idsFam) ?>">
+				<div id="familyContainer__<?= htmlspecialchars($idsFam) ?>" class="familyContainer">
 					<input id="familyId__<?= htmlspecialchars($idsFam) ?>" class="familyTitle h3" type="text" value="<?= htmlspecialchars($keyFam) ?>">
 			<?php
 			}
@@ -156,7 +156,23 @@
 				if ($admin === true)
 				{
 					?>
-					<button id="addCarte__<?= htmlspecialchars($idsFam) ?>" class="btn addCarte">ajouter une carte à la famille: "<?= htmlspecialchars($keyFam) ?>"</button>
+					<div class="addCarte_btnContainer">
+						<button id="addCarte__<?= htmlspecialchars($idsFam) ?>" class="btn addCarte">ajouter une carte à la famille: "<?= htmlspecialchars($keyFam) ?>"</button>
+						<div class="radio radioFolder_container radio_selected">
+							<span>
+								<span class="radioFolder">
+								</span>
+							</span>
+							<p>carte dépliable</p>
+						</div>
+						<div class="radio radioLink_container">
+							<span>
+								<span class="radioLink">
+								</span>
+							</span>
+							<p>carte lien vers pdf</p>
+						</div>
+					</div>
 					<?php
 				}
 			?>

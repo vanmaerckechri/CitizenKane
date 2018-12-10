@@ -12,6 +12,9 @@ let deleteCartesList = {};
 
 window.addEventListener("load", function(event)
 {
+
+	// -- Tools --
+
 	let incrStr = function(str)
 	{
 		let splitIndex = 0;
@@ -79,6 +82,25 @@ window.addEventListener("load", function(event)
 		return result;
 	}
 
+	let focusParent = function(parentClassName, child)
+	{	
+		let parent = child.parentNode;
+		while (!parent.classList.contains(parentClassName))
+		{
+			parent = parent.parentNode;
+		}
+		return parent;
+	}
+
+	let cleanIdBeforeThisChar = function(dirtId, cleanBeforeMe)
+	{
+		let id = dirtId;
+		let index = id.indexOf(cleanBeforeMe);
+		return id.slice(index + cleanBeforeMe.length, id.length);
+	}
+
+	// -- Save to DB --
+
 	let detectNewPlats = function(cartes= document)
 	{
 		let newPlats = cartes.querySelectorAll(".newPlat");
@@ -124,7 +146,8 @@ window.addEventListener("load", function(event)
 			newCartes[i].classList.remove("newCarte");
 			let newCarteTitle = newCartes[i].querySelector(".carteTitle").value;
 			// new carte in family who already exist
-			let famName = newCartes[i].parentNode.querySelector(".familyTitle").value;
+			let parent = focusParent("familyContainer", newCartes[i]);
+			let famName = parent.querySelector(".familyTitle").value;
 			newCarteContent[page][famName] = !newCarteContent[page][famName] ? {} : newCarteContent[page][famName];
 			newCarteContent[page][famName][newCarteTitle] = detectNewPlats(newCartes[i]);
 		}
@@ -228,6 +251,8 @@ window.addEventListener("load", function(event)
 		}
 	}
 
+	// -- Manage Cartes --
+
 	let addPlat = function(event)
 	{
 		let li = createElem(["li"], [["class"]], [["newPlat"]]);
@@ -254,6 +279,21 @@ window.addEventListener("load", function(event)
 				prix.value = 0;
 			}
 		}, false);
+	}
+
+	let switchNewCarteStyle = function(radio)
+	{
+		let parent = radio.parentNode;
+		console.log(radio)
+		let radios = parent.querySelectorAll(".radio");
+		let toggle = !radio.classList.contains("radio_selected") ? true : false;
+		for (let i = radios.length - 1; i >= 0; i--)
+		{
+			if (toggle == true)
+			{
+				radios[i].classList.toggle("radio_selected");
+			}
+		}
 	}
 
 	let addCarte = function(event, firstCarteForNewFam = false)
@@ -336,8 +376,8 @@ window.addEventListener("load", function(event)
 
 	let addFamilyCarte = function(event)
 	{
-		let divParent = createElem(["div"], [["class"]], [["newFam"]]);
-		let famiTitleInput = createElem(["input"], [["type", "class", "placeholder"]], [["text", "familyTitle h3", "Nouvelle Famille de Cartes"]]);
+		let divParent = createElem(["div"], [["class"]], [["familyContainer newFam"]]);
+		let famiTitleInput = createElem(["input"], [["type", "class", "value"]], [["text", "familyTitle h3", "Nouvelle Famille de Cartes"]]);
 		let addCarteButton = createElem(["button"], [["class"]], [["btn addCarte"]]);
 		addCarteButton.innerHTML = "Ajouter une Carte à la Famille: \"Nouvelle Famille de Cartes\"";
 		divParent.appendChild(famiTitleInput);
@@ -356,7 +396,11 @@ window.addEventListener("load", function(event)
 
 	let updateFamilyCarteTitle = function(event)
 	{
-		let idsFam = event.target.id.slice(10, event.target.id.length);
+		/*let idsFam = event.target.id;
+		let index = idsFam.indexOf("__");
+		idsFam = idsFam.slice(index + 2, idsFam.length);*/
+		let idsFam = cleanIdBeforeThisChar(event.target.id, "__");
+
 		idsFam = idsFam.split("_").map(Number);
 		for (let i = idsFam.length - 1; i >= 0; i--)
 		{
@@ -372,9 +416,10 @@ window.addEventListener("load", function(event)
 
 	let updateCarteTitle = function(item)
 	{
-		let id = item.id;
+		/*let id = item.id;
 		let index = id.indexOf("__");
-		id = id.slice(index + 2, id.length);
+		id = id.slice(index + 2, id.length);*/
+		let id = cleanIdBeforeThisChar(item.id, "__");
 
 		let dubClassName = "carteTitle";
 		let titleDomElem = item;
@@ -383,9 +428,10 @@ window.addEventListener("load", function(event)
 
 	let updatePlat = function(item, platPropery)
 	{
-		let idPlat = item.parentNode.id;
+		/*let idPlat = item.parentNode.id;
 		let index = idPlat.indexOf("__");
-		idPlat = idPlat.slice(index + 2, idPlat.length);
+		idPlat = idPlat.slice(index + 2, idPlat.length);*/
+		let idPlat = cleanIdBeforeThisChar(item.parentNode.id, "__");
 
 		updatePlats[idPlat] = !updatePlats[idPlat] ? {} : updatePlats[idPlat];
 		if (isNaN(parseInt(item.value)))
@@ -470,9 +516,10 @@ window.addEventListener("load", function(event)
 
 	let deletePlats = function(event)
 	{
-		let id = event.target.parentNode.id;
+		/*let id = event.target.parentNode.id;
 		let index = id.indexOf("__");
-		id = id.slice(index + 2, id.length);
+		id = id.slice(index + 2, id.length);*/
+		let id = cleanIdBeforeThisChar(event.target.parentNode.id, "__");
 
 		deletePlatsList[id] = "";
 
@@ -534,6 +581,18 @@ window.addEventListener("load", function(event)
 			for (let i = addCarteButtons.length - 1; i >= 0; i--)
 			{			
 				addCarteButtons[i].addEventListener("click", addCarte, false);
+			}
+
+			let radioLink = document.querySelectorAll(".radioLink_container");
+			for (let i = radioLink.length - 1; i >= 0; i--)
+			{			
+				radioLink[i].addEventListener("click", switchNewCarteStyle.bind(this, radioLink[i]), false);
+			}
+
+			let radioFolder = document.querySelectorAll(".radioFolder_container");
+			for (let i = radioFolder.length - 1; i >= 0; i--)
+			{			
+				radioFolder[i].addEventListener("click", switchNewCarteStyle.bind(this, radioFolder[i]), false);
 			}
 		}
 
