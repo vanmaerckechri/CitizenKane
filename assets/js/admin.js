@@ -271,7 +271,7 @@ window.addEventListener("load", function(event)
 		divContainer.appendChild(deleteCarte);
 
 		let divContent = createElem(["div"], [["class"]], [["readMore-content"]]);
-		let carteTitle = createElem(["input"], [["type", "class", "placeholder"]], [["text", "carteTitle h4", "titre de la carte"]]);
+		let carteTitle = createElem(["input"], [["type", "class", "value"]], [["text", "carteTitle h4", "titre de la carte"]]);
 		let ul = document.createElement("ul");
 		let li = document.createElement("li");
 		let addPlatButton = createElem(["button"], [["class"]], [["addPlat btn btn_add"]]);
@@ -293,6 +293,7 @@ window.addEventListener("load", function(event)
 			firstCarteForNewFam.parentNode.insertBefore(divContainer, firstCarteForNewFam);
 		}
 
+		// delete carte button
 		deleteCarte.addEventListener("click", function()
 		{
 			let carte = this.parentNode;
@@ -307,6 +308,7 @@ window.addEventListener("load", function(event)
 			}
 		}, false);
 
+		// limit unfold button to the height of the image
 		openCarteButton.checked = true;
 		openCarteButton.style.height = imgCarte.offsetHeight + "px" ;
 		openCarteButton.addEventListener("change", function()
@@ -321,7 +323,15 @@ window.addEventListener("load", function(event)
 			}
 		}, false);
 
+		// button to add new plat
 		addPlatButton.addEventListener("click", addPlat, false);
+		
+		// avoid titles duplicates
+		carteTitle.value = fixDupTitle("carteTitle", carteTitle);
+		carteTitle.addEventListener("change", function()
+		{
+			carteTitle.value = fixDupTitle("carteTitle", carteTitle);
+		}, false);
 	}
 
 	let addFamilyCarte = function(event)

@@ -47,19 +47,39 @@
 						$description = $carte["description"];
 						?>		
 						<div class="readMore-container">
-							<input class="openCarteButton" type="checkbox" aria-label="afficher la carte des <?= htmlspecialchars($description["title"]) ?>">
 							<?php
-							if (!empty($description["imgSrc"]))
+							if ($description["style"] == "fold")
 							{
 							?>
-								<img src="assets/img/test/<?= htmlspecialchars($description["imgSrc"]) ?>" alt="photo représentant la carte des <?= htmlspecialchars($description["title"]) ?>">
-							<?php
+								<input class="openCarteButton" type="checkbox" aria-label="afficher la carte des <?= htmlspecialchars($description["title"]) ?>">
+								<?php
+								if (!empty($description["imgSrc"]))
+								{
+								?>
+									<img src="assets/img/test/<?= htmlspecialchars($description["imgSrc"]) ?>" alt="photo représentant la carte des <?= htmlspecialchars($description["title"]) ?>">
+								<?php
+								}
+								else
+								{
+								?>
+									<img src="assets/img/test/carte_empty.png" alt="photo représentant la carte des <?= htmlspecialchars($description["title"]) ?>">
+								<?php
+								}
 							}
-							else
+							elseif ($description["style"] == "link")
 							{
-							?>
-								<img src="assets/img/test/carte_empty.png" alt="photo représentant la carte des <?= htmlspecialchars($description["title"]) ?>">
-							<?php
+								if (!empty($description["imgSrc"]))
+								{
+								?>
+									<a href="./assets/pdf/<?= htmlspecialchars($description["link"]) ?>" target="_blank" rel="noopener"><img src="assets/img/test/<?= htmlspecialchars($description["imgSrc"]) ?>" alt="photo représentant la carte des <?= htmlspecialchars($description["title"]) ?>"></a>
+								<?php
+								}
+								else
+								{
+								?>
+									<a href="./assets/pdf/<?= htmlspecialchars($description["link"]) ?>" target="_blank" rel="noopener"><img src="assets/img/test/carte_empty.png" alt="photo représentant la carte des <?= htmlspecialchars($description["title"]) ?>"></a>
+								<?php
+								}
 							}
 							if ($admin === true)
 							{
@@ -68,62 +88,67 @@
 								<button id="deleteCarte__<?= htmlspecialchars($keyCarte) ?>" class="btn_carteDelete">X</button>
 							<?php
 							}
-							?>
-							<div class="readMore-content">
-								<?php
-								if ($admin === true)
-								{
+							if ($description["style"] == "fold")
+							{
 								?>
-									<input id="carteTitle__<?= htmlspecialchars($keyCarte) ?>" class="carteTitle h4" type="text" value="<?= htmlspecialchars($description["title"]) ?>">
-								<?php
-								}
-								else
-								{
-								?>
-									<h4><?= htmlspecialchars($description["title"]) ?></h4>
-								<?php
-								}
-								?>
-								<ul id="carte__<?= htmlspecialchars($keyCarte) ?>">
-								<?php
-								if (isset($carte["plats"]) && !empty($carte["plats"]))
-								{
-									foreach ($carte["plats"] as $keyPlat => $plat)
+								<div class="readMore-content">
+									<?php
+									if ($admin === true)
 									{
-										if ($admin === true)
+									?>
+										<input id="carteTitle__<?= htmlspecialchars($keyCarte) ?>" class="carteTitle h4" type="text" value="<?= htmlspecialchars($description["title"]) ?>">
+									<?php
+									}
+									else
+									{
+									?>
+										<h4><?= htmlspecialchars($description["title"]) ?></h4>
+									<?php
+									}
+									?>
+									<ul id="carte__<?= htmlspecialchars($keyCarte) ?>">
+									<?php
+									if (isset($carte["plats"]) && !empty($carte["plats"]))
+									{
+										foreach ($carte["plats"] as $keyPlat => $plat)
 										{
-										?>
-											<li id="plats__<?= htmlspecialchars($keyPlat) ?>">
-												<button class="moveOrderButton">MOVE</button>
-												<input class="plat" type="text" placeholder="Titre du Plat" value="<?= htmlspecialchars($plat['name']) ?>" autocomplete="off">
-												<input class="prix" type="number" min="0" step="0.1" placeholder="Prix du Plat" value="<?= htmlspecialchars($plat['price']) ?>" autocomplete="off">
-												<button class="btn_platDelete">X</button>
-												<input class="platCompo" type="text" placeholder="Composition du Plat" value="<?= htmlspecialchars($plat['compo']) ?>" autocomplete="off">
-											</li>
-										<?php			
-										}
-										else
-										{
-										?>
-											<li>
-												<span class="plat"><?= htmlspecialchars($plat['name']) ?></span>
-												<span class="dots"></span>
-												<span class="prix"><?= number_format(htmlspecialchars($plat['price']), 2, ',', ' ') ?></span>
-												<span class="platCompo"><?= htmlspecialchars($plat['compo']) ?></span>
-											</li>
-										<?php
+											if ($admin === true)
+											{
+											?>
+												<li id="plats__<?= htmlspecialchars($keyPlat) ?>">
+													<button class="moveOrderButton">MOVE</button>
+													<input class="plat" type="text" placeholder="Titre du Plat" value="<?= htmlspecialchars($plat['name']) ?>" autocomplete="off">
+													<input class="prix" type="number" min="0" step="0.1" placeholder="Prix du Plat" value="<?= htmlspecialchars($plat['price']) ?>" autocomplete="off">
+													<button class="btn_platDelete">X</button>
+													<input class="platCompo" type="text" placeholder="Composition du Plat" value="<?= htmlspecialchars($plat['compo']) ?>" autocomplete="off">
+												</li>
+											<?php			
+											}
+											else
+											{
+											?>
+												<li>
+													<span class="plat"><?= htmlspecialchars($plat['name']) ?></span>
+													<span class="dots"></span>
+													<span class="prix"><?= number_format(htmlspecialchars($plat['price']), 2, ',', ' ') ?></span>
+													<span class="platCompo"><?= htmlspecialchars($plat['compo']) ?></span>
+												</li>
+											<?php
+											}
 										}
 									}
-								}
-								if ($admin === true)
-								{
+									if ($admin === true)
+									{
+										?>
+										<li><button id="addPlat__<?= htmlspecialchars($keyCarte) ?>" class="addPlat btn btn_add">ajouter un plat à "<?= htmlspecialchars($description["title"]) ?>"</button></li>
+									<?php
+									}
 									?>
-									<li><button id="addPlat__<?= htmlspecialchars($keyCarte) ?>" class="addPlat btn btn_add">ajouter un plat à "<?= htmlspecialchars($description["title"]) ?>"</button></li>
+									</ul>
+								</div>
 								<?php
-								}
-								?>
-								</ul>
-							</div>
+							}
+							?>
 						</div>
 					<?php
 					}
@@ -145,10 +170,6 @@
 			<?php
 		}
 		?>
-		<div>
-			<h3>La Carte Boissons</h3>
-			<a href="assets/pdf/boissons.pdf" target="_blank" rel="noopener"><img src="assets/img/cartecafe_boissons_small.jpg" alt="photo d'un cocktail"></a>
-		</div>
 		<div>
 			<h3>Allergènes</h3>
 			<p>Nous vous informons que certains plats de notre restaurant peuvent contenir des allergènes. Si vous présentez un risque d’allergie, merci d’interpeller un de nos serveurs pour plus d’informations.</p>

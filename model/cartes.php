@@ -407,7 +407,7 @@ class Cartes
 		}
 
 		// cartes Description
-		$sth = $dbh->prepare('SELECT title, imgSrc from cartes WHERE id = :id');
+		$sth = $dbh->prepare('SELECT title, imgSrc, style, link from cartes WHERE id = :id');
 		foreach ($cartesSorted as $keyFamily => $family)
 		{
 			foreach ($family as $keyCarte => $carte)
