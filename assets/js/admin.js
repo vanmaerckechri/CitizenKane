@@ -57,22 +57,25 @@ window.addEventListener("load", function(event)
 	let fixDupTitle = function(className, item)
 	{
 		let title = item.value;
-		// if title already exist incr it
-		let carteTitleList = [];
-		let cartesTitle = document.querySelectorAll("." + className);
-		for (let i = cartesTitle.length - 1; i >= 0; i--)
+		if (title != 0)
 		{
-			if (cartesTitle[i] != item)
+			// if title already exist incr it
+			let carteTitleList = [];
+			let cartesTitle = document.querySelectorAll("." + className);
+			for (let i = cartesTitle.length - 1; i >= 0; i--)
 			{
-				carteTitleList.push(cartesTitle[i].value)
+				if (cartesTitle[i] != item)
+				{
+					carteTitleList.push(cartesTitle[i].value)
+				}
 			}
-		}
 
-		while (checkDup(carteTitleList , title))
-		{
-			title = incrStr(title);
+			while (checkDup(carteTitleList , title))
+			{
+				title = incrStr(title);
+			}
+			item.value = title;
 		}
-		item.value = title;
 		return title;
 	}
 
@@ -148,12 +151,14 @@ window.addEventListener("load", function(event)
 		for (let i = 0, length = newCartes.length; i < length; i++)
 		{
 			newCartes[i].classList.remove("newCarte");
-			let newCarteTitle = newCartes[i].querySelector(".carteTitle") ? newCartes[i].querySelector(".carteTitle").value : "link" + i;
+			let newCarteTitle = newCartes[i].querySelector(".carteTitle").value;
+			let styleCarte = newCartes[i].querySelector(".uploadPdf-container") ? "link" : "fold";
 			// new carte in family who already exist
 			let parent = focusParent("familyContainer", newCartes[i]);
 			let famName = parent.querySelector(".familyTitle").value;
 			newCarteContent[page][famName] = !newCarteContent[page][famName] ? {} : newCarteContent[page][famName];
 			newCarteContent[page][famName][newCarteTitle] = detectNewPlats(newCartes[i]);
+			newCarteContent[page][famName][newCarteTitle]["styleCarte"] = styleCarte;
 		}
 
 		return newCarteContent;	
@@ -382,9 +387,9 @@ window.addEventListener("load", function(event)
 		divContainer.appendChild(deleteCarte);
 
 		let divContent = createElem(["div"], [["class"]], [["readMore-content"]]);
+		let carteTitle = createElem(["input"], [["type", "class", "value", "placeholder"]], [["text", "carteTitle h4", "titre de la carte", "Carte sans titre"]]);
 		if (style == "folder")
 		{
-			var carteTitle = createElem(["input"], [["type", "class", "value"]], [["text", "carteTitle h4", "titre de la carte"]]);
 			var ul = document.createElement("ul");
 			var li = document.createElement("li");
 			var addPlatButton = createElem(["button"], [["class"]], [["addPlat btn btn_add"]]);
@@ -407,6 +412,7 @@ window.addEventListener("load", function(event)
 			uploadPdfContainer.appendChild(labelUploadPdf);
 			uploadPdfContainer.appendChild(inputUploadPdf);
 			divContent.appendChild(uploadPdfContainer);
+			divContent.appendChild(carteTitle);
 
 			openCarteButton.remove();
 		}
@@ -509,6 +515,15 @@ window.addEventListener("load", function(event)
 
 		// create new carte in the new family at spawn
 		addCarte(this, addCarteButton);
+
+		// avoid titles duplicates
+		famiTitleInput.value = fixDupTitle("familyTitle", famiTitleInput);
+		famiTitleInput.addEventListener("change", function()
+		{
+			famiTitleInput.value = fixDupTitle("familyTitle", famiTitleInput);
+
+			detectBodyUpdate();
+		}, false);
 
 		detectBodyUpdate();
 	}

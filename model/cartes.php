@@ -69,9 +69,7 @@ class Cartes
     	$styleCarte = "folder";
 		$cartePdfId = [];
 
-		$insPdfCarte = $dbh->prepare("INSERT INTO cartes (title, style) VALUES (:title, :style)");
-		$insCarte = $dbh->prepare("INSERT INTO cartes (title) VALUES (:title)");
-
+		$insCarte = $dbh->prepare("INSERT INTO cartes (title, style) VALUES (:title, :style)");
 
 		$insPage = $dbh->prepare("INSERT INTO pages (name, family, id_carte) VALUES (:name, :family, :id_carte)");
 
@@ -81,27 +79,16 @@ class Cartes
 			{
 				foreach ($cartes as $carteTitle => $plats) 
 				{
-					if (stripos($carteTitle, "link") === 0)
-					{
-						$styleCarte = "link";
-					}
+					$styleCarte = $plats['styleCarte'];
+					unset($plats['styleCarte']);
 
-					if ($styleCarte == "link")
-					{
-						$insPdfCarte->bindParam(':title', $carteTitle, PDO::PARAM_STR);			
-						$insPdfCarte->bindParam(':style', $styleCarte, PDO::PARAM_STR);
-						$insPdfCarte->execute();
-					}
-					else
-					{					
-						$insCarte->bindParam(':title', $carteTitle, PDO::PARAM_STR);
-						$insCarte->execute();
-					}
+					$insCarte->bindParam(':title', $carteTitle, PDO::PARAM_STR);			
+					$insCarte->bindParam(':style', $styleCarte, PDO::PARAM_STR);
+					$insCarte->execute();
 
 					$idCarte = $dbh->lastInsertId();
 
 					array_push($newCarteId, $idCarte);
-
 
 					if ($styleCarte != "link")
 					{

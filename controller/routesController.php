@@ -126,6 +126,7 @@ function loadRestaurant($admin)
 	cleanPost($page);
 
 	$restoPage = 'class="active"';
+	require('./view/carteView.php');
     require('./view/restaurantView.php');
 }
 
@@ -140,5 +141,6 @@ function loadCafe($admin)
 	cleanPost($page);
 
 	$cafePage = 'class="active"';
+	require('./view/carteView.php');
     require('./view/cafeView.php');
 }
