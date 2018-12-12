@@ -114,6 +114,7 @@ function loadHome()
 	$homePage = 'class="active"';
     require('./view/homeView.php');
 }
+
 function loadRestaurant($admin)
 {
 	$page = "restaurant";
@@ -123,4 +124,15 @@ function loadRestaurant($admin)
 
 	$restoPage = 'class="active"';
     require('./view/restaurantView.php');
+}
+
+function loadCafe($admin)
+{
+	$page = "cafe";
+	$cartes = new Cartes();
+	$cartes = $cartes->getCartes($page);
+	cleanPost($page);
+
+	$cafePage = 'class="active"';
+    require('./view/cafeView.php');
 }

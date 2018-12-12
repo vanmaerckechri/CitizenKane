@@ -19,6 +19,10 @@ if (isset($_GET['action']))
     {
         loadRestaurant($admin);
     }
+    elseif ($_GET['action'] == 'cafe')
+    {
+        loadCafe($admin);
+    }
     else
     {
         loadHome();

@@ -10,7 +10,7 @@
 			<ul>
 				<li><a <?= $homePage ?? '' ?> href="index.php?action=home">Accueil</a></li>
 				<li><a <?= $restoPage ?? '' ?> href="index.php?action=restaurant">Le Restaurant</a></li>
-				<li><a href="cafe.html">Le Café-Bar</a></li>
+				<li><a <?= $cafePage ?? '' ?> href="index.php?action=cafe">Le Café-Bar</a></li>
 				<li><a href="beer-discovery-project.html">Beer Discovery Project</a></li>
 				<li><a href="brunch.html">Le Brunch</a></li>
 				<li><a href="agenda.html">Agenda</a></li>

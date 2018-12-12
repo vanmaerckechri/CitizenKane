@@ -480,31 +480,42 @@ window.addEventListener("load", function(event)
 		let divParent = createElem(["div"], [["class"]], [["familyContainer newFam"]]);
 		let famiTitleInput = createElem(["input"], [["type", "class", "value"]], [["text", "familyTitle h3", "Nouvelle Famille de Cartes"]]);
 
-		/*let addCarteButton = createElem(["button"], [["class"]], [["btn addCarte"]]);
-		addCarteButton.innerHTML = "Ajouter une Carte à la Famille: \"Nouvelle Famille de Cartes\"";*/
+		// create new addCarteButton
+		let radioLink = createElem(["span", "span", "div"], [["class"], [], ["class"]], [["radioLink"], [], ["radio radioLink_container radio_selected"]]);
+		let radioLinkText = document.createElement("p");
+		radioLinkText.innerHTML = "carte dépliable";
+		radioLink.appendChild(radioLinkText);
 
-		let addCarteButtonContainer = document.querySelector(".addCarte_btnContainer").cloneNode(true);
+		let radioFolder = createElem(["span", "span", "div"], [["class"], [], ["class"]], [["radioFolder"], [], ["radio radioFolder_container"]]);
+		let radioFolderText = document.createElement("p");
+		radioFolderText.innerHTML = "carte vers un lien pdf";
+		radioFolder.appendChild(radioFolderText);
+
+		let addCarteButton = createElem(["button"], [["class"]], [["btn addCarte"]]);
+		addCarteButton.innerHTML = 'ajouter une carte à la famille: "Nouvelle Famille de Cartes"';
+		let addCarteButtonContainer = createElem(["div"], [["class"]], [["addCarte_btnContainer"]]);
+		addCarteButtonContainer.appendChild(addCarteButton);
+		addCarteButtonContainer.appendChild(radioLink);
+		addCarteButtonContainer.appendChild(radioFolder);
 
 		divParent.appendChild(famiTitleInput);
 		divParent.appendChild(addCarteButtonContainer);
 		event.target.parentNode.insertBefore(divParent, event.target);
 
+		// event update addCarte button content if family title change
 		famiTitleInput.addEventListener("change", function()
 		{
-			addCarteButtonContainer.innerHTML = "Ajouter une Carte à la Famille: \"" + famiTitleInput.value + "\"";
+			addCarteButton.innerHTML = "Ajouter une Carte à la Famille: \"" + famiTitleInput.value + "\"";
 
 			detectBodyUpdate();
 		}, false);
 
-		let addCarteButton = addCarteButtonContainer.querySelector(".addCarte");
-		addCarteButton.id = "";
-
+		// event addCarte and option between 2 carte style
 		addCarteButton.addEventListener("click", addCarte, false);
-		let radioLink = addCarteButtonContainer.querySelector(".radioLink_container");
-		let radioFolder = addCarteButtonContainer.querySelector(".radioFolder_container");
 		radioLink.addEventListener("click", switchNewCarteStyle.bind(this, radioLink), false);
 		radioFolder.addEventListener("click", switchNewCarteStyle.bind(this, radioFolder), false);
 
+		// create new carte in the new family at spawn
 		addCarte(this, addCarteButton);
 
 		detectBodyUpdate();
