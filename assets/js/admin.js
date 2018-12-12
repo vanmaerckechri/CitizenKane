@@ -492,7 +492,7 @@ window.addEventListener("load", function(event)
 		radioFolder.appendChild(radioFolderText);
 
 		let addCarteButton = createElem(["button"], [["class"]], [["btn addCarte"]]);
-		addCarteButton.innerHTML = 'ajouter une carte à la famille: "Nouvelle Famille de Cartes"';
+		addCarteButton.innerHTML = "ajouter une carte";
 		let addCarteButtonContainer = createElem(["div"], [["class"]], [["addCarte_btnContainer"]]);
 		addCarteButtonContainer.appendChild(addCarteButton);
 		addCarteButtonContainer.appendChild(radioLink);
@@ -501,14 +501,6 @@ window.addEventListener("load", function(event)
 		divParent.appendChild(famiTitleInput);
 		divParent.appendChild(addCarteButtonContainer);
 		event.target.parentNode.insertBefore(divParent, event.target);
-
-		// event update addCarte button content if family title change
-		famiTitleInput.addEventListener("change", function()
-		{
-			addCarteButton.innerHTML = "Ajouter une Carte à la Famille: \"" + famiTitleInput.value + "\"";
-
-			detectBodyUpdate();
-		}, false);
 
 		// event addCarte and option between 2 carte style
 		addCarteButton.addEventListener("click", addCarte, false);
@@ -526,12 +518,14 @@ window.addEventListener("load", function(event)
 		/*let idsFam = event.target.id;
 		let index = idsFam.indexOf("__");
 		idsFam = idsFam.slice(index + 2, idsFam.length);*/
-		let idsFam = cleanIdBeforeThisChar(event.target.id, "__");
+		let inputFamTitle = event.target;
+		let idsFam = cleanIdBeforeThisChar(inputFamTitle.id, "__");
+		let famTitle = event.target.value;
 
 		idsFam = idsFam.split("_").map(Number);
 		for (let i = idsFam.length - 1; i >= 0; i--)
 		{
-			updateFamilyCarteTitleList[idsFam[i]] = event.target.value;
+			updateFamilyCarteTitleList[idsFam[i]] = famTitle;
 		}
 
 		detectBodyUpdate();
@@ -575,7 +569,7 @@ window.addEventListener("load", function(event)
 		let idPlat = cleanIdBeforeThisChar(item.parentNode.id, "__");
 
 		updatePlats[idPlat] = !updatePlats[idPlat] ? {} : updatePlats[idPlat];
-		if (isNaN(parseInt(item.value)))
+		if (platPropery == "price" && isNaN(parseInt(item.value)))
 		{
 			item.value = 0;
 		}

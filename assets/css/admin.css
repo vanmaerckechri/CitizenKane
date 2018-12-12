@@ -21,6 +21,10 @@
   text-align: center;
   font-size: 1.2rem;
   letter-spacing: 0.3rem; }
+.restaurant-cartes .familyContainer {
+  margin-bottom: 1rem;
+  border: 2px dotted black;
+  padding: 1rem; }
 
 .carteImg {
   position: absolute;
@@ -136,14 +140,17 @@ input.prix {
   .moveOrderButton:hover {
     cursor: grab; }
 
-.btn_add, .moveOrderButton, .addCarte, .btn_addFam {
+.btn_add, .moveOrderButton, .addCarte, .btn_addFam, .btn_import {
   border-radius: 0;
   background-color: #1e9e6b; }
-  .btn_add:hover, .moveOrderButton:hover, .addCarte:hover, .btn_addFam:hover {
+  .btn_add:hover, .moveOrderButton:hover, .addCarte:hover, .btn_addFam:hover, .btn_import:hover {
     background-color: #069059; }
 
 .btn_addFam {
   margin-top: 1.5rem;
   width: 100%; }
+
+.restaurant-cartes .importCarte_btnContainer {
+  margin-top: 0.5rem; }
 
 /*# sourceMappingURL=admin.css.map */

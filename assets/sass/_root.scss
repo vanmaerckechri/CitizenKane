@@ -109,6 +109,10 @@ fieldset
 		text-align: center;
 	}
 }
+select
+{
+	font-family: $title-fontFam;
+}
 legend
 {
 	font-size: 1.2rem;

@@ -89,6 +89,9 @@ fieldset {
     color: #8f8f8f;
     text-align: center; }
 
+select {
+  font-family: "Montserrat", sans-serif; }
+
 legend {
   font-size: 1.2rem;
   color: #FFF; }
@@ -319,7 +322,7 @@ nav {
     .readMore-container .openCarteButton:hover {
       cursor: pointer; }
   .readMore-container .openCarteButton:checked ~ .readMore-content {
-    max-height: 5000px; }
+    max-height: 25000px; }
   .readMore-container img {
     border: 3px solid transparent;
     transition: border-color 0.2s; }

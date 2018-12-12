@@ -35,7 +35,7 @@
 				$idsFam = implode("_", $family["idsFam"]);
 			?>
 				<div id="familyContainer__<?= htmlspecialchars($idsFam) ?>" class="familyContainer">
-					<input id="familyId__<?= htmlspecialchars($idsFam) ?>" class="familyTitle h3" type="text" value="<?= htmlspecialchars($keyFam) ?>">
+					<input id="familyId__<?= htmlspecialchars($idsFam) ?>" class="familyTitle h3" type="text" value="<?= htmlspecialchars($keyFam) ?>" placeholder="Famille de Cartes Sans Titre" autocomplete="off">
 			<?php
 			}
 			else
@@ -103,14 +103,17 @@
 									if ($admin === true)
 									{
 									?>
-										<input id="carteTitle__<?= htmlspecialchars($keyCarte) ?>" class="carteTitle h4" type="text" value="<?= htmlspecialchars($description["title"]) ?>">
+										<input id="carteTitle__<?= htmlspecialchars($keyCarte) ?>" class="carteTitle h4" type="text" value="<?= htmlspecialchars($description["title"]) ?>" placeholder="Carte Sans Titre" autocomplete="off">
 									<?php
 									}
 									else
 									{
-									?>
-										<h4><?= htmlspecialchars($description["title"]) ?></h4>
-									<?php
+										if (isset($description["title"]) && !empty($description["title"]))
+										{
+											?>
+											<h4><?= htmlspecialchars($description["title"]) ?></h4>
+											<?php
+										}
 									}
 									?>
 									<ul id="carte__<?= htmlspecialchars($keyCarte) ?>">
@@ -147,7 +150,7 @@
 									if ($admin === true)
 									{
 										?>
-										<li><button id="addPlat__<?= htmlspecialchars($keyCarte) ?>" class="addPlat btn btn_add">ajouter un plat à "<?= htmlspecialchars($description["title"]) ?>"</button></li>
+										<li><button id="addPlat__<?= htmlspecialchars($keyCarte) ?>" class="addPlat btn btn_add">ajouter un plat</button></li>
 									<?php
 									}
 									?>
@@ -175,7 +178,7 @@
 				{
 					?>
 					<div class="addCarte_btnContainer">
-						<button id="addCarte__<?= htmlspecialchars($idsFam) ?>" class="btn addCarte">ajouter une carte à la famille: "<?= htmlspecialchars($keyFam) ?>"</button>
+						<button id="addCarte__<?= htmlspecialchars($idsFam) ?>" class="btn addCarte">ajouter une carte</button>
 						<div class="radio radioFolder_container radio_selected">
 							<span>
 								<span class="radioFolder">
@@ -190,6 +193,34 @@
 							</span>
 							<p>carte vers un lien pdf</p>
 						</div>
+					</div>
+					<div class="importCarte_btnContainer">
+						<button class="btn btn_import">Importer une Carte Provenant d'une Autre Page</button>
+						<select name="carteForOtherPage" form="">
+							<?php
+								foreach ($cartesForOtherPages as $famTitle => $fam) 
+								{
+									foreach ($fam as $key => $cartes) 
+									{
+										if ($key != "idsFam")
+										{
+											if ($cartes["description"]["style"] != "link")
+											{
+												?>
+			  									<option value="importId__<?= htmlspecialchars($key) ?>"><?= htmlspecialchars($cartes["description"]["title"]) ?></option>
+			  									<?php
+											}
+											else
+											{
+												?>
+			  									<option value="importId__<?= htmlspecialchars($key) ?>"><?= htmlspecialchars($famTitle) ?></option>
+			  									<?php
+											}
+		  								}
+	  								}
+								}
+							?>
+						</select>
 					</div>
 					<?php
 				}

@@ -427,7 +427,7 @@ class Cartes
 		$upt = $dbh->prepare('UPDATE cartes SET title = :title WHERE id = :id');
 		foreach ($cartesTitle as $id => $title)
 		{
-			if (isset($title) && !empty($title))
+			if (isset($title))
 			{
 				$upt->bindParam(':id', $id, PDO::PARAM_INT);
 				$upt->bindParam(':title', $title, PDO::PARAM_STR);
