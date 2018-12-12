@@ -119,7 +119,10 @@ function loadRestaurant($admin)
 {
 	$page = "restaurant";
 	$cartes = new Cartes();
-	$cartes = $cartes->getCartes($page);
+	$allCartes = $cartes->getCartes($page);
+	$cartes = $allCartes[0];
+	$cartesForOtherPages = $allCartes[1];
+
 	cleanPost($page);
 
 	$restoPage = 'class="active"';
@@ -130,7 +133,10 @@ function loadCafe($admin)
 {
 	$page = "cafe";
 	$cartes = new Cartes();
-	$cartes = $cartes->getCartes($page);
+	$allCartes = $cartes->getCartes($page);
+	$cartes = $allCartes[0];
+	$cartesForOtherPages = $allCartes[1];
+
 	cleanPost($page);
 
 	$cafePage = 'class="active"';

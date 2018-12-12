@@ -461,24 +461,42 @@ class Cartes
 	{
 		$dbh = $this->dbh;
 		// cartes Family
-		$sth = $dbh->prepare('SELECT id, id_carte, family from pages WHERE name = :name');
-		$sth->bindParam(':name', $page, PDO::PARAM_STR);
+		$sth = $dbh->prepare('SELECT id, id_carte, family, name from pages');
 		$sth->execute();
 		$cartes = $sth->fetchAll(PDO::FETCH_ASSOC);
 
-		// reorganize result
+		// -- Reorganize Result --
+		// current page
 		$cartesSorted = [];
 		$idsFam = [];
+
+		// other pages
+		$cartesSortedForOtherPages = [];
+		$idsFamForOtherPages = [];
+
 		foreach ($cartes as $key => $carte)
 		{
-			$idsFam[$carte["family"]]["idsFam"] = !isset($idsFam[$carte["family"]]["idsFam"]) ? [] : $idsFam[$carte["family"]]["idsFam"];
-			array_push($idsFam[$carte["family"]]["idsFam"], $carte["id"]);
+			// current page
+			if ($carte["name"] == $page)
+			{
+				$idsFam[$carte["family"]]["idsFam"] = !isset($idsFam[$carte["family"]]["idsFam"]) ? [] : $idsFam[$carte["family"]]["idsFam"];
+				array_push($idsFam[$carte["family"]]["idsFam"], $carte["id"]);
 
-			$cartesSorted[$carte["family"]][$carte["id_carte"]] = [];
+				$cartesSorted[$carte["family"]][$carte["id_carte"]] = [];		
+			}
+			// other pages
+			else
+			{
+				$idsFamForOtherPages[$carte["family"]]["idsFam"] = !isset($idsFamForOtherPages[$carte["family"]]["idsFam"]) ? [] : $idsFamForOtherPages[$carte["family"]]["idsFam"];
+				array_push($idsFamForOtherPages[$carte["family"]]["idsFam"], $carte["id"]);
+
+				$cartesSortedForOtherPages[$carte["family"]][$carte["id_carte"]] = [];
+			}
 		}
 
-		// cartes Description
+		// -- Cartes Description --
 		$sth = $dbh->prepare('SELECT title, imgSrc, style, link from cartes WHERE id = :id');
+		// current page
 		foreach ($cartesSorted as $keyFamily => $family)
 		{
 			foreach ($family as $keyCarte => $carte)
@@ -489,8 +507,20 @@ class Cartes
 			}
 		}
 
-		// plats
+		// other pages
+		foreach ($cartesSortedForOtherPages as $keyFamily => $family)
+		{
+			foreach ($family as $keyCarte => $carte)
+			{
+				$sth->bindParam(':id', $keyCarte, PDO::PARAM_INT);
+				$sth->execute();
+				$cartesSortedForOtherPages[$keyFamily][$keyCarte]["description"] = $sth->fetchAll(PDO::FETCH_ASSOC)[0];
+			}
+		}
+
+		// -- Plats --
 		$sth = $dbh->prepare('SELECT plats.* from rel_cartes_plats as rel, plats WHERE rel.id_carte = :id && rel.id_plat = plats.id');
+		// current page
 		foreach ($cartesSorted as $keyFamily => $family)
 		{
 			foreach ($family as $keyCarte => $carte)
@@ -501,7 +531,19 @@ class Cartes
 			}
 		}
 
-		// reorganize result
+		// other pages
+		foreach ($cartesSortedForOtherPages as $keyFamily => $family)
+		{
+			foreach ($family as $keyCarte => $carte)
+			{
+				$sth->bindParam(':id', $keyCarte, PDO::PARAM_INT);
+				$sth->execute();
+				$cartesSortedForOtherPages[$keyFamily][$keyCarte]["plats"] = $sth->fetchAll(PDO::FETCH_ASSOC);
+			}
+		}
+
+		// -- Reorganize Result --
+		// current page
 		$finalCarte = [];
 		foreach ($cartesSorted as $keyFam => $family)
 		{
@@ -517,8 +559,27 @@ class Cartes
 				}
 			}
 		}
-		$finalCarte =  array_merge_recursive($finalCarte, $idsFam);
 
-		return $finalCarte;
+		// other pages
+		$finalCarteForOtherPages = [];
+		foreach ($cartesSortedForOtherPages as $keyFam => $family)
+		{
+			$finalCarteForOtherPages[$keyFam] = [];
+			foreach ($family as $keyCarte => $carte)
+			{
+				$finalCarteForOtherPages[$keyFam][$keyCarte]["description"] = $carte["description"];
+				foreach ($carte["plats"] as $keyPlats => $plat)
+				{
+					$id = $plat["id"];
+					unset($plat["id"]);
+					$finalCarteForOtherPages[$keyFam][$keyCarte]["plats"][$id] = $plat;
+				}
+			}
+		}
+
+		$finalCarte = array_merge_recursive($finalCarte, $idsFam);
+		$finalCarteForOtherPages = array_merge_recursive($finalCarteForOtherPages, $idsFamForOtherPages);
+
+		return [$finalCarte, $finalCarteForOtherPages];
 	}
 }

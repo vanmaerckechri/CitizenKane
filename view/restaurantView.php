@@ -235,9 +235,8 @@ if ($admin === true)
 {
 ?>
 	<script type="text/javascript">
-	let pageOldInfos = <?php echo json_encode($cartes); ?>;
-	let pageInfos = <?php echo json_encode($cartes); ?>;
-	let page = <?php echo json_encode($page); ?>;
+		let cartesForOtherPages = <?= json_encode($cartesForOtherPages); ?>;
+		let page = <?= json_encode($page); ?>;
 	</script>
 	<script type="text/javascript" src="assets/js/cvm_createdomelem.js"></script>
 	<script type="text/javascript" src="assets/js/admin.js"></script>
