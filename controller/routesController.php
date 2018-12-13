@@ -30,6 +30,13 @@ function crud()
 		$cartes->insertPlats($newPlats);
 	}
 
+	if (isset($_POST["importCartes"]) && !empty($_POST["importCartes"]))
+	{
+		$importCartes = json_decode($_POST["importCartes"], true);
+		$cartes = new Cartes();
+		$cartes->importCartesFromOtherPage($importCartes);
+	}
+
 	if (isset($_FILES) && !empty($_FILES) && isset($_POST["updateCarteImageCartesId"]) && !empty($_POST["updateCarteImageCartesId"]))
 	{
 		$cartesId = json_decode($_POST["updateCarteImageCartesId"], true);

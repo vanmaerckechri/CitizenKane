@@ -19,8 +19,9 @@ class Cartes
 		{
 			foreach ($carte as $platTitle => $plat) 
 			{
+				$price = !empty($plat["price"]) ? $plat["price"] : 0; 
 				$insPlat->bindParam(':name', $platTitle, PDO::PARAM_STR);
-				$insPlat->bindParam(':prix', $plat["price"], PDO::PARAM_INT);
+				$insPlat->bindParam(':prix', $price, PDO::PARAM_INT);
 				$insPlat->bindParam(':compo', $plat["compo"], PDO::PARAM_STR);
 				$insPlat->execute();
 
@@ -41,8 +42,6 @@ class Cartes
 
 		foreach ($_FILES as $key => $file)
 		{
-						var_dump($serie);
-
 		    if ($file["error"] == UPLOAD_ERR_OK && $file["type"] == "application/pdf" && stripos($key, $serie) !== false)
 		    {
 			    // -- Copy New File Into Pdf Folder --
@@ -57,6 +56,23 @@ class Cartes
 		    $index += 1;
 		}
 		return $nameList;
+    }
+
+    public function importCartesFromOtherPage($importList)
+    {
+    	$dbh = $this->dbh;
+    	$insCarte = $dbh->prepare("INSERT INTO pages (name, family, id_carte) VALUES (:name, :family, :id_carte)");
+
+    	foreach ($importList as $page => $ids)
+    	{
+	  		foreach ($ids as $id_carte => $name)
+			{
+				$insCarte->bindParam(':id_carte', $id_carte, PDO::PARAM_INT);						  	
+				$insCarte->bindParam(':name', $page, PDO::PARAM_STR);	
+				$insCarte->bindParam(':family', $name, PDO::PARAM_STR);
+				$insCarte->execute();
+			}
+    	}
     }
 
     public function insertCartes($newCartes)

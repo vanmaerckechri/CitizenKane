@@ -176,7 +176,7 @@ foreach ($cartes as $keyFam => $family)
 			</div>
 			<div class="importCarte_btnContainer">
 				<button class="btn btn_import">Importer une Carte Provenant d'une Autre Page</button>
-				<select name="carteForOtherPage" form="">
+				<select class="carteForOtherPage">
 					<?php
 						$unknowFamIndex = 0;
 						foreach ($cartesForOtherPages as $famTitle => $fam) 

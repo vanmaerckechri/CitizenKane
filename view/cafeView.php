@@ -31,7 +31,7 @@ ob_start();
 		<h2>Nos Cartes</h2>
 
 		<?= $carteView ?>
-		
+
 		<div class="cafe-chouffes">
 			<h3>Découvrez nos ROUTES DE CHOUFFE, Uniques au Monde !</h3>
 			<div>
@@ -76,7 +76,6 @@ if ($admin === true)
 	<script type="text/javascript">
 		let cartesForOtherPages = <?= json_encode($cartesForOtherPages); ?>;
 		let page = <?= json_encode($page); ?>;
-		console.log(cartesForOtherPages);
 	</script>
 	<script type="text/javascript" src="assets/js/cvm_createdomelem.js"></script>
 	<script type="text/javascript" src="assets/js/admin.js"></script>
