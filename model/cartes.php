@@ -127,32 +127,48 @@ class Cartes
     {
     	$dbh = $this->dbh;
 
+    	$delCarteInPage = $dbh->prepare("DELETE FROM pages WHERE id_carte = :id AND name = :name");
 		$delCarteInRel_cartes_plats = $dbh->prepare("DELETE FROM rel_cartes_plats WHERE id_carte = :id");
-		$delCarteInPage = $dbh->prepare("DELETE FROM pages WHERE id_carte = :id");
 		$delCarteInCartes = $dbh->prepare("DELETE FROM cartes WHERE id = :id");
 
 		$sth = $dbh->prepare('SELECT id_plat from rel_cartes_plats WHERE id_carte = :id_carte');
     	$delPlat = $dbh->prepare("DELETE FROM plats WHERE id = :id");
 
-		foreach ($deleteCartesList as $idCarte => $empty)
+		foreach ($deleteCartesList as $idCarte => $page)
 		{
-			// select plats to delete them with id cartes
-			$sth->bindParam(':id_carte', $idCarte, PDO::PARAM_INT);
-			$sth->execute();
-			$idPlats = $sth->fetchAll(PDO::FETCH_COLUMN);
-			foreach ($idPlats as $key => $idPlat)
-			{
-				$delPlat->bindParam(':id', $idPlat, PDO::PARAM_INT);   
-				$delPlat->execute();
-			}
-			// delete rest
-			$delCarteInRel_cartes_plats->bindParam(':id', $idCarte, PDO::PARAM_INT);
+			// delete link between page and carte
 			$delCarteInPage->bindParam(':id', $idCarte, PDO::PARAM_INT);   
-			$delCarteInCartes->bindParam(':id', $idCarte, PDO::PARAM_INT);
-
-			$delCarteInRel_cartes_plats->execute();
+			$delCarteInPage->bindParam(':name', $page, PDO::PARAM_STR);   
 			$delCarteInPage->execute();
-			$delCarteInCartes->execute();
+			// check if the carte exist on another page
+			$carteExistOnAnotherPage = $dbh->prepare('SELECT id from pages WHERE id_carte = :id_carte');
+			$carteExistOnAnotherPage->bindParam(':id_carte', $idCarte, PDO::PARAM_INT);   
+			$carteExistOnAnotherPage->execute();
+			$carteExistOnAnotherPage = $carteExistOnAnotherPage->fetchAll(PDO::FETCH_COLUMN);
+
+
+			// if carte doesn t exist on another page then delete carte and plats
+			if (empty($carteExistOnAnotherPage))
+			{
+				// select plats to delete them with id cartes
+				$sth->bindParam(':id_carte', $idCarte, PDO::PARAM_INT);
+				$sth->execute();
+				$idPlats = $sth->fetchAll(PDO::FETCH_COLUMN);
+
+				foreach ($idPlats as $key => $idPlat)
+				{
+					$delPlat->bindParam(':id', $idPlat, PDO::PARAM_INT);   
+					$delPlat->execute();
+				}
+
+				// delete link between plats and carte
+				$delCarteInRel_cartes_plats->bindParam(':id', $idCarte, PDO::PARAM_INT);
+				$delCarteInRel_cartes_plats->execute();
+				
+				// delete carte infos
+				$delCarteInCartes->bindParam(':id', $idCarte, PDO::PARAM_INT);
+				$delCarteInCartes->execute();
+			}
 		}
     }
 

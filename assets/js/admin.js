@@ -806,7 +806,7 @@ window.addEventListener("load", function(event)
 
 		let fam = event.target.parentNode.parentNode;
 
-		deleteCartesList[id] = "";
+		deleteCartesList[id] = page;
 		event.target.parentNode.remove();
 
 		// delete family if family does'nt have carte
