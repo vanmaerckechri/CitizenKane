@@ -6,11 +6,6 @@ $admin = $session->testAdmin();
 
 if (isset($_GET['action']))
 {
-    if (isset($_POST))
-    {
-        crud();
-    }
-
     if ($_GET['action'] == 'home')
     {
         loadHome();
@@ -22,6 +17,10 @@ if (isset($_GET['action']))
     elseif ($_GET['action'] == 'cafe')
     {
         loadCafe($admin);
+    }
+    elseif ($_GET['action'] == 'beerProject')
+    {
+        loadBeerProject($admin);
     }
     else
     {

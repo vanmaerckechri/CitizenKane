@@ -1,6 +1,6 @@
+// -- Common --
 .h4
 {
-	text-transform: uppercase;
 	font-weight: bold;
 	font-family: $main-fontFam;
 	overflow: hidden;
@@ -8,6 +8,39 @@
 	hyphens: auto;
 }
 
+.btn_recordChanges
+{
+	position: fixed;
+	left: 0;
+	bottom:0;
+	z-index: 10;
+}
+
+.btn_carteDelete
+{
+	border: 1px solid white;
+	border-radius: 50%;
+	position: absolute;
+	top: 0.5rem;
+	right: 0.5rem;
+	width: 48px;
+	height: 48px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 1.5rem;
+	color: white;
+	font-weight: bold;
+	background-color: #a10d0d;
+	transition: background-color 0.3s;
+	&:hover
+	{
+		cursor: pointer;
+		background-color: red;
+	}
+}
+
+// -- Cartes --
 .restaurant-cartes
 {
 	.h3
@@ -156,30 +189,6 @@ input.prix
 	align-items: center;
 }
 
-.btn_carteDelete
-{
-	border: 1px solid white;
-	border-radius: 50%;
-	position: absolute;
-	top: 0.5rem;
-	right: 0.5rem;
-	width: 48px;
-	height: 48px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 1.5rem;
-	color: white;
-	font-weight: bold;
-	background-color: #a10d0d;
-	transition: background-color 0.3s;
-	&:hover
-	{
-		cursor: pointer;
-		background-color: red;
-	}
-}
-
 .btn_platDelete
 {
 	border: 1px solid black;
@@ -213,7 +222,7 @@ input.prix
 	}
 }
 
-.btn_add, .moveOrderButton, .addCarte, .btn_addFam, .btn_import
+.btn_add, .moveOrderButton, .addCarte, .btn_addFam, .btn_import, .btn_addNewEvent
 {
 	border-radius: 0;
 	background-color: $second-color;
@@ -235,4 +244,31 @@ input.prix
 	{
 		margin-top: 0.5rem;
 	}
+}
+
+// -- Beer Project --
+
+.beerproject-brasserie
+{
+	position: relative;
+}
+.beerProjectTitle
+{
+	text-align: center;
+}
+
+.beerproject-brasserie
+{
+	p
+	{
+		input
+		{
+			width: auto;
+		}
+	}
+}
+
+.beerproject_imgInput
+{
+	text-align: center;
 }

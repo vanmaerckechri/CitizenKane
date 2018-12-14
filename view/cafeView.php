@@ -78,7 +78,7 @@ if ($admin === true)
 		let page = <?= json_encode($page); ?>;
 	</script>
 	<script type="text/javascript" src="assets/js/cvm_createdomelem.js"></script>
-	<script type="text/javascript" src="assets/js/admin.js"></script>
+	<script type="text/javascript" src="assets/js/admin_cartes.js"></script>
 <?php
 }
 ?>
