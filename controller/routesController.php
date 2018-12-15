@@ -57,9 +57,16 @@ function loadCafe($admin)
 
 function loadBeerProject($admin)
 {
+	if (isset($_POST))
+    {
+        require('./controller/beerProjectController.php');
+    }
 	$page = "beerProject";
 	$beerProject = new BeerProject();
 	$beerProjectList = $beerProject->getList();
+
+	cleanPost($page);
+
 	$beerProjectPage = 'class="active"';
     require('./view/beerProjectView.php');	
 }

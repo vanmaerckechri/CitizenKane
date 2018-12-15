@@ -39,7 +39,7 @@ ob_start(); ?>
 				<h3>Ajouter un Événement</h3>
 				<div class="beerproject-brasserie newBrasserie">
 					<input class="brasserieImgInput" type="file" accept="image/png, image/jpeg" class="beerproject_imgInput">
-					<img src="assets/img/test/carte_empty.png" alt="">
+					<img src="assets/img/test/carte_empty.png" alt="logo de la brasserie">
 					<div class="aboveline">
 						<input class="h4 brasserieTitle" type="text" placeholder="Titre de l'édition" autocomplete="off">
 						<p><b>Soirée découverte</b> : <input class="brasserieDate" type="date" autocomplete="off"></p>
@@ -58,7 +58,20 @@ ob_start(); ?>
 				<div id="beerProjectId__<?= htmlspecialchars($beerProjectSoon["id"]) ?>" class="beerproject-brasserie brasseriesFromDb">
 					<button class="btn_carteDelete">X</button>
 					<input type="file" accept="image/png, image/jpeg" class="beerproject_imgInput">
-					<img src="assets/img/<?= htmlspecialchars($beerProjectSoon["imgSrc"]) ?>" alt="logo de la brasserie de Jandrain-Jandrenouille">
+					<?php
+					if (isset($beerProjectSoon["imgSrc"]) && !empty($beerProjectSoon["imgSrc"]))
+					{
+					?>
+						<img src="assets/img/<?= htmlspecialchars($beerProjectSoon["imgSrc"]) ?>" alt="logo de la brasserie">
+					<?php
+					}
+					else
+					{
+					?>
+						<img src="assets/img/test/carte_empty.png" alt="logo de la brasserie">
+					<?php
+					}
+					?>
 					<div class="aboveline">
 						<input class="h4 brasserieTitle" type="text" value="<?= htmlspecialchars($beerProjectSoon["title"]) ?>" autocomplete="off">
 						<p><b>Soirée découverte</b> : <input class="brasserieDate" type="date" value="<?= htmlspecialchars($beerProjectSoon["date"]) ?>" autocomplete="off"></p>
@@ -86,7 +99,20 @@ ob_start(); ?>
 				<div id="beerProjectId__<?= htmlspecialchars($beerProjectPast["id"]) ?>" class="beerproject-brasserie brasseriesFromDb">
 					<button class="btn_carteDelete">X</button>
 					<input type="file" accept="image/png, image/jpeg" class="beerproject_imgInput">
-					<img src="assets/img/<?= htmlspecialchars($beerProjectPast["imgSrc"]) ?>" alt="logo de la brasserie de Jandrain-Jandrenouille">
+					<?php
+					if (isset($beerProjectPast["imgSrc"]) && !empty($beerProjectPast["imgSrc"]))
+					{
+					?>
+						<img src="assets/img/<?= htmlspecialchars($beerProjectPast["imgSrc"]) ?>" alt="logo de la brasserie">
+					<?php
+					}
+					else
+					{
+					?>
+						<img src="assets/img/test/carte_empty.png" alt="logo de la brasserie">
+					<?php
+					}
+					?>					
 					<div class="aboveline">
 						<input class="h4 brasserieTitle" type="text" value="<?= htmlspecialchars($beerProjectPast["title"]) ?>" autocomplete="off">
 						<p><b>Soirée découverte</b> : <input class="brasserieDate" type="date" value="<?= htmlspecialchars($beerProjectPast["date"]) ?>" autocomplete="off"></p>

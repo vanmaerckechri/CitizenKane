@@ -177,9 +177,9 @@ window.addEventListener("load", function(event)
 		{
 			let brasserieInfos = {};
 			brasserieInfos["title"] = brasserie.querySelector(".brasserieTitle").value;
-			brasserieInfos["date"] = brasserie.querySelector(".brasserieDate").value;
+			brasserieInfos["date"] = brasserie.querySelector(".brasserieDate").value != "" ? brasserie.querySelector(".brasserieDate").value : false;
 			brasserieInfos["beers"] = brasserie.querySelector(".brasserieBeers").value;
-			brasserieInfos["link"] = brasserie.querySelector(".brasserieUrl").value;
+			brasserieInfos["link"] = brasserie.querySelector(".brasserieUrl") ? brasserie.querySelector(".brasserieUrl").value : "";
 			return brasserieInfos;
 		}
 
@@ -202,7 +202,6 @@ window.addEventListener("load", function(event)
 						delete that.inputUpdateIdList[i];
 					}
 				}
-				console.log(inputUpdateList)
 				inputUpdateList = JSON.stringify(inputUpdateList);
 				let inputUpdate = createElem(["input"], [["type", "value", "name"]], [["text", inputUpdateList, "inputUpdate"]]);
 				form.appendChild(inputUpdate);
@@ -220,7 +219,6 @@ window.addEventListener("load", function(event)
 						delete that.inputUpdateIdList[i];
 					}
 				}
-				console.log(brasserieDeleteIdList)
 				brasserieDeleteIdList = JSON.stringify(brasserieDeleteIdList);
 				let brasserieToDelete = createElem(["input"], [["type", "value", "name"]], [["text", brasserieDeleteIdList, "brasserieToDelete"]]);
 				form.appendChild(brasserieToDelete);
@@ -236,14 +234,13 @@ window.addEventListener("load", function(event)
 				{
 					newBrasserieListToInsert.push(that.getBrasserieInfos(newBrasserieList[i]));
 				}
-				console.log(newBrasserieListToInsert)
 				newBrasserieListToInsert = JSON.stringify(newBrasserieListToInsert);
 				let insertNewBrasserie = createElem(["input"], [["type", "value", "name"]], [["text", newBrasserieListToInsert, "insertNewBrasserie"]]);
 				form.appendChild(insertNewBrasserie);		
 			}
 
-			/*document.body.appendChild(form);
-			form.submit();*/
+			document.body.appendChild(form);
+			form.submit();
 		}
 	}	
 
