@@ -256,9 +256,16 @@ input.prix
 {
 	position: relative;
 }
-.brasserieTitle
+
+.brasserieTitle, .brasserieDate, .brasserieBeers
 {
+	border: 1px dotted black;
 	text-align: center;
+}
+
+.brasserieDate
+{
+	margin-top: 0.5rem;
 }
 
 .beerproject-brasserie
@@ -274,5 +281,20 @@ input.prix
 
 .brasserieImgInput
 {
+	text-align: center;
+}
+
+// agenda
+textarea
+{
+	border: 1px dotted black;
+	padding: 0.5rem;
+	min-width: 365px;
+	max-width: 365px;
+}
+
+.brasserieDate_open, .brasserieDate_close
+{
+	border: 1px dotted black;
 	text-align: center;
 }

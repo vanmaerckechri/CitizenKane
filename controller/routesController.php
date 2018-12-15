@@ -18,11 +18,11 @@ function loadHome()
 
 function loadRestaurant($admin)
 {
+	$page = "restaurant";
 	if (isset($_POST))
     {
         require('./controller/cartesController.php');
     }
-	$page = "restaurant";
 	$cartes = new Cartes();
 	$allCartes = $cartes->getCartes($page);
 	$cartes = $allCartes[0];
@@ -37,11 +37,11 @@ function loadRestaurant($admin)
 
 function loadCafe($admin)
 {
+	$page = "cafe";
 	if (isset($_POST))
     {
         require('./controller/cartesController.php');
     }
-	$page = "cafe";
 	$cartes = new Cartes();
 	$allCartes = $cartes->getCartes($page);
 	$cartes = $allCartes[0];
@@ -56,13 +56,13 @@ function loadCafe($admin)
 
 function loadBeerProject($admin)
 {
+	$page = "beerProject";
 	if (isset($_POST))
     {
         require('./controller/beerProjectController.php');
     }
-	$page = "beerProject";
 	$beerProject = new BeerProject();
-	$beerProjectList = $beerProject->getList();
+	$beerProjectList = $beerProject->getList($page);
 
 	cleanPost($page);
 
@@ -72,13 +72,13 @@ function loadBeerProject($admin)
 
 function loadAgenda($admin)
 {
+	$page = "agenda";
 	if (isset($_POST))
     {
         require('./controller/beerProjectController.php');
     }
-	$page = "agenda";
 	$beerProject = new BeerProject();
-	$beerProjectList = $beerProject->getList();
+	$beerProjectList = $beerProject->getList($page);
 
 	cleanPost($page);
 

@@ -8,46 +8,69 @@ class BeerProject
         $this->dbh = $this->connect->dbConnect();
     }
 
-    public function getList()
+    public function getList($page)
     {
     	$dbh = $this->dbh;
 
-    	$reqAll = $dbh->prepare('SELECT * from beerproject ORDER BY date DESC');
+    	$reqAll = $page == "beerProject" ? $dbh->prepare('SELECT * from beerproject ORDER BY date DESC') : $dbh->prepare('SELECT * from agenda ORDER BY date_close DESC');
     	$reqAll->execute();
 		$beerProjectList = $reqAll->fetchAll(PDO::FETCH_ASSOC);
 
 		return $beerProjectList;
 	}
 
-	public function update($updateList)
+	public function update($updateList, $page)
     {
     	$dbh = $this->dbh;
 
-		$upt = $dbh->prepare('UPDATE beerproject SET title = :title, date = :date, beers = :beers, link = :link WHERE id = :id');
+		$upt = $page == "beerProject" ? $dbh->prepare('UPDATE beerproject SET title = :title, date = :date, beers = :beers, link = :link WHERE id = :id') : $dbh->prepare('UPDATE agenda SET title = :title, date_open = :date_open, date_close = :date_close, summary = :summary WHERE id = :id');
 		foreach ($updateList as $id => $brasserie)
 		{
 			$upt->bindParam(':id', $id, PDO::PARAM_INT);
-			$upt->bindParam(':title', $brasserie["title"], PDO::PARAM_STR);
-			if ($brasserie["date"] === false)
+
+			// beerProject
+			if ($page == "beerProject")
 			{
-				$currentDate = date('Y-m-d');
-				$upt->bindParam(':date', $currentDate, PDO::PARAM_STR);
+				$upt->bindParam(':title', $brasserie["title"], PDO::PARAM_STR);
+				if ($brasserie["date"] === false)
+				{
+					$currentDate = date('Y-m-d');
+					$upt->bindParam(':date', $currentDate, PDO::PARAM_STR);
+				}
+				else
+				{
+					$upt->bindParam(':date', $brasserie["date"], PDO::PARAM_STR);
+				}
+				$upt->bindParam(':beers', $brasserie["beers"], PDO::PARAM_STR);
+				$upt->bindParam(':link', $brasserie["link"], PDO::PARAM_STR);
 			}
+			// agenda
 			else
 			{
-				$upt->bindParam(':date', $brasserie["date"], PDO::PARAM_STR);
+				$upt->bindParam(':title', $brasserie["title"], PDO::PARAM_STR);
+				if ($brasserie["date_open"] === false || $brasserie["date_close"] === false)
+				{
+					$currentDate = date('Y-m-d H:i:s');
+					$upt->bindParam(':date_open', $currentDate, PDO::PARAM_STR);
+					$upt->bindParam(':date_close', $currentDate, PDO::PARAM_STR);
+				}
+				else
+				{
+					$upt->bindParam(':date_open', $brasserie["date_open"], PDO::PARAM_STR);
+					$upt->bindParam(':date_close', $brasserie["date_close"], PDO::PARAM_STR);
+				}
+				$upt->bindParam(':summary', $brasserie["summary"], PDO::PARAM_STR);				
 			}
-			$upt->bindParam(':beers', $brasserie["beers"], PDO::PARAM_STR);
-			$upt->bindParam(':link', $brasserie["link"], PDO::PARAM_STR);
+
 			$upt->execute();
 		}
 	}
 
-	public function delete($deleteList)
+	public function delete($deleteList, $page)
     {
     	$dbh = $this->dbh;
 
-    	$del = $dbh->prepare("DELETE FROM beerproject WHERE id = :id");
+    	$del = $page == "beerProject" ? $dbh->prepare("DELETE FROM beerproject WHERE id = :id") : $dbh->prepare("DELETE FROM agenda WHERE id = :id");
 		foreach ($deleteList as $key => $id)
 		{
 			$del->bindParam(':id', $id, PDO::PARAM_INT);   
@@ -55,26 +78,47 @@ class BeerProject
 		}
 	}
 
-	public function insert($newBrasserieList)
+	public function insert($newBrasserieList, $page)
     {
     	$dbh = $this->dbh;
-    	$ins = $dbh->prepare("INSERT INTO beerproject (title, date, beers, link) VALUES (:title, :date, :beers, :link)");
+    	$ins = $page == "beerProject" ? $dbh->prepare("INSERT INTO beerproject (title, date, beers, link) VALUES (:title, :date, :beers, :link)") : $dbh->prepare("INSERT INTO agenda (title, date_open, date_close, summary) VALUES (:title, :date_open, :date_close, :summary)");
     	$idList = [];
 
     	foreach ($newBrasserieList as $key => $brasserie)
     	{
 			$ins->bindParam(':title', $brasserie["title"], PDO::PARAM_STR);
-			if ($brasserie["date"] === false)
+
+			// beerProject
+			if ($page == "beerProject")
 			{
-				$currentDate = date('Y-m-d');
-				$ins->bindParam(':date', $currentDate, PDO::PARAM_STR);
+				if ($brasserie["date"] === false)
+				{
+					$currentDate = date('Y-m-d');
+					$ins->bindParam(':date', $currentDate, PDO::PARAM_STR);
+				}
+				else
+				{
+					$ins->bindParam(':date', $brasserie["date"], PDO::PARAM_STR);
+				}			
+				$ins->bindParam(':beers', $brasserie["beers"], PDO::PARAM_STR);
+				$ins->bindParam(':link', $brasserie["link"], PDO::PARAM_STR);
 			}
+			// agenda
 			else
 			{
-				$ins->bindParam(':date', $brasserie["date"], PDO::PARAM_STR);
-			}			
-			$ins->bindParam(':beers', $brasserie["beers"], PDO::PARAM_STR);
-			$ins->bindParam(':link', $brasserie["link"], PDO::PARAM_STR);
+				if ($brasserie["date_open"] === false || $brasserie["date_close"] === false)
+				{
+					$currentDate = date('Y-m-d H:i:s');
+					$upt->bindParam(':date_open', $currentDate, PDO::PARAM_STR);
+					$upt->bindParam(':date_close', $currentDate, PDO::PARAM_STR);
+				}
+				else
+				{
+					$upt->bindParam(':date_open', $brasserie["date_open"], PDO::PARAM_STR);
+					$upt->bindParam(':date_close', $brasserie["date_close"], PDO::PARAM_STR);
+				}			
+				$ins->bindParam(':summary', $brasserie["summary"], PDO::PARAM_STR);
+			}
 			$ins->execute();
 
 			array_push($idList, $dbh->lastInsertId());
@@ -82,11 +126,11 @@ class BeerProject
     	return $idList;
     }
 
-    public function updateImg($imgSrcList, $imgIdList)
+    public function updateImg($imgSrcList, $imgIdList, $page)
     {
     	$dbh = $this->dbh;
 
-		$upt = $dbh->prepare('UPDATE beerproject SET imgSrc = :imgSrc WHERE id = :id');
+		$upt = $page == "beerProject" ? $dbh->prepare('UPDATE beerproject SET imgSrc = :imgSrc WHERE id = :id') : $dbh->prepare('UPDATE agenda SET imgSrc = :imgSrc WHERE id = :id');
 		foreach ($imgIdList as $key => $id)
 		{
 			$upt->bindParam(':id', $id[$key], PDO::PARAM_INT);
@@ -95,7 +139,7 @@ class BeerProject
 		}
 	}
 
-    public function uploadImg($serie, $id)
+    public function uploadImg($serie, $id, $page)
     {
 		$uploads_dir = './assets/img/test2/';
 		$nameList = [];
@@ -111,7 +155,7 @@ class BeerProject
 		       	$tmp_name = $file["tmp_name"];
 		        $fileName = basename($file["name"]);
 		        $imgSrcTemp = $uploads_dir . $fileName;
-		        $fileName = "beerproject_" . $id[$index] . $type;
+		        $fileName = $page == "beerProject" ? "beerproject_" . $id[$index] . $type :  "agenda_" . $id[$index] . $type;
 		        $imgSrc = $uploads_dir . $fileName;
 		        move_uploaded_file($tmp_name, $imgSrcTemp);
 				rename($imgSrcTemp, $imgSrc);

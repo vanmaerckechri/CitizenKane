@@ -26,12 +26,6 @@ window.addEventListener("load", function(event)
 			{
 				inputs[i].addEventListener("change", this.checkUpdates.bind(this, that), false);
 			}
-
-			let textarea = this.beerProjectContainer.querySelectorAll(".brasseriesFromDb textarea");
-			for (let i = textarea.length - 1; i >= 0; i--)
-			{
-				textarea[i].addEventListener("change", this.checkUpdates.bind(this, that), false);
-			}
 		}
 
 		initImgInputs()
@@ -125,13 +119,13 @@ window.addEventListener("load", function(event)
 			let addNewBrasserieButton = event.target;
 			let newBrasserie = Tools.focusParent("beerproject-brasserie", addNewBrasserieButton);
 			let newBrasserieClone = newBrasserie.cloneNode(true);
-			let newBrasserieDate = page == "beerProject" ? newBrasserieClone.querySelector(".brasserieDate").value : newBrasserieClone.querySelector(".brasserieDate_open").value;
+			let newBrasserieDate = newBrasserieClone.querySelector(".brasserieDate").value;
 
 			// search place to put new brasserie by date
 			let allBrasseries = that.beerProjectContainer.querySelectorAll(".beerproject-brasserie");
 			for (let i = 1, length = allBrasseries.length; i < length; i++)
 			{
-				let brasserieDate = page == "beerProject" ? allBrasseries[i].querySelector(".brasserieDate").value : allBrasseries[i].querySelector(".brasserieDate_open").value;
+				let brasserieDate = allBrasseries[i].querySelector(".brasserieDate").value;
 				if (newBrasserieDate > brasserieDate)
 				{
 					// update class to prepare record to db
@@ -151,18 +145,9 @@ window.addEventListener("load", function(event)
 					// reset board inputs for next new brasserie
 					newBrasserie.querySelector(".brasserieImgInput").value = "";
 					newBrasserie.querySelector(".brasserieTitle").value = "";
-					if (page == "beerProject")
-					{
-						newBrasserie.querySelector(".brasserieDate").value = "";
-						newBrasserie.querySelector(".brasserieUrl").value = "";
-						newBrasserie.querySelector(".brasserieBeers").value = "";
-					}
-					else
-					{
-						newBrasserie.querySelector(".brasserieDate_open").value = "";
-						newBrasserie.querySelector(".brasserieDate_close").value = "";
-						newBrasserie.querySelector(".summary").value = "";
-					}
+					newBrasserie.querySelector(".brasserieDate").value = "";
+					newBrasserie.querySelector(".brasserieBeers").value = "";
+					newBrasserie.querySelector(".brasserieUrl").value = "";
 					break;
 				}
 			}
@@ -173,25 +158,16 @@ window.addEventListener("load", function(event)
 		{
 			let brasserieInfos = {};
 			brasserieInfos["title"] = brasserie.querySelector(".brasserieTitle").value;
-			if (page == "beerProject")
-			{
-				brasserieInfos["date"] = brasserie.querySelector(".brasserieDate").value != "" ? brasserie.querySelector(".brasserieDate").value : false;
-				brasserieInfos["beers"] = brasserie.querySelector(".brasserieBeers").value;
-				brasserieInfos["link"] = brasserie.querySelector(".brasserieUrl") ? brasserie.querySelector(".brasserieUrl").value : "";				
-			}
-			else
-			{
-				brasserieInfos["date_open"] = brasserie.querySelector(".brasserieDate_open").value != "" ? brasserie.querySelector(".brasserieDate_open").value : false;
-				brasserieInfos["date_close"] = brasserie.querySelector(".brasserieDate_close").value != "" ? brasserie.querySelector(".brasserieDate_close").value : false;
-				brasserieInfos["summary"] = brasserie.querySelector(".summary").value;
-			}
+			brasserieInfos["date"] = brasserie.querySelector(".brasserieDate").value != "" ? brasserie.querySelector(".brasserieDate").value : false;
+			brasserieInfos["beers"] = brasserie.querySelector(".brasserieBeers").value;
+			brasserieInfos["link"] = brasserie.querySelector(".brasserieUrl") ? brasserie.querySelector(".brasserieUrl").value : "";
 			return brasserieInfos;
 		}
 
 		record(that, event)
 		{
 			let formAction = "index.php?action=" + page;
-			let form = Tools.createElem(["form"], [["action", "method", "enctype", "style"]], [[formAction, "post", "multipart/form-data", "display: none"]]);
+			let form = createElem(["form"], [["action", "method", "enctype", "style"]], [[formAction, "post", "multipart/form-data", "display: none"]]);
 
 			// update brasserie who already exit in db
 			if (Tools.checkObjectNotEmpty(that.inputUpdateIdList) === true)
@@ -208,7 +184,7 @@ window.addEventListener("load", function(event)
 					}
 				}
 				inputUpdateList = JSON.stringify(inputUpdateList);
-				let inputUpdate = Tools.createElem(["input"], [["type", "value", "name"]], [["text", inputUpdateList, "inputUpdate"]]);
+				let inputUpdate = createElem(["input"], [["type", "value", "name"]], [["text", inputUpdateList, "inputUpdate"]]);
 				form.appendChild(inputUpdate);
 			}
 
@@ -225,7 +201,7 @@ window.addEventListener("load", function(event)
 					}
 				}
 				brasserieDeleteIdList = JSON.stringify(brasserieDeleteIdList);
-				let brasserieToDelete = Tools.createElem(["input"], [["type", "value", "name"]], [["text", brasserieDeleteIdList, "brasserieToDelete"]]);
+				let brasserieToDelete = createElem(["input"], [["type", "value", "name"]], [["text", brasserieDeleteIdList, "brasserieToDelete"]]);
 				form.appendChild(brasserieToDelete);
 			}
 
@@ -240,7 +216,7 @@ window.addEventListener("load", function(event)
 					newBrasserieListToInsert.push(that.getBrasserieInfos(newBrasserieList[i]));
 				}
 				newBrasserieListToInsert = JSON.stringify(newBrasserieListToInsert);
-				let insertNewBrasserie = Tools.createElem(["input"], [["type", "value", "name"]], [["text", newBrasserieListToInsert, "insertNewBrasserie"]]);
+				let insertNewBrasserie = createElem(["input"], [["type", "value", "name"]], [["text", newBrasserieListToInsert, "insertNewBrasserie"]]);
 				form.appendChild(insertNewBrasserie);		
 			}
 
@@ -262,7 +238,7 @@ window.addEventListener("load", function(event)
 					}
 				}
 				brasserieImgId = JSON.stringify(brasserieImgId);
-				let brasserieImgInputId = Tools.createElem(["input"], [["type", "value", "name"]], [["text", brasserieImgId, "brasserieImgInputId"]]);
+				let brasserieImgInputId = createElem(["input"], [["type", "value", "name"]], [["text", brasserieImgId, "brasserieImgInputId"]]);
 				form.appendChild(brasserieImgInputId);		
 			}
 
