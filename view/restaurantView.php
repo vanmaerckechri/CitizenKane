@@ -50,7 +50,7 @@ ob_start(); ?>
 		if ($admin === true)
 		{
 	?>
-			<button id="recordChanges" class="btn displayNone" style="position: fixed; left: 0; bottom:0; z-index: 10">Enregistrer les Modifiactions</button>
+			<button id="recordChanges" class="btn displayNone btn_recordChanges">Enregistrer les Modifiactions</button>
 	<?php
 		}
 	?>
@@ -65,7 +65,7 @@ if ($admin === true)
 		let cartesForOtherPages = <?= json_encode($cartesForOtherPages); ?>;
 		let page = <?= json_encode($page); ?>;
 	</script>
-	<script type="text/javascript" src="assets/js/cvm_createdomelem.js"></script>
+	<script type="text/javascript" src="assets/js/tools.js"></script>
 	<script type="text/javascript" src="assets/js/admin_cartes.js"></script>
 <?php
 }

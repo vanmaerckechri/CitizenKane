@@ -227,7 +227,7 @@ if ($admin === true)
 	<script type="text/javascript">
 		let page = <?= json_encode($page); ?>;
 	</script>
-	<script type="text/javascript" src="assets/js/cvm_createdomelem.js"></script>
+	<script type="text/javascript" src="assets/js/tools.js"></script>
 	<script type="text/javascript" src="assets/js/admin_beerproject.js"></script>
 <?php
 }

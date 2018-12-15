@@ -1,7 +1,6 @@
 <?php
 
 require('./model/connexion.php');
-require('./model/beerproject.php');
 
 function cleanPost($page)
 {

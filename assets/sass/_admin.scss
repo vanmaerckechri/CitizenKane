@@ -184,6 +184,10 @@ input.prix
 
 .uploadPdf-container
 {
+	padding: 0.5rem;
+	position: absolute;
+	bottom: 0;
+	left: 3px;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;

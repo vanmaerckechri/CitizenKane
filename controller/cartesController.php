@@ -11,8 +11,10 @@ if (isset($_POST["newCartes"]) && !empty($_POST["newCartes"]))
 	$newCartesId = $cartes->insertCartes($newCartes);
 
 	// img in new carte
-	$newImages = $cartes->uploadImg("onNewCarte");
-	$cartes->updateCartes($newCartesId, $newImages);
+	$newImagesIdsAndSrc = $cartes->uploadImg("onNewCarte", $newCartesId);
+	$imgSrcList = $newImagesIdsAndSrc[0];
+	$idsList = $newImagesIdsAndSrc[1];
+	$cartes->updateCartes($idsList, $imgSrcList);
 
 	// img in new carte
 	$newPdf = $cartes->uploadPdf("pdfOnNewCarte");
@@ -41,8 +43,10 @@ if (isset($_FILES) && !empty($_FILES) && isset($_POST["updateCarteImageCartesId"
 	//$oldImgDir = "oldCartes/";
 	//$oldFileNameList = $cartes->getImgSrc($cartesId);
 	//$fileNameList = $cartes->uploadImg($oldImgDir, $oldFileNameList);
-	$fileNameList = $cartes->uploadImg("onAlreadyExistCarte");
-	$cartes->updateCartes($cartesId, $fileNameList);
+	$newImagesIdsAndSrc = $cartes->uploadImg("onAlreadyExistCarte", $cartesId);
+	$imgSrcList = $newImagesIdsAndSrc[0];
+	$idsList = $newImagesIdsAndSrc[1];
+	$cartes->updateCartes($idsList, $imgSrcList);
 }
 
 if (isset($_FILES) && !empty($_FILES) && isset($_POST["updateCartePdfId"]) && !empty($_POST["updateCartePdfId"]))

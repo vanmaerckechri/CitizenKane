@@ -1,8 +1,6 @@
 <?php
 
-require('./model/cartes.php');
-
-$newCartesId;
+require('./model/beerproject.php');
 
 if (isset($_POST["inputUpdate"]) && !empty($_POST["inputUpdate"]))
 {

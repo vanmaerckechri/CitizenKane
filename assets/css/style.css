@@ -301,6 +301,7 @@ nav {
 .readMore-container {
   max-width: 1280px;
   position: relative;
+  min-height: 330px;
   text-align: center; }
   .readMore-container .readMore-content {
     margin: 0;

@@ -16,96 +16,6 @@ let deleteCartesList = {};
 
 window.addEventListener("load", function(event)
 {
-
-	// -- Tools --
-
-	let incrStr = function(str)
-	{
-		let splitIndex = 0;
-		let word;
-		let num;
-		let isNum = new RegExp(/^\d+$/);
-		
-		for (let i = str.length - 1; i >= 0; i--)
-		{
-			if (isNum.test(str[i]) === false)
-			{
-				splitIndex = i;
-				break;
-			}
-		}
-
-		word = str.slice(0, splitIndex + 1);
-		num = str.slice(splitIndex + 1, str.length);
-		num = num == "" ? 0 : parseInt(num, 10) + 1;
-
-		return word + num;
-	}
-
-	let checkDup = function(array, string)
-	{
-		for (let i = array.length - 1; i >= 0; i--)
-		{
-			if (array[i].toUpperCase() === string.toUpperCase())
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
-	let fixDupTitle = function(className, item)
-	{
-		let title = item.value;
-		if (title != 0)
-		{
-			// if title already exist incr it
-			let carteTitleList = [];
-			let cartesTitle = document.querySelectorAll("." + className);
-			for (let i = cartesTitle.length - 1; i >= 0; i--)
-			{
-				if (cartesTitle[i] != item)
-				{
-					carteTitleList.push(cartesTitle[i].value)
-				}
-			}
-
-			while (checkDup(carteTitleList , title))
-			{
-				title = incrStr(title);
-			}
-			item.value = title;
-		}
-		return title;
-	}
-
-	let checkObjectEmpty = function(object)
-	{
-		let result = false;
-		for (let property in object)
-		{
-			result = true;
-		}
-		return result;
-	}
-
-	let focusParent = function(parentClassName, child)
-	{	
-		let parent = child;
-		while (!parent.classList.contains(parentClassName))
-		{
-			parent = parent.parentNode;
-		}
-		return parent;
-	}
-
-	let cleanIdBeforeThisChar = function(dirtId, cleanBeforeMe)
-	{
-		let id = dirtId;
-		let index = id.indexOf(cleanBeforeMe);
-		return id.slice(index + cleanBeforeMe.length, id.length);
-	}
-
 	// -- Save to DB --
 
 	let detectNewPlats = function(cartes= document)
@@ -154,7 +64,7 @@ window.addEventListener("load", function(event)
 			let newCarteTitle = newCartes[i].querySelector(".carteTitle").value;
 			let styleCarte = newCartes[i].querySelector(".uploadPdf-container") ? "link" : "fold";
 			// new carte in family who already exist
-			let parent = focusParent("familyContainer", newCartes[i]);
+			let parent = Tools.focusParent("familyContainer", newCartes[i]);
 			let famName = parent.querySelector(".familyTitle").value;
 			newCarteContent[page][famName] = !newCarteContent[page][famName] ? {} : newCarteContent[page][famName];
 			newCarteContent[page][famName][newCarteTitle] = detectNewPlats(newCartes[i]);
@@ -170,8 +80,8 @@ window.addEventListener("load", function(event)
 		let importCarte = {};
 		for (let i = importList.length - 1; i >= 0; i--)
 		{
-			let id = cleanIdBeforeThisChar(importList[i].id, "__");
-			let familyTitle = focusParent("familyContainer", importList[i]);
+			let id = Tools.cleanIdBeforeThisChar(importList[i].id, "__");
+			let familyTitle = Tools.focusParent("familyContainer", importList[i]);
 			familyTitle = familyTitle.querySelector(".familyTitle").value;
 
 			importCarte[page] = typeof importCarte[page] == "undefined" ? {} : importCarte[page];
@@ -183,21 +93,21 @@ window.addEventListener("load", function(event)
 	let recordChanges = function()
 	{
 		let formAction = "index.php?action=" + page;
-		let form = createElem(["form"], [["action", "method", "enctype"]], [[formAction, "post", "multipart/form-data"]]);
+		let form = Tools.createElem(["form"], [["action", "method", "enctype"]], [[formAction, "post", "multipart/form-data"]]);
 
 		let importCartes = detectImportCarte();
-		if (checkObjectEmpty(importCartes) === true)
+		if (Tools.checkObjectNotEmpty(importCartes) === true)
 		{
 			importCartes = JSON.stringify(importCartes);
-			let importCartesInput = createElem(["input"], [["type", "value", "name"]], [["text", importCartes, "importCartes"]]);
+			let importCartesInput = Tools.createElem(["input"], [["type", "value", "name"]], [["text", importCartes, "importCartes"]]);
 			form.appendChild(importCartesInput);			
 		}
 
 		let newCartes = detectNewCartes();
-		if (checkObjectEmpty(newCartes) === true)
+		if (Tools.checkObjectNotEmpty(newCartes) === true)
 		{
 			newCartes = JSON.stringify(newCartes);
-			let newCartesList = createElem(["input"], [["type", "value", "name"]], [["text", newCartes, "newCartes"]]);
+			let newCartesList = Tools.createElem(["input"], [["type", "value", "name"]], [["text", newCartes, "newCartes"]]);
 
 			// new img
 			let newImgList = document.querySelectorAll(".newImage");
@@ -219,21 +129,21 @@ window.addEventListener("load", function(event)
 		}
 
 		let newPlats = detectNewPlats();
-		if (checkObjectEmpty(newPlats) === true)
+		if (Tools.checkObjectNotEmpty(newPlats) === true)
 		{
 			newPlats = JSON.stringify(newPlats);
-			let newPlatsList = createElem(["input"], [["type", "value", "name"]], [["text", newPlats, "newPlats"]]);
+			let newPlatsList = Tools.createElem(["input"], [["type", "value", "name"]], [["text", newPlats, "newPlats"]]);
 			form.appendChild(newPlatsList);
 		}	
 
-		if (checkObjectEmpty(updateFamilyCarteTitleList) === true)
+		if (Tools.checkObjectNotEmpty(updateFamilyCarteTitleList) === true)
 		{
 			updateFamilyCarteTitleList = JSON.stringify(updateFamilyCarteTitleList);
-			let familyCarteTitleList = createElem(["input"], [["type", "value", "name"]], [["text", updateFamilyCarteTitleList, "familyCarteTitle"]]);
+			let familyCarteTitleList = Tools.createElem(["input"], [["type", "value", "name"]], [["text", updateFamilyCarteTitleList, "familyCarteTitle"]]);
 			form.appendChild(familyCarteTitleList);
 		}
 
-		if (checkObjectEmpty(newCarteImg) === true)
+		if (Tools.checkObjectNotEmpty(newCarteImg) === true)
 		{
 			let index = 0;
 			for (let propertyTitle in newCarteImg)
@@ -245,11 +155,11 @@ window.addEventListener("load", function(event)
 				index += 1;
 			}
 			updateCarteImageCartesId = JSON.stringify(updateCarteImageCartesId);
-			let cartesId = createElem(["input"], [["type", "value", "name"]], [["text", updateCarteImageCartesId, "updateCarteImageCartesId"]]);
+			let cartesId = Tools.createElem(["input"], [["type", "value", "name"]], [["text", updateCarteImageCartesId, "updateCarteImageCartesId"]]);
 			form.appendChild(cartesId);
 		}
 
-		if (checkObjectEmpty(newCartePdf) === true)
+		if (Tools.checkObjectNotEmpty(newCartePdf) === true)
 		{
 			let index = 0;
 			for (let propertyTitle in newCartePdf)
@@ -261,46 +171,46 @@ window.addEventListener("load", function(event)
 				index += 1;
 			}
 			updateCartePdfId = JSON.stringify(updateCartePdfId);
-			let cartesId = createElem(["input"], [["type", "value", "name"]], [["text", updateCartePdfId, "updateCartePdfId"]]);
+			let cartesId = Tools.createElem(["input"], [["type", "value", "name"]], [["text", updateCartePdfId, "updateCartePdfId"]]);
 			form.appendChild(cartesId);
 		}
 
-		if (checkObjectEmpty(updateCartesTitle) === true)
+		if (Tools.checkObjectNotEmpty(updateCartesTitle) === true)
 		{
 			updateCartesTitle = JSON.stringify(updateCartesTitle);
-			let cartesTitle = createElem(["input"], [["type", "value", "name"]], [["text", updateCartesTitle, "updateCartesTitle"]]);
+			let cartesTitle = Tools.createElem(["input"], [["type", "value", "name"]], [["text", updateCartesTitle, "updateCartesTitle"]]);
 			form.appendChild(cartesTitle);
 		}
 
-		if (checkObjectEmpty(updatePlats) === true)
+		if (Tools.checkObjectNotEmpty(updatePlats) === true)
 		{
 			updatePlats = JSON.stringify(updatePlats);
-			let plats = createElem(["input"], [["type", "value", "name"]], [["text", updatePlats, "updatePlats"]]);
+			let plats = Tools.createElem(["input"], [["type", "value", "name"]], [["text", updatePlats, "updatePlats"]]);
 			form.appendChild(plats);
 		}
 
-		if (checkObjectEmpty(updatePlatsOrder) === true)
+		if (Tools.checkObjectNotEmpty(updatePlatsOrder) === true)
 		{
 			updatePlatsOrder = JSON.stringify(updatePlatsOrder);
-			let platsOrder = createElem(["input"], [["type", "value", "name"]], [["text", updatePlatsOrder, "updatePlatsOrder"]]);
+			let platsOrder = Tools.createElem(["input"], [["type", "value", "name"]], [["text", updatePlatsOrder, "updatePlatsOrder"]]);
 			form.appendChild(platsOrder);
 		}	
 
-		if (checkObjectEmpty(deletePlatsList) === true)
+		if (Tools.checkObjectNotEmpty(deletePlatsList) === true)
 		{
 			deletePlatsList = JSON.stringify(deletePlatsList);
-			let deletePlatsInput = createElem(["input"], [["type", "value", "name"]], [["text", deletePlatsList, "deletePlatsList"]]);
+			let deletePlatsInput = Tools.createElem(["input"], [["type", "value", "name"]], [["text", deletePlatsList, "deletePlatsList"]]);
 			form.appendChild(deletePlatsInput);
 		}	
 
-		if (checkObjectEmpty(deleteCartesList) === true)
+		if (Tools.checkObjectNotEmpty(deleteCartesList) === true)
 		{
 			deleteCartesList = JSON.stringify(deleteCartesList);
-			let deleteCartesInput = createElem(["input"], [["type", "value", "name"]], [["text", deleteCartesList, "deleteCartesList"]]);
+			let deleteCartesInput = Tools.createElem(["input"], [["type", "value", "name"]], [["text", deleteCartesList, "deleteCartesList"]]);
 			form.appendChild(deleteCartesInput);
 		}	
 
-		if (checkObjectEmpty(importCartes) === true || checkObjectEmpty(newCartes) === true || checkObjectEmpty(newPlats) === true || checkObjectEmpty(updateFamilyCarteTitleList) === true || checkObjectEmpty(newCarteImg) === true || newImageInNewCarte.length > 0 || checkObjectEmpty(updateCartesTitle) === true || checkObjectEmpty(newCartePdf) === true || checkObjectEmpty(updatePlats) === true || checkObjectEmpty(updatePlatsOrder) === true || checkObjectEmpty(deletePlatsList) === true || checkObjectEmpty(deleteCartesList) === true)
+		if (Tools.checkObjectNotEmpty(importCartes) === true || Tools.checkObjectNotEmpty(newCartes) === true || Tools.checkObjectNotEmpty(newPlats) === true || Tools.checkObjectNotEmpty(updateFamilyCarteTitleList) === true || Tools.checkObjectNotEmpty(newCarteImg) === true || newImageInNewCarte.length > 0 || Tools.checkObjectNotEmpty(updateCartesTitle) === true || Tools.checkObjectNotEmpty(newCartePdf) === true || Tools.checkObjectNotEmpty(updatePlats) === true || Tools.checkObjectNotEmpty(updatePlatsOrder) === true || Tools.checkObjectNotEmpty(deletePlatsList) === true || Tools.checkObjectNotEmpty(deleteCartesList) === true)
 		{
 			document.body.appendChild(form);
 			form.submit();
@@ -337,12 +247,12 @@ window.addEventListener("load", function(event)
 	let addPlat = function(event)
 	{
 		event = typeof event.target == "undefined" ? event : event.target;
-		let li = createElem(["li"], [["class"]], [["newPlat"]]);
-		let plat = createElem(["input"], [["class", "type", "placeholder", "autocomplete"]], [["plat", "text", "Titre du Plat", "off"]]);
-		let prix = createElem(["input"], [["class", "type", "min", "step", "placeholder", "autocomplete"]], [["prix", "number", 0, 0.1, "Prix du Plat", "off"]]);
-		let delButton = createElem(["button"], [["class"]], [["btn_platDelete"]]);
+		let li = Tools.createElem(["li"], [["class"]], [["newPlat"]]);
+		let plat = Tools.createElem(["input"], [["class", "type", "placeholder", "autocomplete"]], [["plat", "text", "Titre du Plat", "off"]]);
+		let prix = Tools.createElem(["input"], [["class", "type", "min", "step", "placeholder", "autocomplete"]], [["prix", "number", 0, 0.1, "Prix du Plat", "off"]]);
+		let delButton = Tools.createElem(["button"], [["class"]], [["btn_platDelete"]]);
 		delButton.innerHTML = "X";
-		let compo = createElem(["input"], [["class", "type", "placeholder", "autocomplete"]], [["platCompo", "text", "Composition du Plat", "off"]]);
+		let compo = Tools.createElem(["input"], [["class", "type", "placeholder", "autocomplete"]], [["platCompo", "text", "Composition du Plat", "off"]]);
 		li.appendChild(plat);
 		li.appendChild(prix);
 		li.appendChild(delButton);
@@ -390,15 +300,15 @@ window.addEventListener("load", function(event)
 	{
 		event = typeof event.target == "undefined" ? event : event.target;
 		// detect carte style
-		let familyContainer = focusParent("familyContainer", event);
+		let familyContainer = Tools.focusParent("familyContainer", event);
 		let radios = familyContainer.querySelectorAll(".radio");
 		let style = radios[0].classList.contains("radio_selected") ? "folder" : "link";
 
-		let divContainer = createElem(["div"], [["class"]], [["readMore-container newCarte"]]);
-		let openCarteButton = createElem(["input"], [["type", "class", "aria-label"]], [["checkbox", "openCarteButton", "afficher la carte"]]);
-		let imgCarte = createElem(["img"], [["src", "alt"]], [["./assets/img/test/carte_empty.png", "photo représentant la carte"]]);
-		let inputUploadImg = createElem(["input"], [["type", "class", "accept"]], [["file", "carteImg newImage", "image/png, image/jpeg"]]);
-		let deleteCarte = createElem(["button"], [["class"]], [["btn_carteDelete"]]);
+		let divContainer = Tools.createElem(["div"], [["class"]], [["readMore-container newCarte"]]);
+		let openCarteButton = Tools.createElem(["input"], [["type", "class", "aria-label"]], [["checkbox", "openCarteButton", "afficher la carte"]]);
+		let imgCarte = Tools.createElem(["img"], [["src", "alt"]], [["./assets/img/test/carte_empty.png", "photo représentant la carte"]]);
+		let inputUploadImg = Tools.createElem(["input"], [["type", "class", "accept"]], [["file", "carteImg newImage", "image/png, image/jpeg"]]);
+		let deleteCarte = Tools.createElem(["button"], [["class"]], [["btn_carteDelete"]]);
 		deleteCarte.innerHTML = "X"
 
 		divContainer.appendChild(openCarteButton);
@@ -406,16 +316,14 @@ window.addEventListener("load", function(event)
 		divContainer.appendChild(inputUploadImg);
 		divContainer.appendChild(deleteCarte);
 
-		let divContent = createElem(["div"], [["class"]], [["readMore-content"]]);
-		let carteTitle = createElem(["input"], [["type", "class", "value", "placeholder"]], [["text", "carteTitle h4", "titre de la carte", "Carte sans titre"]]);
-
-		console.log(style)
+		let divContent = Tools.createElem(["div"], [["class"]], [["readMore-content"]]);
+		let carteTitle = Tools.createElem(["input"], [["type", "class", "value", "placeholder"]], [["text", "carteTitle h4", "titre de la carte", "Carte sans titre"]]);
 
 		if (style == "folder")
 		{
 			var ul = document.createElement("ul");
 			var li = document.createElement("li");
-			var addPlatButton = createElem(["button"], [["class"]], [["addPlat btn btn_add"]]);
+			var addPlatButton = Tools.createElem(["button"], [["class"]], [["addPlat btn btn_add"]]);
 			addPlatButton.innerHTML = "ajouter un plat";
 
 			li.appendChild(addPlatButton);
@@ -425,9 +333,9 @@ window.addEventListener("load", function(event)
 		}
 		else
 		{
-			let uploadPdfContainer = createElem(["div"], [["class"]], [["uploadPdf-container"]]);
+			let uploadPdfContainer = Tools.createElem(["div"], [["class"]], [["uploadPdf-container"]]);
 			let labelUploadPdf = document.createElement("p");
-			let inputUploadPdf = createElem(["input"], [["type", "class", "accept"]], [["file", "uploadPdf", "application/pdf"]]);
+			let inputUploadPdf = Tools.createElem(["input"], [["type", "class", "accept"]], [["file", "uploadPdf", "application/pdf"]]);
 			labelUploadPdf.innerHTML = "PDF: ";
 
 			divContent.classList.add("cartePdf-content");
@@ -441,7 +349,7 @@ window.addEventListener("load", function(event)
 		}
 		divContainer.appendChild(divContent);
 
-		let addNewCarteButtonContainer = focusParent("addCarte_btnContainer", event);
+		let addNewCarteButtonContainer = Tools.focusParent("addCarte_btnContainer", event);
 		familyContainer.insertBefore(divContainer, addNewCarteButtonContainer);
 
 		// delete carte button
@@ -482,10 +390,10 @@ window.addEventListener("load", function(event)
 			addPlatButton.addEventListener("click", addPlat, false);
 		
 			// avoid titles duplicates
-			carteTitle.value = fixDupTitle("carteTitle", carteTitle);
+			carteTitle.value = Tools.fixDupTitle("carteTitle", carteTitle);
 			carteTitle.addEventListener("change", function()
 			{
-				carteTitle.value = fixDupTitle("carteTitle", carteTitle);
+				carteTitle.value = Tools.fixDupTitle("carteTitle", carteTitle);
 
 				detectBodyUpdate();
 			}, false);
@@ -498,23 +406,23 @@ window.addEventListener("load", function(event)
 
 	let addFamilyCarte = function(event)
 	{
-		let divParent = createElem(["div"], [["class"]], [["familyContainer newFam"]]);
-		let famiTitleInput = createElem(["input"], [["type", "class", "value"]], [["text", "familyTitle h3", "Nouvelle Famille de Cartes"]]);
+		let divParent = Tools.createElem(["div"], [["class"]], [["familyContainer newFam"]]);
+		let famiTitleInput = Tools.createElem(["input"], [["type", "class", "value"]], [["text", "familyTitle h3", "Nouvelle Famille de Cartes"]]);
 
 		// create new addCarteButton
-		let radioLink = createElem(["span", "span", "div"], [["class"], [], ["class"]], [["radioFolder"], [], ["radio radioFolder_container radio_selected"]]);
+		let radioLink = Tools.createElem(["span", "span", "div"], [["class"], [], ["class"]], [["radioFolder"], [], ["radio radioFolder_container radio_selected"]]);
 		let radioLinkText = document.createElement("p");
 		radioLinkText.innerHTML = "carte dépliable";
 		radioLink.appendChild(radioLinkText);
 
-		let radioFolder = createElem(["span", "span", "div"], [["class"], [], ["class"]], [["radioLink"], [], ["radio radioLink_container"]]);
+		let radioFolder = Tools.createElem(["span", "span", "div"], [["class"], [], ["class"]], [["radioLink"], [], ["radio radioLink_container"]]);
 		let radioFolderText = document.createElement("p");
 		radioFolderText.innerHTML = "carte vers un lien pdf";
 		radioFolder.appendChild(radioFolderText);
 
-		let addCarteButton = createElem(["button"], [["class"]], [["btn addCarte"]]);
+		let addCarteButton = Tools.createElem(["button"], [["class"]], [["btn addCarte"]]);
 		addCarteButton.innerHTML = "ajouter une carte";
-		let addCarteButtonContainer = createElem(["div"], [["class"]], [["addCarte_btnContainer"]]);
+		let addCarteButtonContainer = Tools.createElem(["div"], [["class"]], [["addCarte_btnContainer"]]);
 		addCarteButtonContainer.appendChild(addCarteButton);
 		addCarteButtonContainer.appendChild(radioLink);
 		addCarteButtonContainer.appendChild(radioFolder);
@@ -538,10 +446,10 @@ window.addEventListener("load", function(event)
 		//addCarte(addCarteButtonContainer);
 
 		// avoid titles duplicates
-		famiTitleInput.value = fixDupTitle("familyTitle", famiTitleInput);
+		famiTitleInput.value = Tools.fixDupTitle("familyTitle", famiTitleInput);
 		famiTitleInput.addEventListener("change", function()
 		{
-			famiTitleInput.value = fixDupTitle("familyTitle", famiTitleInput);
+			famiTitleInput.value = Tools.fixDupTitle("familyTitle", famiTitleInput);
 
 			detectBodyUpdate();
 		}, false);
@@ -555,7 +463,7 @@ window.addEventListener("load", function(event)
 		let index = idsFam.indexOf("__");
 		idsFam = idsFam.slice(index + 2, idsFam.length);*/
 		let inputFamTitle = event.target;
-		let idsFam = cleanIdBeforeThisChar(inputFamTitle.id, "__");
+		let idsFam = Tools.cleanIdBeforeThisChar(inputFamTitle.id, "__");
 		let famTitle = event.target.value;
 
 		idsFam = idsFam.split("_").map(Number);
@@ -588,11 +496,11 @@ window.addEventListener("load", function(event)
 		/*let id = item.id;
 		let index = id.indexOf("__");
 		id = id.slice(index + 2, id.length);*/
-		let id = cleanIdBeforeThisChar(item.id, "__");
+		let id = Tools.cleanIdBeforeThisChar(item.id, "__");
 
 		let dubClassName = "carteTitle";
 		let titleDomElem = item;
-		updateCartesTitle[id] = fixDupTitle(dubClassName, titleDomElem);
+		updateCartesTitle[id] = Tools.fixDupTitle(dubClassName, titleDomElem);
 
 		detectBodyUpdate();
 	}
@@ -602,7 +510,7 @@ window.addEventListener("load", function(event)
 		/*let idPlat = item.parentNode.id;
 		let index = idPlat.indexOf("__");
 		idPlat = idPlat.slice(index + 2, idPlat.length);*/
-		let idPlat = cleanIdBeforeThisChar(item.parentNode.id, "__");
+		let idPlat = Tools.cleanIdBeforeThisChar(item.parentNode.id, "__");
 
 		updatePlats[idPlat] = !updatePlats[idPlat] ? {} : updatePlats[idPlat];
 		if (platPropery == "price" && isNaN(parseInt(item.value)))
@@ -616,9 +524,9 @@ window.addEventListener("load", function(event)
 
 	let importCarte = function(event)
 	{
-		let importButtonContainer = focusParent("importCarte_btnContainer", event.target)
+		let importButtonContainer = Tools.focusParent("importCarte_btnContainer", event.target)
 		let currentCarteId = importButtonContainer.querySelector(".carteForOtherPage").value;
-		currentCarteId = cleanIdBeforeThisChar(currentCarteId, "__");
+		currentCarteId = Tools.cleanIdBeforeThisChar(currentCarteId, "__");
 
 		// get carte obj by id
 		let importCarteObj; 
@@ -637,7 +545,7 @@ window.addEventListener("load", function(event)
 		}
 
 		// autoSelect the good radio style for import
-		let famContainer = focusParent("familyContainer", event.target);
+		let famContainer = Tools.focusParent("familyContainer", event.target);
 		let radio;
 		if (importCarteObj["description"]["style"] == "link")
 		{
@@ -703,7 +611,7 @@ window.addEventListener("load", function(event)
 		else
 		{
 			let pdfFile = importCarteObj["description"]["link"];
-			let pdfLink = createElem(["a"], [["href", "target", "rel"]], [["./assets/pdf/" + pdfFile, "_blank", "noopener"]]);
+			let pdfLink = Tools.createElem(["a"], [["href", "target", "rel"]], [["./assets/pdf/" + pdfFile, "_blank", "noopener"]]);
 			carteImg.parentNode.insertBefore(pdfLink, carteImg);
 			pdfLink.appendChild(carteImg);
 		}
@@ -789,7 +697,7 @@ window.addEventListener("load", function(event)
 		/*let id = event.target.parentNode.id;
 		let index = id.indexOf("__");
 		id = id.slice(index + 2, id.length);*/
-		let id = cleanIdBeforeThisChar(event.target.parentNode.id, "__");
+		let id = Tools.cleanIdBeforeThisChar(event.target.parentNode.id, "__");
 
 		deletePlatsList[id] = "";
 

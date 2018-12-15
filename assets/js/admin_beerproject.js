@@ -2,36 +2,6 @@
 
 window.addEventListener("load", function(event)
 {
-	class Tools
-	{
-		static focusParent(parentByClassName, child)
-		{	
-			let parent = child;
-			while (!parent.classList.contains(parentByClassName))
-			{
-				parent = parent.parentNode;
-			}
-			return parent;
-		}
-
-		static cleanIdBeforeThisChar(dirtId, cleanBeforeMe)
-		{
-			let id = dirtId;
-			let index = id.indexOf(cleanBeforeMe);
-			return id.slice(index + cleanBeforeMe.length, id.length);
-		}
-
-		static checkObjectNotEmpty(object)
-		{
-			let result = false;
-			for (let property in object)
-			{
-				result = true;
-			}
-			return result;
-		}
-	}
-
 	class BeerProject 
 	{
 		constructor(beerProjectContainer) 

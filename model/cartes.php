@@ -257,11 +257,6 @@ class Cartes
     	return false; 	
     }
 
-    public function is_alpha_png($file)
-    {
-      	return (ord(@file_get_contents($fn, NULL, NULL, 25, 1)) == 6);
-    }
-
     public function createSmallImg($imgDir, $imgSrc, $newWidth)
     {
     	// detect type img file
@@ -309,61 +304,31 @@ class Cartes
     }
 
     //public function uploadImg($oldImgDir, $oldImgSrc = false)
-    public function uploadImg($serie)
+    public function uploadImg($serie, $ids)
     {
 		$uploads_dir = './assets/img/test/';
 		$nameList = [];
+		$idsList = [];
 		$index = 0;
 
 		foreach ($_FILES as $key => $file)
 		{
 		    if ($file["error"] == UPLOAD_ERR_OK && ($file["type"] == "image/jpeg" || $file["type"] == "image/png") && stripos($key, $serie) !== false)
 		    {
-		    	/*
-		    	if (isset($oldImgSrc[$index]) && !empty($oldImgSrc[$index]))
-		    	{
-			    	// -- Delete OldImg Small Version and Move OldImg Original Version to OldImgDir --
-			    	// check if oldImg is the small version
-			    	$oldImg = $oldImgSrc[$index];
-			    	$smallPos = stripos($oldImg, "_small");
-			    	$oldImgSrcSmall;
-			    	// if oldImg is the small version transform oldImg in original version
-			    	if ($smallPos !== false)
-			    	{
-			    		$oldImgSrcSmall = $oldImg;
-			    		$ext = substr($oldImg, $smallPos + 6, strlen($oldImg));
-			    		$oldImg = substr($oldImg, 0, $smallPos);
-			    		$oldImg .= $ext;
-			    	}
-			    	else
-			    	{
-				    	$extPos = $this->detectTypeImgFile($oldImg);
-						if ($extPos != false)
-						{
-				    		$ext = substr($oldImg, $extPos, strlen($oldImg));
-				    		$oldImgSrcSmall = substr($oldImg, 0, $extPos);
-							$oldImgSrcSmall = $oldImgSrcSmall . "_small" . $ext;
-						}
-			    	}
-			    	// delete old smallImg version
-			    	if (file_exists ($uploads_dir.$oldImgSrcSmall))
-			    	{
-						unlink($uploads_dir.$oldImgSrcSmall);
-			    	}
-			    	// move old original version to oldSaveDir
-			    	if (file_exists ($uploads_dir.$oldImg))
-			    	{
-			        	rename($uploads_dir . $oldImg, $uploads_dir . $oldImgDir . $oldImg);
-			    	}
-			    }
-			    */
-
+		    	$type = $file["type"] == "image/jpeg" ? ".jpg" : ".png";
 			    // -- Copy New File Into Img Folder --
 		       	$tmp_name = $file["tmp_name"];
-		        $name = basename($file["name"]);
-		        move_uploaded_file($tmp_name, "$uploads_dir/$name");
+		        $fileName = basename($file["name"]);
+		        $imgSrcTemp = $uploads_dir . $fileName;
+		        $fileName = "carte_" . $ids[$index] . $type;
+		        $imgSrc = $uploads_dir . $fileName;
+		        move_uploaded_file($tmp_name, $imgSrcTemp);
+				rename($imgSrcTemp, $imgSrc);
+				array_push($idsList, $ids[$index]);
+				$index += 1;
+
 		        // create small img for new img
-		        $imgNewSmall = $this->createSmallImg($uploads_dir, $name, 250);
+		        $imgNewSmall = $this->createSmallImg($uploads_dir, $fileName, 250);
 		        // prepare array with all new img src for db
 		        // if a imgSmall version exist push it in array else push big version
 		        if ($imgNewSmall != false)
@@ -372,13 +337,12 @@ class Cartes
 		        }
 		        else
 		        {
-		       		array_push($nameList, $name);
+		       		array_push($nameList, $fileName);
 		        }
 		        unset($_FILES[$key]);
 		    }
-		    $index += 1;
 		}
-		return $nameList;
+		return [$nameList, $idsList];
     }
 
     public function updateFamilyCarteTitle($FamilyCarteTitle)
