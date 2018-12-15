@@ -42,6 +42,7 @@ window.addEventListener("load", function(event)
 			this.inputUpdateIdList = {};
 
 			this.initInputs();
+			this.initImgInputs();
 			this.initDeleteBrasserieButtons();
 			this.initAddNewBrasserieButton();
 			this.initRecordButton();
@@ -54,6 +55,16 @@ window.addEventListener("load", function(event)
 			for (let i = inputs.length - 1; i >= 0; i--)
 			{
 				inputs[i].addEventListener("change", this.checkUpdates.bind(this, that), false);
+			}
+		}
+
+		initImgInputs()
+		{
+			// reset value
+			let inputs = this.beerProjectContainer.querySelectorAll(".brasserieImgInput");
+			for (let i = inputs.length - 1; i >= 0; i--)
+			{
+				inputs[i].value = "";
 			}
 		}
 
@@ -238,6 +249,43 @@ window.addEventListener("load", function(event)
 				let insertNewBrasserie = createElem(["input"], [["type", "value", "name"]], [["text", newBrasserieListToInsert, "insertNewBrasserie"]]);
 				form.appendChild(insertNewBrasserie);		
 			}
+
+			// set img on brasseries who already in db
+			let brasserieImgInput = that.beerProjectContainer.querySelectorAll(".brasseriesFromDb .brasserieImgInput");
+			let brasserieImgId = [];
+
+			if (brasserieImgInput.length > 0)
+			{
+				for (let i = 0, length = brasserieImgInput.length; i < length; i++)
+				{
+					if (brasserieImgInput[i].value != "")
+					{
+						let brasserieContainer = Tools.focusParent("brasseriesFromDb", brasserieImgInput[i]);
+						let brasserieId = Tools.cleanIdBeforeThisChar(brasserieContainer.id, "__");
+						brasserieImgInput[i].setAttribute("name", "onAlreadyExistBrasserie" + brasserieId);
+						brasserieImgId.push(brasserieId); 
+						form.appendChild(brasserieImgInput[i]);		
+					}
+				}
+				brasserieImgId = JSON.stringify(brasserieImgId);
+				let brasserieImgInputId = createElem(["input"], [["type", "value", "name"]], [["text", brasserieImgId, "brasserieImgInputId"]]);
+				form.appendChild(brasserieImgInputId);		
+			}
+
+			// set img on new brasseries
+			let newBrasserieImgInput = that.beerProjectContainer.querySelectorAll(".newBrasserieToDb .brasserieImgInput");
+
+			if (newBrasserieImgInput.length > 0)
+			{
+				for (let i = 0, length = newBrasserieImgInput.length; i < length; i++)
+				{
+					if (newBrasserieImgInput[i].value != "")
+					{
+						newBrasserieImgInput[i].setAttribute("name", "onNewBrasserie" + i);
+						form.appendChild(newBrasserieImgInput[i]);		
+					}
+				}
+			}			
 
 			document.body.appendChild(form);
 			form.submit();

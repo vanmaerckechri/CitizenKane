@@ -38,7 +38,7 @@ ob_start(); ?>
 			<div class="newBrasserie-container">
 				<h3>Ajouter un Événement</h3>
 				<div class="beerproject-brasserie newBrasserie">
-					<input class="brasserieImgInput" type="file" accept="image/png, image/jpeg" class="beerproject_imgInput">
+					<input class="brasserieImgInput" type="file" accept="image/png, image/jpeg">
 					<img src="assets/img/test/carte_empty.png" alt="logo de la brasserie">
 					<div class="aboveline">
 						<input class="h4 brasserieTitle" type="text" placeholder="Titre de l'édition" autocomplete="off">
@@ -57,12 +57,12 @@ ob_start(); ?>
 			?>
 				<div id="beerProjectId__<?= htmlspecialchars($beerProjectSoon["id"]) ?>" class="beerproject-brasserie brasseriesFromDb">
 					<button class="btn_carteDelete">X</button>
-					<input type="file" accept="image/png, image/jpeg" class="beerproject_imgInput">
+					<input class="brasserieImgInput" type="file" accept="image/png, image/jpeg">
 					<?php
 					if (isset($beerProjectSoon["imgSrc"]) && !empty($beerProjectSoon["imgSrc"]))
 					{
 					?>
-						<img src="assets/img/<?= htmlspecialchars($beerProjectSoon["imgSrc"]) ?>" alt="logo de la brasserie">
+						<img src="assets/img/test2/<?= htmlspecialchars($beerProjectSoon["imgSrc"]) ?>" alt="logo de la brasserie">
 					<?php
 					}
 					else
@@ -98,12 +98,12 @@ ob_start(); ?>
 			?>
 				<div id="beerProjectId__<?= htmlspecialchars($beerProjectPast["id"]) ?>" class="beerproject-brasserie brasseriesFromDb">
 					<button class="btn_carteDelete">X</button>
-					<input type="file" accept="image/png, image/jpeg" class="beerproject_imgInput">
+					<input class="brasserieImgInput" type="file" accept="image/png, image/jpeg">
 					<?php
 					if (isset($beerProjectPast["imgSrc"]) && !empty($beerProjectPast["imgSrc"]))
 					{
 					?>
-						<img src="assets/img/<?= htmlspecialchars($beerProjectPast["imgSrc"]) ?>" alt="logo de la brasserie">
+						<img src="assets/img/test2/<?= htmlspecialchars($beerProjectPast["imgSrc"]) ?>" alt="logo de la brasserie">
 					<?php
 					}
 					else

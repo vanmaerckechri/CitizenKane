@@ -814,7 +814,8 @@ section.beerproject-intro {
   .beerproject-brasserie img {
     border-radius: 0.5rem;
     width: 150px;
-    height: 150px; }
+    height: 150px;
+    object-fit: cover; }
   .beerproject-brasserie div {
     padding-top: 1rem;
     min-height: 150px;
