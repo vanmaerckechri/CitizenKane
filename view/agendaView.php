@@ -59,7 +59,7 @@ ob_start(); ?>
 						if (isset($beerProjectSoon["imgSrc"]) && !empty($beerProjectSoon["imgSrc"]))
 						{
 						?>
-							<img src="assets/img/test2/<?= htmlspecialchars($beerProjectSoon["imgSrc"]) ?>" alt="logo de la brasserie">
+							<img src="assets/img/test2/<?= htmlspecialchars($beerProjectSoon["imgSrc"]) ?>" alt="logo de l'événement">
 						<?php
 						}
 						else
@@ -93,7 +93,7 @@ ob_start(); ?>
 						if (isset($beerProjectPast["imgSrc"]) && !empty($beerProjectPast["imgSrc"]))
 						{
 						?>
-							<img src="assets/img/test2/<?= htmlspecialchars($beerProjectPast["imgSrc"]) ?>" alt="logo de la brasserie">
+							<img src="assets/img/test2/<?= htmlspecialchars($beerProjectPast["imgSrc"]) ?>" alt="logo de l'événement">
 						<?php
 						}
 						else
@@ -108,6 +108,76 @@ ob_start(); ?>
 							<p><b>date d'ouverture</b> (yyyy-mm-jj hh:mm:ss) : <input class="brasserieDate_open" type="datetime-local" value="<?= htmlspecialchars($beerProjectPast["date_open"]) ?>" autocomplete="off"></p>
 							<p><b>date de fin</b> (yyyy-mm-jj hh:mm:ss) : <input class="brasserieDate_close" type="datetime-local" value="<?= htmlspecialchars($beerProjectPast["date_close"]) ?>" autocomplete="off"></p>
 							<p><b>En Résumé</b> : <textarea class="summary" autocomplete="off"><?= htmlspecialchars($beerProjectPast["summary"]) ?></textarea></p>
+						</div>
+					</div>		
+				<?php
+				}
+				?>
+			</div>
+		<?php
+		// -- CLIENTS --
+		}
+		else
+		{
+		?>
+			<div>
+				<h3>à Venir</h3>
+				<?php
+				foreach ($beerProjectSoonList as $key => $beerProjectSoon)
+				{
+					$dateNewFormat = DateManage::translateDateTime($beerProjectSoon["date_open"], $beerProjectSoon["date_close"]);
+				?>
+					<div class="beerproject-brasserie brasseriesFromDb">
+						<?php
+						if (isset($beerProjectSoon["imgSrc"]) && !empty($beerProjectSoon["imgSrc"]))
+						{
+						?>
+							<img src="assets/img/test2/<?= htmlspecialchars($beerProjectSoon["imgSrc"]) ?>" alt="logo de l'événement">
+						<?php
+						}
+						else
+						{
+						?>
+							<img src="assets/img/test/carte_empty.png" alt="logo de la brasserie">
+						<?php
+						}
+						?>
+						<div class="aboveline">
+							<h4 class="brasserieTitle"><?= htmlspecialchars($beerProjectSoon["title"]) ?></h4>
+							<p><b>Date</b> : <?= $dateNewFormat ?></p>
+							<p><b>En Résumé</b> : <?= htmlspecialchars($beerProjectSoon["summary"]) ?></p>
+						</div>
+					</div>		
+				<?php
+				}
+				?>
+			</div>
+			<div>
+				<h3>Passés</h3>
+				<?php
+				foreach ($beerProjectPastList as $key => $beerProjectPast)
+				{
+					$dateNewFormat = DateManage::translateDateTime($beerProjectPast["date_open"], $beerProjectPast["date_close"]);
+				?>
+					<div id="beerProjectId__<?= htmlspecialchars($beerProjectPast["id"]) ?>" class="beerproject-brasserie brasseriesFromDb">
+						<?php
+						if (isset($beerProjectPast["imgSrc"]) && !empty($beerProjectPast["imgSrc"]))
+						{
+						?>
+							<img src="assets/img/test2/<?= htmlspecialchars($beerProjectPast["imgSrc"]) ?>" alt="logo de l'événement">
+						<?php
+						}
+						else
+						{
+						?>
+							<img src="assets/img/test/carte_empty.png" alt="logo de la brasserie">
+						<?php
+						}
+						?>
+						<div class="aboveline">
+							<h4 class="brasserieTitle"><?= htmlspecialchars($beerProjectPast["title"]) ?></h4>
+							<p><b>Date</b> : <?= $dateNewFormat ?></p>
+							<p><b>En Résumé</b> : <?= htmlspecialchars($beerProjectPast["summary"]) ?></p>
 						</div>
 					</div>		
 				<?php

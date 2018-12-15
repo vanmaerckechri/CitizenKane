@@ -33,7 +33,7 @@ class Session
 {
 	public function testAdmin()
 	{
-		$_SESSION["name"] = "chef";
+		$_SESSION["name"] = "";
 		$_SESSION["pwd"] = "1234";
 
 		if (isset($_SESSION["name"]) && isset($_SESSION["pwd"]) && $_SESSION["name"] == "chef" && $_SESSION["pwd"] == "1234")

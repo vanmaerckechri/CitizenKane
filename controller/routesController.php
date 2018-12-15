@@ -57,10 +57,9 @@ function loadCafe($admin)
 function loadBeerProject($admin)
 {
 	$page = "beerProject";
-	if (isset($_POST))
-    {
-        require('./controller/beerProjectController.php');
-    }
+
+    require('./controller/beerProjectController.php');
+
 	$beerProject = new BeerProject();
 	$beerProjectList = $beerProject->getList($page);
 
@@ -73,10 +72,9 @@ function loadBeerProject($admin)
 function loadAgenda($admin)
 {
 	$page = "agenda";
-	if (isset($_POST))
-    {
-        require('./controller/beerProjectController.php');
-    }
+
+    require('./controller/beerProjectController.php');
+
 	$beerProject = new BeerProject();
 	$beerProjectList = $beerProject->getList($page);
 

@@ -142,12 +142,13 @@ ob_start(); ?>
 			<?php
 			foreach ($beerProjectSoonList as $key => $beerProjectSoon)
 			{
+				$dateNewFormat = DateManage::translateDate($beerProjectSoon["date"]);
 			?>
 				<div class="beerproject-brasserie">
 					<img src="assets/img/test2/<?= htmlspecialchars($beerProjectSoon["imgSrc"]) ?>" alt="logo de la brasserie">
 					<div class="aboveline">
 						<h4><?= htmlspecialchars($beerProjectSoon["title"]) ?></h4>
-						<p><b>Soirée découverte</b> : <?= htmlspecialchars($beerProjectSoon["date"]) ?></p>
+						<p><b>Soirée découverte</b> : <?= $dateNewFormat ?></p>
 						<p><b>Bières à découvrir</b> : <?= htmlspecialchars($beerProjectSoon["beers"]) ?></p>
 						<?php
 						if (!empty($beerProjectSoon["link"]))
@@ -168,12 +169,13 @@ ob_start(); ?>
 			<?php
 			foreach ($beerProjectPastList as $key => $beerProjectPast)
 			{
+				$dateNewFormat = DateManage::translateDate($beerProjectPast["date"]);
 			?>
 				<div class="beerproject-brasserie">
 					<img src="assets/img/test2/<?= htmlspecialchars($beerProjectPast["imgSrc"]) ?>" alt="logo de la brasserie">
 					<div class="aboveline">
 						<h4><?= htmlspecialchars($beerProjectPast["title"]) ?></h4>
-						<p><b>Soirée découverte</b> : <?= htmlspecialchars($beerProjectPast["date"]) ?></p>
+						<p><b>Soirée découverte</b> : <?= $dateNewFormat ?></p>
 						<p><b>Bières à découvrir</b> : <?= htmlspecialchars($beerProjectPast["beers"]) ?></p>
 						<?php
 						if (!empty($beerProjectPast["link"]))
