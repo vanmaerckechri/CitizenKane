@@ -145,10 +145,10 @@ input.prix {
   .moveOrderButton:hover {
     cursor: grab; }
 
-.btn_add, .moveOrderButton, .addCarte, .btn_addFam, .btn_import, .btn_addNewEvent {
+.btn_add, .moveOrderButton, .addCarte, .btn_addFam, .btn_import, .btn_addNewBrasserie {
   border-radius: 0;
   background-color: #1e9e6b; }
-  .btn_add:hover, .moveOrderButton:hover, .addCarte:hover, .btn_addFam:hover, .btn_import:hover, .btn_addNewEvent:hover {
+  .btn_add:hover, .moveOrderButton:hover, .addCarte:hover, .btn_addFam:hover, .btn_import:hover, .btn_addNewBrasserie:hover {
     background-color: #069059; }
 
 .btn_addFam {
@@ -161,13 +161,13 @@ input.prix {
 .beerproject-brasserie {
   position: relative; }
 
-.beerProjectTitle {
+.brasserieTitle {
   text-align: center; }
 
 .beerproject-brasserie p input {
   width: auto; }
 
-.beerproject_imgInput {
+.brasserieImgInput {
   text-align: center; }
 
 /*# sourceMappingURL=admin.css.map */

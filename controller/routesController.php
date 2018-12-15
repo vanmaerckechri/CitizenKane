@@ -57,6 +57,7 @@ function loadCafe($admin)
 
 function loadBeerProject($admin)
 {
+	$page = "beerProject";
 	$beerProject = new BeerProject();
 	$beerProjectList = $beerProject->getList();
 	$beerProjectPage = 'class="active"';

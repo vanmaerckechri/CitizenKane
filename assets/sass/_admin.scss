@@ -222,7 +222,7 @@ input.prix
 	}
 }
 
-.btn_add, .moveOrderButton, .addCarte, .btn_addFam, .btn_import, .btn_addNewEvent
+.btn_add, .moveOrderButton, .addCarte, .btn_addFam, .btn_import, .btn_addNewBrasserie
 {
 	border-radius: 0;
 	background-color: $second-color;
@@ -252,7 +252,7 @@ input.prix
 {
 	position: relative;
 }
-.beerProjectTitle
+.brasserieTitle
 {
 	text-align: center;
 }
@@ -268,7 +268,7 @@ input.prix
 	}
 }
 
-.beerproject_imgInput
+.brasserieImgInput
 {
 	text-align: center;
 }

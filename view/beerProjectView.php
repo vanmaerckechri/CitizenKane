@@ -38,15 +38,15 @@ ob_start(); ?>
 			<div class="newBrasserie-container">
 				<h3>Ajouter un Événement</h3>
 				<div class="beerproject-brasserie newBrasserie">
-					<input type="file" accept="image/png, image/jpeg" class="beerproject_imgInput">
+					<input class="brasserieImgInput" type="file" accept="image/png, image/jpeg" class="beerproject_imgInput">
 					<img src="assets/img/test/carte_empty.png" alt="">
 					<div class="aboveline">
-						<input class="h4 beerProjectTitle" type="text" placeholder="Titre de l'édition" autocomplete="off">
-						<p><b>Soirée découverte</b> : <input type="date" autocomplete="off"></p>
-						<p><b>Bières à découvrir</b> : <input type="text" placeholder="Les bières..." autocomplete="off"> </p>
-						<p><b>Site</b> : <input type="text" placeholder="url..."></p>
+						<input class="h4 brasserieTitle" type="text" placeholder="Titre de l'édition" autocomplete="off">
+						<p><b>Soirée découverte</b> : <input class="brasserieDate" type="date" autocomplete="off"></p>
+						<p><b>Bières à découvrir</b> : <input class="brasserieBeers" type="text" placeholder="Les bières..." autocomplete="off"> </p>
+						<p><b>Site</b> : <input class="brasserieUrl" type="text" placeholder="url..." autocomplete="off"></p>
 					</div>
-					<button class="btn btn_addNewEvent">valider</button>
+					<button class="btn btn_addNewBrasserie">valider</button>
 				</div>	
 			</div>
 			<div>
@@ -55,19 +55,19 @@ ob_start(); ?>
 			foreach ($beerProjectSoonList as $key => $beerProjectSoon)
 			{
 			?>
-				<div id="beerProjectId__<?= htmlspecialchars($beerProjectSoon["id"]) ?>" class="beerproject-brasserie">
+				<div id="beerProjectId__<?= htmlspecialchars($beerProjectSoon["id"]) ?>" class="beerproject-brasserie brasseriesFromDb">
 					<button class="btn_carteDelete">X</button>
 					<input type="file" accept="image/png, image/jpeg" class="beerproject_imgInput">
 					<img src="assets/img/<?= htmlspecialchars($beerProjectSoon["imgSrc"]) ?>" alt="logo de la brasserie de Jandrain-Jandrenouille">
 					<div class="aboveline">
-						<input class="h4 beerProjectTitle" type="text" value="<?= htmlspecialchars($beerProjectSoon["title"]) ?>" autocomplete="off">
-						<p><b>Soirée découverte</b> : <input type="date" value="<?= htmlspecialchars($beerProjectSoon["date"]) ?>" autocomplete="off"></p>
-						<p><b>Bières à découvrir</b> : <input type="text" value="<?= htmlspecialchars($beerProjectSoon["beers"]) ?>" autocomplete="off"> </p>
+						<input class="h4 brasserieTitle" type="text" value="<?= htmlspecialchars($beerProjectSoon["title"]) ?>" autocomplete="off">
+						<p><b>Soirée découverte</b> : <input class="brasserieDate" type="date" value="<?= htmlspecialchars($beerProjectSoon["date"]) ?>" autocomplete="off"></p>
+						<p><b>Bières à découvrir</b> : <input class="brasserieBeers" type="text" value="<?= htmlspecialchars($beerProjectSoon["beers"]) ?>" autocomplete="off"> </p>
 						<?php
 						if (!empty($beerProjectSoon["link"]))
 						{
 						?>
-							<p><b>Site</b> : <input type="text" value="<?= htmlspecialchars($beerProjectSoon['link']) ?>"></p>
+							<p><b>Site</b> : <input class="brasserieUrl" type="text" value="<?= htmlspecialchars($beerProjectSoon['link']) ?>" autocomplete="off"></p>
 						<?php
 						}
 						?>
@@ -83,19 +83,19 @@ ob_start(); ?>
 			foreach ($beerProjectPastList as $key => $beerProjectPast)
 			{
 			?>
-				<div id="beerProjectId__<?= htmlspecialchars($beerProjectPast["id"]) ?>" class="beerproject-brasserie">
+				<div id="beerProjectId__<?= htmlspecialchars($beerProjectPast["id"]) ?>" class="beerproject-brasserie brasseriesFromDb">
 					<button class="btn_carteDelete">X</button>
 					<input type="file" accept="image/png, image/jpeg" class="beerproject_imgInput">
 					<img src="assets/img/<?= htmlspecialchars($beerProjectPast["imgSrc"]) ?>" alt="logo de la brasserie de Jandrain-Jandrenouille">
 					<div class="aboveline">
-						<input class="h4 beerProjectTitle" type="text" value="<?= htmlspecialchars($beerProjectPast["title"]) ?>" autocomplete="off">
-						<p><b>Soirée découverte</b> : <input type="date" value="<?= htmlspecialchars($beerProjectPast["date"]) ?>" autocomplete="off"></p>
-						<p><b>Bières à découvrir</b> : <input type="text" value="<?= htmlspecialchars($beerProjectPast["beers"]) ?>" autocomplete="off"> </p>
+						<input class="h4 brasserieTitle" type="text" value="<?= htmlspecialchars($beerProjectPast["title"]) ?>" autocomplete="off">
+						<p><b>Soirée découverte</b> : <input class="brasserieDate" type="date" value="<?= htmlspecialchars($beerProjectPast["date"]) ?>" autocomplete="off"></p>
+						<p><b>Bières à découvrir</b> : <input class="brasserieBeers" type="text" value="<?= htmlspecialchars($beerProjectPast["beers"]) ?>" autocomplete="off"> </p>
 						<?php
 						if (!empty($beerProjectPast["link"]))
 						{
 						?>
-							<p><b>Site</b> : <input type="text" value="<?= htmlspecialchars($beerProjectPast['link']) ?>"></p>
+							<p><b>Site</b> : <input class="brasserieUrl" type="text" value="<?= htmlspecialchars($beerProjectPast['link']) ?>" autocomplete="off"></p>
 						<?php
 						}
 						?>
@@ -198,6 +198,9 @@ ob_start(); ?>
 if ($admin === true)
 {
 ?>
+	<script type="text/javascript">
+		let page = <?= json_encode($page); ?>;
+	</script>
 	<script type="text/javascript" src="assets/js/cvm_createdomelem.js"></script>
 	<script type="text/javascript" src="assets/js/admin_beerproject.js"></script>
 <?php
