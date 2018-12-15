@@ -13,7 +13,7 @@
 				<li><a <?= $cafePage ?? '' ?> href="index.php?action=cafe">Le Café-Bar</a></li>
 				<li><a <?= $beerProjectPage ?? '' ?> href="index.php?action=beerProject">Beer Discovery Project</a></li>
 				<li><a href="brunch.html">Le Brunch</a></li>
-				<li><a href="agenda.html">Agenda</a></li>
+				<li><a <?= $agendaPage ?? '' ?> href="index.php?action=agenda">Agenda</a></li>
 				<li><a href="contact.html">Infos & contact</a></li>
 				<li><a class="btn" href="" target="_blank" rel="noopener">Je réserve !</a></li>
 			</ul>

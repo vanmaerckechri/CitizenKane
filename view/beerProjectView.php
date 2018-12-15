@@ -144,7 +144,7 @@ ob_start(); ?>
 			{
 			?>
 				<div class="beerproject-brasserie">
-					<img src="assets/img/<?= htmlspecialchars($beerProjectSoon["imgSrc"]) ?>" alt="logo de la brasserie de Jandrain-Jandrenouille">
+					<img src="assets/img/test2/<?= htmlspecialchars($beerProjectSoon["imgSrc"]) ?>" alt="logo de la brasserie">
 					<div class="aboveline">
 						<h4><?= htmlspecialchars($beerProjectSoon["title"]) ?></h4>
 						<p><b>Soirée découverte</b> : <?= htmlspecialchars($beerProjectSoon["date"]) ?></p>
@@ -170,7 +170,7 @@ ob_start(); ?>
 			{
 			?>
 				<div class="beerproject-brasserie">
-					<img src="assets/img/<?= htmlspecialchars($beerProjectPast["imgSrc"]) ?>" alt="logo de la brasserie de Jandrain-Jandrenouille">
+					<img src="assets/img/test2/<?= htmlspecialchars($beerProjectPast["imgSrc"]) ?>" alt="logo de la brasserie">
 					<div class="aboveline">
 						<h4><?= htmlspecialchars($beerProjectPast["title"]) ?></h4>
 						<p><b>Soirée découverte</b> : <?= htmlspecialchars($beerProjectPast["date"]) ?></p>

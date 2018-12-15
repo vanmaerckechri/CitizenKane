@@ -69,3 +69,19 @@ function loadBeerProject($admin)
 	$beerProjectPage = 'class="active"';
     require('./view/beerProjectView.php');	
 }
+
+function loadAgenda($admin)
+{
+	if (isset($_POST))
+    {
+        require('./controller/beerProjectController.php');
+    }
+	$page = "agenda";
+	$beerProject = new BeerProject();
+	$beerProjectList = $beerProject->getList();
+
+	cleanPost($page);
+
+	$agendaPage = 'class="active"';
+    require('./view/agendaView.php');	
+}

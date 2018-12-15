@@ -22,6 +22,10 @@ if (isset($_GET['action']))
     {
         loadBeerProject($admin);
     }
+    elseif ($_GET['action'] == 'agenda')
+    {
+        loadAgenda($admin);
+    }
     else
     {
         loadHome();
