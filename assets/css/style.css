@@ -504,7 +504,7 @@ nav {
   pointer-events: none; }
 
 .displayNone {
-  display: none; }
+  display: none !important; }
 
 .underline, .aboveline {
   margin: 1rem 0;

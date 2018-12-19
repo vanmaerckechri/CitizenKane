@@ -26,6 +26,14 @@ if (isset($_GET['action']))
     {
         loadAgenda($admin);
     }
+    elseif ($_GET['action'] == 'brunch')
+    {
+        loadBrunch($admin);
+    }
+    elseif ($_GET['action'] == 'contact')
+    {
+        loadContact($admin);
+    }
     else
     {
         loadHome();

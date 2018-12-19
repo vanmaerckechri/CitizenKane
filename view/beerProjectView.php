@@ -39,7 +39,7 @@ ob_start(); ?>
 				<h3>Ajouter un Événement</h3>
 				<div class="beerproject-brasserie newBrasserie">
 					<input class="brasserieImgInput" type="file" accept="image/png, image/jpeg">
-					<img src="assets/img/test/carte_empty.png" alt="logo de la brasserie">
+					<img src="assets/img/upload/carte_empty.png" alt="logo de la brasserie">
 					<div class="aboveline">
 						<input class="h4 brasserieTitle" type="text" placeholder="Titre de l'édition" autocomplete="off">
 						<p><b>Soirée découverte</b> : <input class="brasserieDate" type="date" autocomplete="off"></p>
@@ -48,6 +48,9 @@ ob_start(); ?>
 					</div>
 					<button class="btn btn_addNewBrasserie">valider</button>
 				</div>	
+			</div>
+			<div id="waitingRecord" class="displayNone">
+				<h3>En Attente d'Enregistrement</h3>
 			</div>
 			<div>
 				<h3>à Venir</h3>
@@ -62,13 +65,13 @@ ob_start(); ?>
 					if (isset($beerProjectSoon["imgSrc"]) && !empty($beerProjectSoon["imgSrc"]))
 					{
 					?>
-						<img src="assets/img/test2/<?= htmlspecialchars($beerProjectSoon["imgSrc"]) ?>" alt="logo de la brasserie">
+						<img src="assets/img/upload/<?= htmlspecialchars($beerProjectSoon["imgSrc"]) ?>" alt="logo de la brasserie">
 					<?php
 					}
 					else
 					{
 					?>
-						<img src="assets/img/test/carte_empty.png" alt="logo de la brasserie">
+						<img src="assets/img/upload/carte_empty.png" alt="logo de la brasserie">
 					<?php
 					}
 					?>
@@ -103,13 +106,13 @@ ob_start(); ?>
 					if (isset($beerProjectPast["imgSrc"]) && !empty($beerProjectPast["imgSrc"]))
 					{
 					?>
-						<img src="assets/img/test2/<?= htmlspecialchars($beerProjectPast["imgSrc"]) ?>" alt="logo de la brasserie">
+						<img src="assets/img/upload/<?= htmlspecialchars($beerProjectPast["imgSrc"]) ?>" alt="logo de la brasserie">
 					<?php
 					}
 					else
 					{
 					?>
-						<img src="assets/img/test/carte_empty.png" alt="logo de la brasserie">
+						<img src="assets/img/upload/carte_empty.png" alt="logo de la brasserie">
 					<?php
 					}
 					?>					
@@ -145,7 +148,7 @@ ob_start(); ?>
 				$dateNewFormat = DateManage::translateDate($beerProjectSoon["date"]);
 			?>
 				<div class="beerproject-brasserie">
-					<img src="assets/img/test2/<?= htmlspecialchars($beerProjectSoon["imgSrc"]) ?>" alt="logo de la brasserie">
+					<img src="assets/img/upload/<?= htmlspecialchars($beerProjectSoon["imgSrc"]) ?>" alt="logo de la brasserie">
 					<div class="aboveline">
 						<h4><?= htmlspecialchars($beerProjectSoon["title"]) ?></h4>
 						<p><b>Soirée découverte</b> : <?= $dateNewFormat ?></p>
@@ -172,7 +175,7 @@ ob_start(); ?>
 				$dateNewFormat = DateManage::translateDate($beerProjectPast["date"]);
 			?>
 				<div class="beerproject-brasserie">
-					<img src="assets/img/test2/<?= htmlspecialchars($beerProjectPast["imgSrc"]) ?>" alt="logo de la brasserie">
+					<img src="assets/img/upload/<?= htmlspecialchars($beerProjectPast["imgSrc"]) ?>" alt="logo de la brasserie">
 					<div class="aboveline">
 						<h4><?= htmlspecialchars($beerProjectPast["title"]) ?></h4>
 						<p><b>Soirée découverte</b> : <?= $dateNewFormat ?></p>

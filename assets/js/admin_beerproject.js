@@ -128,44 +128,51 @@ window.addEventListener("load", function(event)
 			let newBrasserieDate = page == "beerProject" ? newBrasserieClone.querySelector(".brasserieDate").value : newBrasserieClone.querySelector(".brasserieDate_open").value;
 
 			// search place to put new brasserie by date
+			let waitingRecord = document.getElementById("waitingRecord");
 			let allBrasseries = that.beerProjectContainer.querySelectorAll(".beerproject-brasserie");
 			for (let i = 1, length = allBrasseries.length; i < length; i++)
 			{
 				let brasserieDate = page == "beerProject" ? allBrasseries[i].querySelector(".brasserieDate").value : allBrasseries[i].querySelector(".brasserieDate_open").value;
-				if (newBrasserieDate > brasserieDate)
+				// update class to prepare record to db
+				newBrasserieClone.className = ("beerproject-brasserie newBrasserieToDb")
+				// delete addNewBrasserieButton from clone before insert it
+				newBrasserieClone.querySelector(".btn_addNewBrasserie").remove();
+				// add deleteBrasserieButton to clone before insert it
+				let deleteBrasserieButton = that.beerProjectContainer.querySelector(".btn_carteDelete").cloneNode(true);
+				newBrasserieClone.insertBefore(deleteBrasserieButton, newBrasserieClone.querySelector("img"));
+				deleteBrasserieButton.addEventListener("click", function()
 				{
-					// update class to prepare record to db
-					newBrasserieClone.className = ("beerproject-brasserie newBrasserieToDb")
-					// delete addNewBrasserieButton from clone before insert it
-					newBrasserieClone.querySelector(".btn_addNewBrasserie").remove();
-					// add deleteBrasserieButton to clone before insert it
-					let deleteBrasserieButton = that.beerProjectContainer.querySelector(".btn_carteDelete").cloneNode(true);
-					newBrasserieClone.insertBefore(deleteBrasserieButton, newBrasserieClone.querySelector("img"));
-					deleteBrasserieButton.addEventListener("click", function()
+					newBrasserieClone.remove();
+					if (!waitingRecord.querySelector("div"))
 					{
-						newBrasserieClone.remove();
-						that.toogleDisplayRecordButton();
-					})
-					// insert it
-					allBrasseries[i].parentNode.insertBefore(newBrasserieClone, allBrasseries[i]);
-					// reset board inputs for next new brasserie
-					newBrasserie.querySelector(".brasserieImgInput").value = "";
-					newBrasserie.querySelector(".brasserieTitle").value = "";
-					if (page == "beerProject")
-					{
-						newBrasserie.querySelector(".brasserieDate").value = "";
-						newBrasserie.querySelector(".brasserieUrl").value = "";
-						newBrasserie.querySelector(".brasserieBeers").value = "";
+						waitingRecord.classList.add("displayNone");
 					}
-					else
-					{
-						newBrasserie.querySelector(".brasserieDate_open").value = "";
-						newBrasserie.querySelector(".brasserieDate_close").value = "";
-						newBrasserie.querySelector(".summary").value = "";
-					}
-					break;
+					that.toogleDisplayRecordButton();
+				})
+				// insert it
+				if (waitingRecord.classList.contains("displayNone"))
+				{
+					waitingRecord.classList.remove("displayNone");
 				}
+				waitingRecord.appendChild(newBrasserieClone)
+				// reset board inputs for next new brasserie
+				newBrasserie.querySelector(".brasserieImgInput").value = "";
+				newBrasserie.querySelector(".brasserieTitle").value = "";
+				if (page == "beerProject")
+				{
+					newBrasserie.querySelector(".brasserieDate").value = "";
+					newBrasserie.querySelector(".brasserieUrl").value = "";
+					newBrasserie.querySelector(".brasserieBeers").value = "";
+				}
+				else
+				{
+					newBrasserie.querySelector(".brasserieDate_open").value = "";
+					newBrasserie.querySelector(".brasserieDate_close").value = "";
+					newBrasserie.querySelector(".summary").value = "";
+				}
+				break;
 			}
+
 			that.toogleDisplayRecordButton();
 		}
 

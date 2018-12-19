@@ -54,6 +54,25 @@ function loadCafe($admin)
     require('./view/cafeView.php');
 }
 
+function loadBrunch($admin)
+{
+	$page = "brunch";
+	if (isset($_POST))
+    {
+        require('./controller/cartesController.php');
+    }
+	$cartes = new Cartes();
+	$allCartes = $cartes->getCartes($page);
+	$cartes = $allCartes[0];
+	$cartesForOtherPages = $allCartes[1];
+
+	cleanPost($page);
+
+	$brunchPage = 'class="active"';
+	require('./view/carteView.php');
+    require('./view/brunchView.php');
+}
+
 function loadBeerProject($admin)
 {
 	$page = "beerProject";
@@ -82,4 +101,10 @@ function loadAgenda($admin)
 
 	$agendaPage = 'class="active"';
     require('./view/agendaView.php');	
+}
+
+function loadContact()
+{
+	$contactPage = 'class="active"';
+    require('./view/contactView.php');
 }

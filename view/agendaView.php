@@ -36,7 +36,7 @@ ob_start(); ?>
 				<h3>Ajouter un Événement</h3>
 				<div class="beerproject-brasserie newBrasserie">
 					<input class="brasserieImgInput" type="file" accept="image/png, image/jpeg">
-					<img src="assets/img/test/carte_empty.png" alt="logo de l'événement">
+					<img src="assets/img/upload/carte_empty.png" alt="logo de l'événement">
 					<div class="aboveline">
 						<input class="h4 brasserieTitle" type="text" placeholder="Titre de l'édition" autocomplete="off">
 						<p><b>date d'ouverture</b> (yyyy-mm-jj hh:mm:ss) : <input class="brasserieDate_open" type="datetime-local" autocomplete="off"></p>
@@ -45,6 +45,9 @@ ob_start(); ?>
 					</div>
 					<button class="btn btn_addNewBrasserie">valider</button>
 				</div>	
+			</div>
+			<div id="waitingRecord" class="displayNone">
+				<h3>En Attente d'Enregistrement</h3>
 			</div>
 			<div>
 				<h3>à Venir</h3>
@@ -59,13 +62,13 @@ ob_start(); ?>
 						if (isset($beerProjectSoon["imgSrc"]) && !empty($beerProjectSoon["imgSrc"]))
 						{
 						?>
-							<img src="assets/img/test2/<?= htmlspecialchars($beerProjectSoon["imgSrc"]) ?>" alt="logo de l'événement">
+							<img src="assets/img/upload/<?= htmlspecialchars($beerProjectSoon["imgSrc"]) ?>" alt="logo de l'événement">
 						<?php
 						}
 						else
 						{
 						?>
-							<img src="assets/img/test/carte_empty.png" alt="logo de la brasserie">
+							<img src="assets/img/upload/carte_empty.png" alt="logo de la brasserie">
 						<?php
 						}
 						?>
@@ -93,13 +96,13 @@ ob_start(); ?>
 						if (isset($beerProjectPast["imgSrc"]) && !empty($beerProjectPast["imgSrc"]))
 						{
 						?>
-							<img src="assets/img/test2/<?= htmlspecialchars($beerProjectPast["imgSrc"]) ?>" alt="logo de l'événement">
+							<img src="assets/img/upload/<?= htmlspecialchars($beerProjectPast["imgSrc"]) ?>" alt="logo de l'événement">
 						<?php
 						}
 						else
 						{
 						?>
-							<img src="assets/img/test/carte_empty.png" alt="logo de la brasserie">
+							<img src="assets/img/upload/carte_empty.png" alt="logo de la brasserie">
 						<?php
 						}
 						?>
@@ -132,13 +135,13 @@ ob_start(); ?>
 						if (isset($beerProjectSoon["imgSrc"]) && !empty($beerProjectSoon["imgSrc"]))
 						{
 						?>
-							<img src="assets/img/test2/<?= htmlspecialchars($beerProjectSoon["imgSrc"]) ?>" alt="logo de l'événement">
+							<img src="assets/img/upload/<?= htmlspecialchars($beerProjectSoon["imgSrc"]) ?>" alt="logo de l'événement">
 						<?php
 						}
 						else
 						{
 						?>
-							<img src="assets/img/test/carte_empty.png" alt="logo de la brasserie">
+							<img src="assets/img/upload/carte_empty.png" alt="logo de la brasserie">
 						<?php
 						}
 						?>
@@ -164,13 +167,13 @@ ob_start(); ?>
 						if (isset($beerProjectPast["imgSrc"]) && !empty($beerProjectPast["imgSrc"]))
 						{
 						?>
-							<img src="assets/img/test2/<?= htmlspecialchars($beerProjectPast["imgSrc"]) ?>" alt="logo de l'événement">
+							<img src="assets/img/upload/<?= htmlspecialchars($beerProjectPast["imgSrc"]) ?>" alt="logo de l'événement">
 						<?php
 						}
 						else
 						{
 						?>
-							<img src="assets/img/test/carte_empty.png" alt="logo de la brasserie">
+							<img src="assets/img/upload/carte_empty.png" alt="logo de la brasserie">
 						<?php
 						}
 						?>

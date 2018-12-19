@@ -109,13 +109,13 @@ class BeerProject
 				if ($brasserie["date_open"] === false || $brasserie["date_close"] === false)
 				{
 					$currentDate = date('Y-m-d H:i:s');
-					$upt->bindParam(':date_open', $currentDate, PDO::PARAM_STR);
-					$upt->bindParam(':date_close', $currentDate, PDO::PARAM_STR);
+					$ins->bindParam(':date_open', $currentDate, PDO::PARAM_STR);
+					$ins->bindParam(':date_close', $currentDate, PDO::PARAM_STR);
 				}
 				else
 				{
-					$upt->bindParam(':date_open', $brasserie["date_open"], PDO::PARAM_STR);
-					$upt->bindParam(':date_close', $brasserie["date_close"], PDO::PARAM_STR);
+					$ins->bindParam(':date_open', $brasserie["date_open"], PDO::PARAM_STR);
+					$ins->bindParam(':date_close', $brasserie["date_close"], PDO::PARAM_STR);
 				}			
 				$ins->bindParam(':summary', $brasserie["summary"], PDO::PARAM_STR);
 			}
@@ -141,7 +141,7 @@ class BeerProject
 
     public function uploadImg($serie, $id, $page)
     {
-		$uploads_dir = './assets/img/test2/';
+		$uploads_dir = './assets/img/upload/';
 		$nameList = [];
 		$idsList = [];
 		$index = 0;

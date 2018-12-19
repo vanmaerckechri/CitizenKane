@@ -428,6 +428,10 @@ window.addEventListener("load", function(event)
 		addCarteButtonContainer.appendChild(radioFolder);
 
 		let importCarte_btnContainer = document.querySelector(".importCarte_btnContainer").cloneNode(true);
+		if (importCarte_btnContainer.classList.contains("displayNone"))
+		{
+			importCarte_btnContainer.classList.remove("displayNone");
+		}
 		let importButton = importCarte_btnContainer.querySelector("button");
 		importButton.addEventListener("click", importCarte, false);
 
@@ -564,7 +568,7 @@ window.addEventListener("load", function(event)
 		importedCarte.classList.add("importCarte");
 		importedCarte.id = "importCarte__" + idCarte;
 		let carteImg = importedCarte.querySelector("img");
-		carteImg.src = "./assets/img/" + importCarteObj["description"]["imgSrc"];
+		carteImg.src = "./assets/img/test/" + importCarteObj["description"]["imgSrc"];
 		let carteTitle = importedCarte.querySelector(".carteTitle");
 		carteTitle.id = "carteTitle__" + idCarte;
 		carteTitle.value = importCarteObj["description"]["title"];

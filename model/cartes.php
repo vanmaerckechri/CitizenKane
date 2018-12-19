@@ -306,7 +306,7 @@ class Cartes
     //public function uploadImg($oldImgDir, $oldImgSrc = false)
     public function uploadImg($serie, $ids)
     {
-		$uploads_dir = './assets/img/test/';
+		$uploads_dir = './assets/img/upload/';
 		$nameList = [];
 		$idsList = [];
 		$index = 0;
