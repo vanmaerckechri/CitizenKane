@@ -8,9 +8,9 @@ if ($admin === true)
 ?>
 	<div id="main" class="main mainAuth">
 		<h2>Administration du Compte</h2>
-		<button class="btn btn_admin">Modifier le mot de passe</button>
+		<button id="changePwd_btn" class="btn btn_admin">Modifier le mot de passe</button>
 		<button class="btn btn_admin">Modifier l'adresse mail</button>
-		<button id="disco" class="btn btn_admin">Se déconnecter</button>
+		<button id="disco_btn" class="btn btn_admin">Se déconnecter</button>
 	</div>
 <?php
 }
@@ -53,7 +53,8 @@ ob_start();?>
 	if ($admin === true)
 	{
 	?>
-		let disco = document.getElementById("disco");
+		let changePwd = document.getElementById("changePwd_btn");
+		let disco = document.getElementById("disco_btn");
 
 		let createForm = function(inputName)
 		{
@@ -72,12 +73,19 @@ ob_start();?>
 			return form;
 		}
 
+		let sendResetPwd = function()
+		{
+			let form = createForm("changePwd");
+			form.submit();
+		}
+
 		let disconnect = function()
 		{
 			let form = createForm("disco");
 			form.submit();
 		}
 
+		changePwd.addEventListener("click", sendResetPwd, false);
 		disco.addEventListener("click", disconnect, false);
 	<?php
 	}

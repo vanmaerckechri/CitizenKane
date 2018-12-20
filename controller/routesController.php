@@ -148,6 +148,12 @@ if (isset($_POST["g-recaptcha-response"]) && !empty($_POST["g-recaptcha-response
 
 		$_SESSION["alertSms"] = $coResult === false ? '<p class="alertSms">Les informations que vous avez entrées sont incorrectes !</p>' : "";
 	}
+	else if (isset($_POST["changePwd"]))
+	{
+		$connexion = new Connexion();
+		$connexion->sendResetCode("resetPwd");
+	}
+
 	$alertSms = $_SESSION["alertSms"] ?? '';
 
 	cleanPost($page);

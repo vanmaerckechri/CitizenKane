@@ -127,7 +127,7 @@ class Connexion
 
 		if (isset($adminInfos) && !empty($adminInfos))
 		{
-			$code = generateCode();
+			$code = $this->generateCode();
 			$hashCode = $this->getHashPwd($code);
 
 			// copy reset code in db
@@ -138,10 +138,10 @@ class Connexion
 
 			// send mail
 			$mail = $adminInfos["mail"];
-			$title = "Modification du Compte Demandée";
-			$urlRoot = getUrlRoot();
-			$message = "Bonjour, voici le lien permettant de finaliser la modification demandée: " . $urlRoot . "index.php?action=" . $pwdOrMail . "&code=" . $hashCode;
-			sendMail($title, $message, $mail);
+			$title = "Demande d'une Modification Liée au Compte";
+			$urlRoot = $this->getUrlRoot();
+			$message = "Bonjour, voici le lien permettant de finaliser la modification demandée: " . $urlRoot . "index.php?action=" . $pwdOrMail . "&code=" . hash('sha1', $code);
+			$this->sendMail($title, $message, $mail);
 		}
 	}
 
