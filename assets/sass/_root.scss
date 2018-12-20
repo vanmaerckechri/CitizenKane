@@ -16,6 +16,7 @@ html
 }
 body
 {
+	min-height: 100vh;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -111,6 +112,7 @@ fieldset
 }
 select
 {
+	max-width: 100%;
 	font-family: $title-fontFam;
 }
 legend
@@ -128,6 +130,7 @@ label
 input
 {
 	padding: .5rem;
+	max-width: 100%;
 	width: 100%;
 }
 input[type="submit"]

@@ -215,12 +215,14 @@ ob_start(); ?>
 		</form>
 	</section>
 	<?php 
-		if ($admin === true)
-		{
+	if ($admin === true)
+	{
 	?>
+		<div class="recordChangesContainer">
 			<button id="recordChanges" class="btn displayNone btn_recordChanges">Enregistrer les Modifiactions</button>
+		</div>
 	<?php
-		}
+	}
 	?>
 </div>
 <?php $content = ob_get_clean(); ?>

@@ -13,6 +13,7 @@ html {
   font-size: 16px; }
 
 body {
+  min-height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -90,6 +91,7 @@ fieldset {
     text-align: center; }
 
 select {
+  max-width: 100%;
   font-family: "Montserrat", sans-serif; }
 
 legend {
@@ -104,6 +106,7 @@ label {
 
 input {
   padding: .5rem;
+  max-width: 100%;
   width: 100%; }
 
 input[type="submit"] {
@@ -181,6 +184,7 @@ nav {
   margin-right: auto;
   margin-top: calc(1rem / 2);
   margin-bottom: calc(1rem / 2);
+  max-width: 1280px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -875,6 +879,31 @@ section.beerproject-intro {
 .contact-form input.btn {
   margin-top: 1rem; }
 
+.mainAuth {
+  margin-top: 78px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #272727; }
+  .mainAuth h2 {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    color: #FFF; }
+  .mainAuth form {
+    max-width: 450px; }
+  .mainAuth legend {
+    margin: 0 auto; }
+  .mainAuth input {
+    max-width: 250px; }
+  .mainAuth .authForgetPwd {
+    margin: 1rem 0; }
+  .mainAuth .btn {
+    margin-top: 1rem; }
+  .mainAuth .alertSms {
+    margin-bottom: 0;
+    color: #af291e; }
+
 @media screen and (max-width: 1295px) {
   .beerproject-editions {
     padding-left: 0;
@@ -885,10 +914,13 @@ section.beerproject-intro {
       justify-content: space-around; }
       .beerproject-editions > div:last-child {
         box-shadow: none; } }
-@media screen and (max-width: 1010px) {
-  .restaurant-intro {
-    margin-top: 130px;
-    min-height: calc(100vh - 130px); } }
+@media screen and (max-width: 1130px) {
+  .restaurant-intro, .home-intro, .beerproject-intro {
+    margin-top: 133px;
+    min-height: calc(100vh - 133px); }
+
+  .mainAuth {
+    margin-top: 133px; } }
 @media screen and (max-width: 996px) {
   .home-intro {
     position: relative; }
@@ -896,7 +928,10 @@ section.beerproject-intro {
   .restaurant-intro {
     margin-top: 0;
     padding-top: 0;
-    min-height: calc(100vh - 64px); } }
+    min-height: calc(100vh - 64px); }
+
+  .mainAuth {
+    margin-top: 0; } }
 @media screen and (max-width: 880px) {
   section {
     padding-top: 2rem;

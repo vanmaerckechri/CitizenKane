@@ -1,14 +1,21 @@
 <?php
+session_start();
+
 require('./controller/routesController.php');
 
-$session = new Session();
-$admin = $session->testAdmin();
+$connexion = new Connexion();
+$admin = false;
+
+if (isset($_SESSION["nickname"]) && !empty($_SESSION["nickname"]) && isset($_SESSION["password"]) && !empty($_SESSION["password"]))
+{
+    $admin = $connexion->checkConnexion($_SESSION["nickname"], $_SESSION["password"]);
+}
 
 if (isset($_GET['action']))
 {
     if ($_GET['action'] == 'home')
     {
-        loadHome();
+        loadHome($admin);
     }
     elseif ($_GET['action'] == 'restaurant')
     {
@@ -34,12 +41,16 @@ if (isset($_GET['action']))
     {
         loadContact($admin);
     }
+    elseif ($_GET['action'] == 'admin')
+    {
+        loadAdmin($admin);
+    }
     else
     {
-        loadHome();
+        loadHome($admin);
     }
 }
 else
 {
-    loadHome();
+    loadHome($admin);
 }

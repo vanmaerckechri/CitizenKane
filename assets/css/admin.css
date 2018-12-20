@@ -1,3 +1,12 @@
+.adminHeader {
+  max-width: 1280px; }
+  .adminHeader ul {
+    display: flex;
+    justify-content: center;
+    list-style: none; }
+    .adminHeader ul li {
+      margin: 10px; }
+
 .h4 {
   font-weight: bold;
   font-family: "Lato", sans-serif;
@@ -5,11 +14,14 @@
   text-overflow: ellipsis;
   hyphens: auto; }
 
-.btn_recordChanges {
+.recordChangesContainer {
   position: fixed;
-  left: 0;
+  left: 50%;
   bottom: 0;
-  z-index: 10; }
+  max-width: 1280px;
+  width: 100%;
+  z-index: 10;
+  transform: translate(-50%); }
 
 .btn_carteDelete {
   border: 1px solid white;
@@ -30,6 +42,21 @@
   .btn_carteDelete:hover {
     cursor: pointer;
     background-color: red; }
+
+.adminMenuContainer {
+  padding: 2px 2px 0 0;
+  position: absolute;
+  left: 50%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  max-width: 1280px;
+  width: 100%;
+  text-align: right;
+  transform: translate(-50%); }
+  .adminMenuContainer .btn_admin {
+    padding: 0.2rem 0.7rem;
+    font-size: 1rem; }
 
 .restaurant-cartes .h3 {
   margin: 1.5rem auto 0.5rem;
@@ -120,6 +147,7 @@ input.prix {
   position: absolute;
   bottom: 0;
   left: 3px;
+  max-width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center; }
@@ -149,10 +177,10 @@ input.prix {
   .moveOrderButton:hover {
     cursor: grab; }
 
-.btn_add, .moveOrderButton, .addCarte, .btn_addFam, .btn_import, .btn_addNewBrasserie {
+.btn_add, .moveOrderButton, .addCarte, .btn_addFam, .btn_import, .btn_addNewBrasserie, .btn_admin {
   border-radius: 0;
   background-color: #1e9e6b; }
-  .btn_add:hover, .moveOrderButton:hover, .addCarte:hover, .btn_addFam:hover, .btn_import:hover, .btn_addNewBrasserie:hover {
+  .btn_add:hover, .moveOrderButton:hover, .addCarte:hover, .btn_addFam:hover, .btn_import:hover, .btn_addNewBrasserie:hover, .btn_admin:hover {
     background-color: #069059; }
 
 .btn_addFam {
@@ -187,5 +215,15 @@ textarea {
 .brasserieDate_open, .brasserieDate_close {
   border: 1px dotted black;
   text-align: center; }
+
+.adminContainer {
+  padding-bottom: 1rem;
+  width: 100%;
+  max-width: 1280px;
+  text-align: center; }
+  .adminContainer form {
+    margin: 0 auto; }
+  .adminContainer input {
+    margin-bottom: 1rem; }
 
 /*# sourceMappingURL=admin.css.map */

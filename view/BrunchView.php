@@ -53,7 +53,9 @@ ob_start(); ?>
 	if ($admin === true)
 	{
 	?>
-		<button id="recordChanges" class="btn displayNone btn_recordChanges">Enregistrer les Modifiactions</button>
+		 <div class="recordChangesContainer">
+			<button id="recordChanges" class="btn displayNone btn_recordChanges">Enregistrer les Modifiactions</button>
+		</div>
 	<?php
 	}
 	?>

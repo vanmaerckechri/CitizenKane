@@ -19,5 +19,19 @@
 			</ul>
 		</div>
 	</nav>
+	<?php
+    if ($admin === true)
+    {
+    ?>
+        <div class="adminMenuContainer">
+        	<a href="index.php?action=admin" class="btn btn_admin">compte</a>
+        	<form method="post" action="./index.php?action=admin">
+        		<input type="hidden" name="disco">
+        		<input class="btn btn_admin" type="submit" value="se déco.">
+        	</form>
+        </div>
+    <?php
+    }
+	?>
 </header>
 <?php $header = ob_get_clean(); ?>

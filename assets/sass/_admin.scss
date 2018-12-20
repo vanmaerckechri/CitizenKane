@@ -1,4 +1,19 @@
 // -- Common --
+.adminHeader
+{
+	max-width: $mainCtnr-maxWidth;
+	ul
+	{
+		display: flex;
+		justify-content: center;
+		list-style: none;
+		li
+		{
+			margin: 10px;
+		}
+	}
+}
+
 .h4
 {
 	font-weight: bold;
@@ -8,12 +23,19 @@
 	hyphens: auto;
 }
 
-.btn_recordChanges
+.recordChangesContainer
 {
 	position: fixed;
-	left: 0;
-	bottom:0;
+	left: 50%;
+	bottom: 0;
+	max-width: $mainCtnr-maxWidth;
+	width: 100%;
 	z-index: 10;
+	transform: translate(-50%);
+	.btn_recordChanges
+	{
+
+	}	
 }
 
 .btn_carteDelete
@@ -37,6 +59,25 @@
 	{
 		cursor: pointer;
 		background-color: red;
+	}
+}
+
+.adminMenuContainer
+{
+	padding: 2px 2px 0 0;
+	position: absolute;
+	left: 50%;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	max-width: $mainCtnr-maxWidth;
+	width: 100%;
+	text-align: right;
+	transform: translate(-50%);
+	.btn_admin
+	{
+		padding: 0.2rem 0.7rem;
+		font-size: 1rem;
 	}
 }
 
@@ -188,6 +229,7 @@ input.prix
 	position: absolute;
 	bottom: 0;
 	left: 3px;
+	max-width: 100%;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
@@ -226,7 +268,7 @@ input.prix
 	}
 }
 
-.btn_add, .moveOrderButton, .addCarte, .btn_addFam, .btn_import, .btn_addNewBrasserie
+.btn_add, .moveOrderButton, .addCarte, .btn_addFam, .btn_import, .btn_addNewBrasserie, .btn_admin
 {
 	border-radius: 0;
 	background-color: $second-color;
@@ -297,4 +339,21 @@ textarea
 {
 	border: 1px dotted black;
 	text-align: center;
+}
+
+// admin
+.adminContainer
+{
+	padding-bottom: 1rem;
+	width: 100%;
+	max-width: $mainCtnr-maxWidth;
+	text-align: center;
+	form
+	{
+		margin: 0 auto;
+	}
+	input
+	{
+		margin-bottom: 1rem;
+	}
 }

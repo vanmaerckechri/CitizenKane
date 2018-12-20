@@ -624,6 +624,49 @@ section.beerproject-intro
 	}
 }
 
+// AUTH -->
+
+.mainAuth
+{
+	margin-top: 78px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: $footer-bgColor;
+	h2
+	{
+		margin-top: 2rem;
+		margin-bottom: 2rem;
+		color: $font-colorLighter;
+	}
+	form
+	{
+		max-width: 450px;
+	}
+	legend
+	{
+		margin: 0 auto;
+	}
+	input
+	{
+		max-width: 250px;
+	}
+	.authForgetPwd
+	{
+		margin: 1rem 0;
+	}
+	.btn
+	{
+		margin-top: 1rem;
+	}
+	.alertSms
+	{
+		margin-bottom: 0;
+		color: #af291e;
+	}
+}
+
 @media screen and (max-width: 1295px)
 {
 	.beerproject-editions
@@ -644,12 +687,17 @@ section.beerproject-intro
 		}
 	}
 }
-@media screen and (max-width: 1010px)
+
+@media screen and (max-width: 1130px)
 {
-	.restaurant-intro
+	.restaurant-intro, .home-intro, .beerproject-intro
 	{
 		margin-top: $header-bigHeight;
 		min-height: calc(100vh - #{$header-bigHeight});
+	}
+	.mainAuth
+	{
+		margin-top: $header-bigHeight;
 	}
 }
 
@@ -664,6 +712,10 @@ section.beerproject-intro
 		margin-top: 0;
 		padding-top: 0;
 		min-height: calc(100vh - #{$header-smallHeight});
+	}
+	.mainAuth
+	{
+		margin-top: 0;
 	}
 }
 
