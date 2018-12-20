@@ -110,7 +110,7 @@ foreach ($cartes as $keyFam => $family)
 									<li>
 										<span class="plat"><?= htmlspecialchars($plat['name']) ?></span>
 										<span class="dots"></span>
-										<span class="prix"><?= number_format(htmlspecialchars($plat['price']), 2, ',', ' ') ?></span>
+										<span class="prix"><?= number_format(htmlspecialchars($plat['price']), 2, ',', ' ') ?> €</span>
 										<span class="platCompo"><?= htmlspecialchars($plat['compo']) ?></span>
 									</li>
 								<?php

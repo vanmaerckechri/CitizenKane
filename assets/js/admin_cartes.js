@@ -306,7 +306,7 @@ window.addEventListener("load", function(event)
 
 		let divContainer = Tools.createElem(["div"], [["class"]], [["readMore-container newCarte"]]);
 		let openCarteButton = Tools.createElem(["input"], [["type", "class", "aria-label"]], [["checkbox", "openCarteButton", "afficher la carte"]]);
-		let imgCarte = Tools.createElem(["img"], [["src", "alt"]], [["./assets/img/test/carte_empty.png", "photo représentant la carte"]]);
+		let imgCarte = Tools.createElem(["img"], [["src", "alt"]], [["./assets/img/upload/carte_empty.png", "photo représentant la carte"]]);
 		let inputUploadImg = Tools.createElem(["input"], [["type", "class", "accept"]], [["file", "carteImg newImage", "image/png, image/jpeg"]]);
 		let deleteCarte = Tools.createElem(["button"], [["class"]], [["btn_carteDelete"]]);
 		deleteCarte.innerHTML = "X"

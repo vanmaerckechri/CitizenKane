@@ -154,5 +154,4 @@ if (isset($_POST["g-recaptcha-response"]) && !empty($_POST["g-recaptcha-response
 
 	require('./view/adminView.php');
 }
-}
 
