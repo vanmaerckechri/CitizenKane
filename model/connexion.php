@@ -30,7 +30,7 @@ class Connexion
 
 	public function getUrlRoot()
 	{
-		return "https://cvm.one/citizen_kane";
+		return "https://cvm.one/citizen_kane/";
 	}
 
 	public function getHashPwd($pwd)
@@ -188,26 +188,34 @@ class Connexion
 
 		$sth = $dbh->prepare('SELECT id from auth');
 		$sth->execute();
-		$id = $sth->fetch(PDO::FETCH_COLUMN);		
+		$adminInfos = $sth->fetch(PDO::FETCH_ASSOC);		
 
-		if (isset($id) && !empty($id))
+		if (isset($adminInfos) && !empty($adminInfos))
 		{
-			$id = $id[0];
+			$id = $adminInfos["id"];
+			$oldMail = $adminInfos["mail"];
+			$oldPwd = $adminInfos["mdp"];
 			$reset_code = "";
 			if ($pwdOrMail == "pwd")
 			{
 				$input = $this->getHashPwd($newInput);
 				$upt = $dbh->prepare('UPDATE auth SET mdp = :input, reset_code = :reset_code WHERE id = :id');
+				
+				$_SESSION["nickname"] = $oldMail;
+				$_SESSION["password"] = $input;
 			}
 			else
 			{
 				$input = $newInput;
 				$upt = $dbh->prepare('UPDATE auth SET mail = :input, reset_code = :reset_code WHERE id = :id');
+
+				$_SESSION["nickname"] = $input;
+				$_SESSION["password"] = $oldPwd;
 			}
 			$upt->bindParam(':id', $id, PDO::PARAM_INT);
 			$upt->bindParam(':input', $input, PDO::PARAM_STR);
 			$upt->bindParam(':reset_code', $reset_code, PDO::PARAM_STR);
-			$upt->execute();			
+			$upt->execute();
 		}
     }
 }
