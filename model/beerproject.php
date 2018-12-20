@@ -31,38 +31,44 @@ class BeerProject
 			// beerProject
 			if ($page == "beerProject")
 			{
-				$upt->bindParam(':title', $brasserie["title"], PDO::PARAM_STR);
-				if ($brasserie["date"] === false)
+				if (strlen($brasserie["title"]) < 250 && strlen($brasserie["beers"]) < 250 && strlen($brasserie["link"]) < 250 && ($brasserie["date"] === false || DateTime::createFromFormat('Y-m-d', $brasserie["date"])))
 				{
-					$currentDate = date('Y-m-d');
-					$upt->bindParam(':date', $currentDate, PDO::PARAM_STR);
+					$upt->bindParam(':title', $brasserie["title"], PDO::PARAM_STR);
+					if ($brasserie["date"] === false)
+					{
+						$currentDate = date('Y-m-d');
+						$upt->bindParam(':date', $currentDate, PDO::PARAM_STR);
+					}
+					else
+					{
+						$upt->bindParam(':date', $brasserie["date"], PDO::PARAM_STR);
+					}
+					$upt->bindParam(':beers', $brasserie["beers"], PDO::PARAM_STR);
+					$upt->bindParam(':link', $brasserie["link"], PDO::PARAM_STR);
+					$upt->execute();
 				}
-				else
-				{
-					$upt->bindParam(':date', $brasserie["date"], PDO::PARAM_STR);
-				}
-				$upt->bindParam(':beers', $brasserie["beers"], PDO::PARAM_STR);
-				$upt->bindParam(':link', $brasserie["link"], PDO::PARAM_STR);
 			}
 			// agenda
 			else
 			{
-				$upt->bindParam(':title', $brasserie["title"], PDO::PARAM_STR);
-				if ($brasserie["date_open"] === false || $brasserie["date_close"] === false)
+				if (isset($brasserie["title"]) && strlen($brasserie["title"]) < 250 && isset($brasserie["summary"]) && strlen($brasserie["summary"]) < 250 && ($brasserie["date_open"] === false || DateTime::createFromFormat('Y-m-d H:i:s', $brasserie["date_open"])) && ($brasserie["date_close"] === false || DateTime::createFromFormat('Y-m-d H:i:s', $brasserie["date_close"])))
 				{
-					$currentDate = date('Y-m-d H:i:s');
-					$upt->bindParam(':date_open', $currentDate, PDO::PARAM_STR);
-					$upt->bindParam(':date_close', $currentDate, PDO::PARAM_STR);
+					$upt->bindParam(':title', $brasserie["title"], PDO::PARAM_STR);
+					if ($brasserie["date_open"] === false || $brasserie["date_close"] === false)
+					{
+						$currentDate = date('Y-m-d H:i:s');
+						$upt->bindParam(':date_open', $currentDate, PDO::PARAM_STR);
+						$upt->bindParam(':date_close', $currentDate, PDO::PARAM_STR);
+					}
+					else
+					{
+						$upt->bindParam(':date_open', $brasserie["date_open"], PDO::PARAM_STR);
+						$upt->bindParam(':date_close', $brasserie["date_close"], PDO::PARAM_STR);
+					}
+					$upt->bindParam(':summary', $brasserie["summary"], PDO::PARAM_STR);		
+					$upt->execute();
 				}
-				else
-				{
-					$upt->bindParam(':date_open', $brasserie["date_open"], PDO::PARAM_STR);
-					$upt->bindParam(':date_close', $brasserie["date_close"], PDO::PARAM_STR);
-				}
-				$upt->bindParam(':summary', $brasserie["summary"], PDO::PARAM_STR);				
 			}
-
-			$upt->execute();
 		}
 	}
 
@@ -91,37 +97,46 @@ class BeerProject
 			// beerProject
 			if ($page == "beerProject")
 			{
-				if ($brasserie["date"] === false)
+				if (strlen($brasserie["title"]) < 250 && strlen($brasserie["beers"]) < 250 && strlen($brasserie["link"]) < 250 && ($brasserie["date"] === false || DateTime::createFromFormat('Y-m-d', $brasserie["date"])))
 				{
-					$currentDate = date('Y-m-d');
-					$ins->bindParam(':date', $currentDate, PDO::PARAM_STR);
+					if ($brasserie["date"] === false)
+					{
+						$currentDate = date('Y-m-d');
+						$ins->bindParam(':date', $currentDate, PDO::PARAM_STR);
+					}
+					else
+					{
+						$ins->bindParam(':date', $brasserie["date"], PDO::PARAM_STR);
+					}			
+					$ins->bindParam(':beers', $brasserie["beers"], PDO::PARAM_STR);
+					$ins->bindParam(':link', $brasserie["link"], PDO::PARAM_STR);
+
+					$ins->execute();
+					array_push($idList, $dbh->lastInsertId());
 				}
-				else
-				{
-					$ins->bindParam(':date', $brasserie["date"], PDO::PARAM_STR);
-				}			
-				$ins->bindParam(':beers', $brasserie["beers"], PDO::PARAM_STR);
-				$ins->bindParam(':link', $brasserie["link"], PDO::PARAM_STR);
 			}
 			// agenda
 			else
 			{
-				if ($brasserie["date_open"] === false || $brasserie["date_close"] === false)
+				if (isset($brasserie["title"]) && strlen($brasserie["title"]) < 250 && isset($brasserie["summary"]) && strlen($brasserie["summary"]) < 250 && ($brasserie["date_open"] === false || DateTime::createFromFormat('Y-m-d H:i:s', $brasserie["date_open"])) && ($brasserie["date_close"] === false || DateTime::createFromFormat('Y-m-d H:i:s', $brasserie["date_close"])))
 				{
-					$currentDate = date('Y-m-d H:i:s');
-					$ins->bindParam(':date_open', $currentDate, PDO::PARAM_STR);
-					$ins->bindParam(':date_close', $currentDate, PDO::PARAM_STR);
-				}
-				else
-				{
-					$ins->bindParam(':date_open', $brasserie["date_open"], PDO::PARAM_STR);
-					$ins->bindParam(':date_close', $brasserie["date_close"], PDO::PARAM_STR);
-				}			
-				$ins->bindParam(':summary', $brasserie["summary"], PDO::PARAM_STR);
-			}
-			$ins->execute();
+					if ($brasserie["date_open"] === false || $brasserie["date_close"] === false)
+					{
+						$currentDate = date('Y-m-d H:i:s');
+						$ins->bindParam(':date_open', $currentDate, PDO::PARAM_STR);
+						$ins->bindParam(':date_close', $currentDate, PDO::PARAM_STR);
+					}
+					else
+					{
+						$ins->bindParam(':date_open', $brasserie["date_open"], PDO::PARAM_STR);
+						$ins->bindParam(':date_close', $brasserie["date_close"], PDO::PARAM_STR);
+					}			
+					$ins->bindParam(':summary', $brasserie["summary"], PDO::PARAM_STR);
 
-			array_push($idList, $dbh->lastInsertId());
+					$ins->execute();
+					array_push($idList, $dbh->lastInsertId());
+				}
+			}
     	}
     	return $idList;
     }
@@ -133,9 +148,12 @@ class BeerProject
 		$upt = $page == "beerProject" ? $dbh->prepare('UPDATE citizen_beerproject SET imgSrc = :imgSrc WHERE id = :id') : $dbh->prepare('UPDATE citizen_agenda SET imgSrc = :imgSrc WHERE id = :id');
 		foreach ($imgIdList as $key => $id)
 		{
-			$upt->bindParam(':id', $id[$key], PDO::PARAM_INT);
-			$upt->bindParam(':imgSrc', $imgSrcList[$key], PDO::PARAM_STR);
-			$upt->execute();
+			if (!isset($imgSrcList[$key]) || strlen($imgSrcList[$key]) < 250)
+			{
+				$upt->bindParam(':id', $id[$key], PDO::PARAM_INT);
+				$upt->bindParam(':imgSrc', $imgSrcList[$key], PDO::PARAM_STR);
+				$upt->execute();
+			}
 		}
 	}
 

@@ -133,7 +133,7 @@ class Connexion
 			// copy reset code in db
 			$upt = $dbh->prepare('UPDATE citizen_auth SET reset_code = :reset_code WHERE id = :id');
 			$upt->bindParam(':id', $adminInfos["id"], PDO::PARAM_INT);
-			$upt->bindParam(':reset_code', $adminInfos["mail"], PDO::PARAM_STR);
+			$upt->bindParam(':reset_code', $hashCode, PDO::PARAM_STR);
 			$upt->execute();
 
 			// send mail

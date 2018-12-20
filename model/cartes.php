@@ -19,17 +19,21 @@ class Cartes
 		{
 			foreach ($carte as $platTitle => $plat) 
 			{
-				$price = !empty($plat["price"]) ? $plat["price"] : 0; 
-				$insPlat->bindParam(':name', $platTitle, PDO::PARAM_STR);
-				$insPlat->bindParam(':prix', $price, PDO::PARAM_INT);
-				$insPlat->bindParam(':compo', $plat["compo"], PDO::PARAM_STR);
-				$insPlat->execute();
+				$price = !empty($plat["price"]) ? $plat["price"] : 0;
 
-				$lastId = $dbh->lastInsertId();
+				if (strlen($platTitle) < 250 && strlen($plat["compo"]) < 250 && is_numeric($price) && is_int($carteId))
+				{
+					$insPlat->bindParam(':name', $platTitle, PDO::PARAM_STR);
+					$insPlat->bindParam(':prix', $price, PDO::PARAM_INT);
+					$insPlat->bindParam(':compo', $plat["compo"], PDO::PARAM_STR);
+					$insPlat->execute();
 
-				$insRelId->bindParam(':id_carte', $carteId, PDO::PARAM_INT);
-				$insRelId->bindParam(':id_plat', $lastId, PDO::PARAM_INT);
-				$insRelId->execute();
+					$lastId = $dbh->lastInsertId();
+
+					$insRelId->bindParam(':id_carte', $carteId, PDO::PARAM_INT);
+					$insRelId->bindParam(':id_plat', $lastId, PDO::PARAM_INT);
+					$insRelId->execute();
+				}
 			}
 		}
     }
@@ -67,10 +71,13 @@ class Cartes
     	{
 	  		foreach ($ids as $id_carte => $name)
 			{
-				$insCarte->bindParam(':id_carte', $id_carte, PDO::PARAM_INT);						  	
-				$insCarte->bindParam(':name', $page, PDO::PARAM_STR);	
-				$insCarte->bindParam(':family', $name, PDO::PARAM_STR);
-				$insCarte->execute();
+				if (strlen($page) < 250 && strlen($name) < 250 && is_int($id_carte))
+				{
+					$insCarte->bindParam(':id_carte', $id_carte, PDO::PARAM_INT);						  	
+					$insCarte->bindParam(':name', $page, PDO::PARAM_STR);	
+					$insCarte->bindParam(':family', $name, PDO::PARAM_STR);
+					$insCarte->execute();
+				}
 			}
     	}
     }
@@ -82,7 +89,7 @@ class Cartes
     	$newCarteId = [];
     	$newCarteLinkStyleId = [];
 
-    	$styleCarte = "folder";
+    	$styleCarte = "fold";
 		$cartePdfId = [];
 
 		$insCarte = $dbh->prepare("INSERT INTO citizen_cartes (title, style) VALUES (:title, :style)");
@@ -95,28 +102,31 @@ class Cartes
 			{
 				foreach ($cartes as $carteTitle => $plats) 
 				{
-					$styleCarte = $plats['styleCarte'];
-					unset($plats['styleCarte']);
-
-					$insCarte->bindParam(':title', $carteTitle, PDO::PARAM_STR);			
-					$insCarte->bindParam(':style', $styleCarte, PDO::PARAM_STR);
-					$insCarte->execute();
-
-					$idCarte = $dbh->lastInsertId();
-
-					array_push($newCarteId, $idCarte);
-
-					if ($styleCarte != "link")
+					if (strlen($carteTitle) < 250 && strlen($pageName) < 250 && strlen($famTitle) < 250 && ($styleCarte == "fold" || $styleCarte == "link"))
 					{
-						$platsInCarteId = [];
-						$platsInCarteId[$idCarte] = $plats;
-						$this->insertPlats($platsInCarteId);
-					}
+						$styleCarte = $plats['styleCarte'];
+						unset($plats['styleCarte']);
 
-					$insPage->bindParam(':name', $pageName, PDO::PARAM_STR);
-					$insPage->bindParam(':family', $famTitle, PDO::PARAM_STR);
-					$insPage->bindParam(':id_carte', $idCarte, PDO::PARAM_INT);
-					$insPage->execute();
+						$insCarte->bindParam(':title', $carteTitle, PDO::PARAM_STR);			
+						$insCarte->bindParam(':style', $styleCarte, PDO::PARAM_STR);
+						$insCarte->execute();
+
+						$idCarte = $dbh->lastInsertId();
+
+						array_push($newCarteId, $idCarte);
+
+						if ($styleCarte != "link")
+						{
+							$platsInCarteId = [];
+							$platsInCarteId[$idCarte] = $plats;
+							$this->insertPlats($platsInCarteId);
+						}
+
+						$insPage->bindParam(':name', $pageName, PDO::PARAM_STR);
+						$insPage->bindParam(':family', $famTitle, PDO::PARAM_STR);
+						$insPage->bindParam(':id_carte', $idCarte, PDO::PARAM_INT);
+						$insPage->execute();
+					}
 				}
 			}
 		}
@@ -219,11 +229,10 @@ class Cartes
 
 		foreach ($cartesId as $key => $id)
 		{
-			if (isset($srcList[$key]) && !empty($srcList[$key]))
+			if (isset($srcList[$key]) && !empty($srcList[$key]) && strlen($srcList[$key]) < 250)
 			{
 
 				$upt->bindParam(':id', $id, PDO::PARAM_INT);
-
 
 				if ($style == "link")
 				{
@@ -351,9 +360,12 @@ class Cartes
 		$upt = $dbh->prepare('UPDATE citizen_pages SET family = :family WHERE id = :id');
 		foreach ($FamilyCarteTitle as $id => $fam)
 		{
-			$upt->bindParam(':id', $id, PDO::PARAM_INT);
-			$upt->bindParam(':family', $fam, PDO::PARAM_STR);
-			$upt->execute();
+			if (strlen($fam) < 250)
+			{
+				$upt->bindParam(':id', $id, PDO::PARAM_INT);
+				$upt->bindParam(':family', $fam, PDO::PARAM_STR);
+				$upt->execute();
+			}
 		}   	
     }
 
@@ -387,20 +399,23 @@ class Cartes
 			$updPrepare[strlen($updPrepare) - 1] = " ";
 			$updPrepare .= "WHERE id = :id";
 			$upd = $dbh->prepare($updPrepare);
-			if ($name === true)
+			if (strlen($carte["name"]) < 250 && (empty($carte["compo"]) || strlen($carte["compo"]) < 250) && (empty($carte["price"]) || is_numeric($carte["price"])))
 			{
-				$upd->bindParam(':name', $carte["name"], PDO::PARAM_STR);
+				if ($name === true)
+				{
+					$upd->bindParam(':name', $carte["name"], PDO::PARAM_STR);
+				}
+				if ($price === true)
+				{
+					$upd->bindParam(':price',  $carte["price"], PDO::PARAM_INT);
+				}
+				if ($compo === true)
+				{
+					$upd->bindParam(':compo',  $carte["compo"], PDO::PARAM_STR);
+				}
+				$upd->bindParam(':id',  $keyCarte, PDO::PARAM_STR);
+				$upd->execute();
 			}
-			if ($price === true)
-			{
-				$upd->bindParam(':price',  $carte["price"], PDO::PARAM_STR);
-			}
-			if ($compo === true)
-			{
-				$upd->bindParam(':compo',  $carte["compo"], PDO::PARAM_STR);
-			}
-			$upd->bindParam(':id',  $keyCarte, PDO::PARAM_STR);
-			$upd->execute();
 		}
 	}
 
@@ -410,7 +425,7 @@ class Cartes
 		$upt = $dbh->prepare('UPDATE citizen_cartes SET title = :title WHERE id = :id');
 		foreach ($cartesTitle as $id => $title)
 		{
-			if (isset($title))
+			if (isset($title) && strlen($title) < 250)
 			{
 				$upt->bindParam(':id', $id, PDO::PARAM_INT);
 				$upt->bindParam(':title', $title, PDO::PARAM_STR);
@@ -433,9 +448,12 @@ class Cartes
 
 			foreach ($carte as $keyPlat => $idPlat) 
 			{
-				$upt->bindParam(':newId_plat', $idPlat, PDO::PARAM_INT);
-				$upt->bindParam(':id', $ids[$keyPlat], PDO::PARAM_INT);
-				$upt->execute();
+				if (isset($idPlat) && is_numeric($idPlat) && isset($ids[$keyPlat]) && is_numeric($ids[$keyPlat]))
+				{
+					$upt->bindParam(':newId_plat', $idPlat, PDO::PARAM_INT);
+					$upt->bindParam(':id', $ids[$keyPlat], PDO::PARAM_INT);
+					$upt->execute();
+				}
 			}
 		}
 	}
