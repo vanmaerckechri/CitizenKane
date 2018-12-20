@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 20 déc. 2018 à 00:22
+-- Généré le :  jeu. 20 déc. 2018 à 01:55
 -- Version du serveur :  5.7.23
 -- Version de PHP :  7.2.10
 
@@ -25,11 +25,11 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `agenda`
+-- Structure de la table `citizen_agenda`
 --
 
-DROP TABLE IF EXISTS `agenda`;
-CREATE TABLE IF NOT EXISTS `agenda` (
+DROP TABLE IF EXISTS `citizen_agenda`;
+CREATE TABLE IF NOT EXISTS `citizen_agenda` (
   `id` smallint(4) UNSIGNED NOT NULL AUTO_INCREMENT,
   `imgSrc` varchar(250) DEFAULT NULL,
   `title` varchar(250) NOT NULL,
@@ -37,13 +37,13 @@ CREATE TABLE IF NOT EXISTS `agenda` (
   `date_close` datetime NOT NULL,
   `summary` longtext NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `agenda`
+-- Déchargement des données de la table `citizen_agenda`
 --
 
-INSERT INTO `agenda` (`id`, `imgSrc`, `title`, `date_open`, `date_close`, `summary`) VALUES
+INSERT INTO `citizen_agenda` (`id`, `imgSrc`, `title`, `date_open`, `date_close`, `summary`) VALUES
 (1, 'agenda_1.png', 'Soirée HAVANA', '2018-10-01 08:00:00', '2018-11-30 23:30:00', 'Tous les jeudis, c\'est SOIRÉE HAVANA au Citizen Kane ! Tous les cocktails Havana sont à 5€ ... Santé !'),
 (2, 'agenda_2.jpg', 'Quiz culturel & multimédia #18', '2018-11-22 21:00:00', '2018-11-22 23:00:00', 'Testez votre culture générale lors de notre quiz mensuel. Au programme : cinéma, histoire, télévision, musique, … Le tout avec des extraits sur grand écran ! Inscrivez-vous gratuitement en équipe via cafecitizenkane@gmail.com. Attention, pour des raisons d’équité, nous n’acceptons que des équipes de maximum 5 joueurs. Les équipes plus nombreuses seront séparées en plusieurs groupes.'),
 (3, 'agenda_3.jpg', 'Beer Discovery Project : Brasserie Jandrain-Jandrenouille', '2018-11-14 20:00:00', '2018-11-14 22:00:00', 'En ce mois de décembre, la Brasserie Jandrain-Jandrenouille sera à l’honneur au Citizen Kane dans le cadre du Beer Discovery Project. Rendez-vous ce 14 décembre dès 20h en présence de la brasserie pour découvrir la IV Saison, la V Cense et la VI Wheat. Plus d’infos sur la brasserie sur www.brasseriedejandrainjandrenouille.com'),
@@ -59,11 +59,11 @@ INSERT INTO `agenda` (`id`, `imgSrc`, `title`, `date_open`, `date_close`, `summa
 -- --------------------------------------------------------
 
 --
--- Structure de la table `auth`
+-- Structure de la table `citizen_auth`
 --
 
-DROP TABLE IF EXISTS `auth`;
-CREATE TABLE IF NOT EXISTS `auth` (
+DROP TABLE IF EXISTS `citizen_auth`;
+CREATE TABLE IF NOT EXISTS `citizen_auth` (
   `id` smallint(4) UNSIGNED NOT NULL AUTO_INCREMENT,
   `mail` varchar(250) NOT NULL,
   `mdp` binary(20) NOT NULL,
@@ -72,20 +72,20 @@ CREATE TABLE IF NOT EXISTS `auth` (
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `auth`
+-- Déchargement des données de la table `citizen_auth`
 --
 
-INSERT INTO `auth` (`id`, `mail`, `mdp`, `reset_code`) VALUES
+INSERT INTO `citizen_auth` (`id`, `mail`, `mdp`, `reset_code`) VALUES
 (1, 'test', 0xa94a8fe5ccb19ba61c4c0873d391e987982fbbd3, 0x0000000000000000000000000000000000000000);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `beerproject`
+-- Structure de la table `citizen_beerproject`
 --
 
-DROP TABLE IF EXISTS `beerproject`;
-CREATE TABLE IF NOT EXISTS `beerproject` (
+DROP TABLE IF EXISTS `citizen_beerproject`;
+CREATE TABLE IF NOT EXISTS `citizen_beerproject` (
   `id` smallint(4) UNSIGNED NOT NULL AUTO_INCREMENT,
   `imgSrc` varchar(250) DEFAULT NULL,
   `title` varchar(250) NOT NULL,
@@ -96,10 +96,10 @@ CREATE TABLE IF NOT EXISTS `beerproject` (
 ) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `beerproject`
+-- Déchargement des données de la table `citizen_beerproject`
 --
 
-INSERT INTO `beerproject` (`id`, `imgSrc`, `title`, `date`, `beers`, `link`) VALUES
+INSERT INTO `citizen_beerproject` (`id`, `imgSrc`, `title`, `date`, `beers`, `link`) VALUES
 (1, 'beerproject_1.jpg', 'Brasserie de Jandrain-Jandrenouille', '2018-12-14', 'IV Saison, V Cense, VI Wheat', 'http://www.brasseriedejandrainjandrenouille.com/'),
 (2, 'beerproject_2.png', 'Brasserie Lion (Brasserie bio & éco-responsable / Ophain)', '2019-01-11', 'Lion Blonde, Lion White, Lion IPA', ''),
 (28, 'beerproject_28.jpg', 'Brasserie Caracole (Brasserie artisanale & pittoresque / Dinant)', '2019-02-08', 'Caracole, Saxo, Nostradamus & Troublette', ''),
@@ -122,11 +122,11 @@ INSERT INTO `beerproject` (`id`, `imgSrc`, `title`, `date`, `beers`, `link`) VAL
 -- --------------------------------------------------------
 
 --
--- Structure de la table `cartes`
+-- Structure de la table `citizen_cartes`
 --
 
-DROP TABLE IF EXISTS `cartes`;
-CREATE TABLE IF NOT EXISTS `cartes` (
+DROP TABLE IF EXISTS `citizen_cartes`;
+CREATE TABLE IF NOT EXISTS `citizen_cartes` (
   `id` smallint(4) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(250) NOT NULL,
   `imgSrc` varchar(250) DEFAULT NULL,
@@ -136,10 +136,10 @@ CREATE TABLE IF NOT EXISTS `cartes` (
 ) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `cartes`
+-- Déchargement des données de la table `citizen_cartes`
 --
 
-INSERT INTO `cartes` (`id`, `title`, `imgSrc`, `style`, `link`) VALUES
+INSERT INTO `citizen_cartes` (`id`, `title`, `imgSrc`, `style`, `link`) VALUES
 (31, 'Salades', 'carte_31_small.jpg', 'fold', NULL),
 (32, 'Plats', 'carte_32_small.jpg', 'fold', NULL),
 (171, '', 'carte_171_small.jpg', 'fold', NULL),
@@ -157,11 +157,11 @@ INSERT INTO `cartes` (`id`, `title`, `imgSrc`, `style`, `link`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `pages`
+-- Structure de la table `citizen_pages`
 --
 
-DROP TABLE IF EXISTS `pages`;
-CREATE TABLE IF NOT EXISTS `pages` (
+DROP TABLE IF EXISTS `citizen_pages`;
+CREATE TABLE IF NOT EXISTS `citizen_pages` (
   `id` smallint(4) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(250) NOT NULL,
   `family` varchar(250) NOT NULL,
@@ -170,10 +170,10 @@ CREATE TABLE IF NOT EXISTS `pages` (
 ) ENGINE=InnoDB AUTO_INCREMENT=189 DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `pages`
+-- Déchargement des données de la table `citizen_pages`
 --
 
-INSERT INTO `pages` (`id`, `name`, `family`, `id_carte`) VALUES
+INSERT INTO `citizen_pages` (`id`, `name`, `family`, `id_carte`) VALUES
 (1, 'restaurant', 'La Carte Restauration', 193),
 (28, 'restaurant', 'La Carte Restauration', 31),
 (29, 'restaurant', 'La Carte Restauration', 32),
@@ -192,11 +192,11 @@ INSERT INTO `pages` (`id`, `name`, `family`, `id_carte`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `plats`
+-- Structure de la table `citizen_plats`
 --
 
-DROP TABLE IF EXISTS `plats`;
-CREATE TABLE IF NOT EXISTS `plats` (
+DROP TABLE IF EXISTS `citizen_plats`;
+CREATE TABLE IF NOT EXISTS `citizen_plats` (
   `id` smallint(4) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(250) NOT NULL,
   `price` decimal(5,2) NOT NULL,
@@ -205,10 +205,10 @@ CREATE TABLE IF NOT EXISTS `plats` (
 ) ENGINE=InnoDB AUTO_INCREMENT=169 DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `plats`
+-- Déchargement des données de la table `citizen_plats`
 --
 
-INSERT INTO `plats` (`id`, `name`, `price`, `compo`) VALUES
+INSERT INTO `citizen_plats` (`id`, `name`, `price`, `compo`) VALUES
 (44, 'La Volver', '8.00', 'Toast de chèvre gratiné – Poivrons – Aubergines – Courgettes grillées – Roquette – Crème balsamique – Vinaigrette du chef'),
 (45, 'La Strada', '11.00', 'Poulet – Croûtons – Oeuf dur – Parmesan – Roquette – Tomates – Vinaigrette du chef'),
 (46, 'La Avé César', '6.50', 'Salade – Tomates – Concombres – Pommes – Croûtons – Pignons – Noix – Chavignol gratiné au miel & thym – Vinaigrette du chef'),
@@ -327,11 +327,11 @@ INSERT INTO `plats` (`id`, `name`, `price`, `compo`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `rel_cartes_plats`
+-- Structure de la table `citizen_rel_cartes_plats`
 --
 
-DROP TABLE IF EXISTS `rel_cartes_plats`;
-CREATE TABLE IF NOT EXISTS `rel_cartes_plats` (
+DROP TABLE IF EXISTS `citizen_rel_cartes_plats`;
+CREATE TABLE IF NOT EXISTS `citizen_rel_cartes_plats` (
   `id` smallint(4) UNSIGNED NOT NULL AUTO_INCREMENT,
   `id_carte` smallint(4) NOT NULL,
   `id_plat` smallint(4) NOT NULL,
@@ -339,10 +339,10 @@ CREATE TABLE IF NOT EXISTS `rel_cartes_plats` (
 ) ENGINE=InnoDB AUTO_INCREMENT=164 DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `rel_cartes_plats`
+-- Déchargement des données de la table `citizen_rel_cartes_plats`
 --
 
-INSERT INTO `rel_cartes_plats` (`id`, `id_carte`, `id_plat`) VALUES
+INSERT INTO `citizen_rel_cartes_plats` (`id`, `id_carte`, `id_plat`) VALUES
 (43, 31, 44),
 (44, 31, 45),
 (45, 31, 46),

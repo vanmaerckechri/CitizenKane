@@ -30,7 +30,7 @@ class Connexion
 
 	public function getUrlRoot()
 	{
-		return "https://cvm.one/citizen_kane/";
+		return "https://cvm.one/citizen/";
 	}
 
 	public function getHashPwd($pwd)
@@ -72,7 +72,7 @@ class Connexion
 		$hashPwd = $this->getHashPwd($pwd);
 		$dbh = $this->dbConnect();
 
-		$sth = $dbh->prepare('SELECT id from auth WHERE mail = :mail AND mdp = :mdp');
+		$sth = $dbh->prepare('SELECT id from citizen_auth WHERE mail = :mail AND mdp = :mdp');
 		$sth->bindParam(':mail', $mail, PDO::PARAM_STR);
 		$sth->bindParam(':mdp', $hashPwd, PDO::PARAM_STR);
 		$sth->execute();
@@ -121,7 +121,7 @@ class Connexion
     	$dbh = $this->dbConnect();
 
 		// get admin mail
-		$sth = $dbh->prepare('SELECT id, mail from auth');
+		$sth = $dbh->prepare('SELECT id, mail from citizen_auth');
 		$sth->execute();
 		$adminInfos = $sth->fetch(PDO::FETCH_ASSOC);		
 
@@ -131,7 +131,7 @@ class Connexion
 			$hashCode = $this->getHashPwd($code);
 
 			// copy reset code in db
-			$upt = $dbh->prepare('UPDATE auth SET reset_code = :reset_code WHERE id = :id');
+			$upt = $dbh->prepare('UPDATE citizen_auth SET reset_code = :reset_code WHERE id = :id');
 			$upt->bindParam(':id', $adminInfos["id"], PDO::PARAM_INT);
 			$upt->bindParam(':reset_code', $adminInfos["mail"], PDO::PARAM_STR);
 			$upt->execute();
@@ -149,7 +149,7 @@ class Connexion
     {
     	$dbh = $this->dbConnect();
 
-		$sth = $dbh->prepare('SELECT id from auth WHERE reset_code = :resetCode');
+		$sth = $dbh->prepare('SELECT id from citizen_auth WHERE reset_code = :resetCode');
 		$sth->bindParam(':resetCode', $resetCode, PDO::PARAM_STR);
 		$sth->execute();
 		$id = $sth->fetch(PDO::FETCH_COLUMN);		
@@ -165,7 +165,7 @@ class Connexion
     {
     	$dbh = $this->dbConnect();
 
-		$sth = $dbh->prepare('SELECT id from auth');
+		$sth = $dbh->prepare('SELECT id from citizen_auth');
 		$sth->execute();
 		$id = $sth->fetch(PDO::FETCH_COLUMN);		
 
@@ -174,7 +174,7 @@ class Connexion
 			$id = $id[0];
 			$hashPwd = $this->getHashPwd($newPwd);
 			$reset_code = "";
-			$upt = $dbh->prepare('UPDATE auth SET mdp = :mdp, reset_code = :reset_code WHERE id = :id');
+			$upt = $dbh->prepare('UPDATE citizen_auth SET mdp = :mdp, reset_code = :reset_code WHERE id = :id');
 			$upt->bindParam(':id', $id, PDO::PARAM_INT);
 			$upt->bindParam(':mdp', $hashPwd, PDO::PARAM_STR);
 			$upt->bindParam(':reset_code', $reset_code, PDO::PARAM_STR);
@@ -186,7 +186,7 @@ class Connexion
     {
     	$dbh = $this->dbConnect();
 
-		$sth = $dbh->prepare('SELECT id from auth');
+		$sth = $dbh->prepare('SELECT id from citizen_auth');
 		$sth->execute();
 		$adminInfos = $sth->fetch(PDO::FETCH_ASSOC);		
 
@@ -199,7 +199,7 @@ class Connexion
 			if ($pwdOrMail == "pwd")
 			{
 				$input = $this->getHashPwd($newInput);
-				$upt = $dbh->prepare('UPDATE auth SET mdp = :input, reset_code = :reset_code WHERE id = :id');
+				$upt = $dbh->prepare('UPDATE citizen_auth SET mdp = :input, reset_code = :reset_code WHERE id = :id');
 
 				$_SESSION["nickname"] = $oldMail;
 				$_SESSION["password"] = $input;
@@ -207,7 +207,7 @@ class Connexion
 			else
 			{
 				$input = $newInput;
-				$upt = $dbh->prepare('UPDATE auth SET mail = :input, reset_code = :reset_code WHERE id = :id');
+				$upt = $dbh->prepare('UPDATE citizen_auth SET mail = :input, reset_code = :reset_code WHERE id = :id');
 
 				$_SESSION["nickname"] = $input;
 				$_SESSION["password"] = $oldPwd;

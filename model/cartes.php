@@ -12,8 +12,8 @@ class Cartes
     {
     	$dbh = $this->dbh;
 
-		$insPlat = $dbh->prepare("INSERT INTO plats (name, price, compo) VALUES (:name, :prix, :compo)");
-		$insRelId = $dbh->prepare("INSERT INTO rel_cartes_plats (id_carte, id_plat) VALUES (:id_carte, :id_plat)");
+		$insPlat = $dbh->prepare("INSERT INTO citizen_plats (name, price, compo) VALUES (:name, :prix, :compo)");
+		$insRelId = $dbh->prepare("INSERT INTO citizen_rel_cartes_plats (id_carte, id_plat) VALUES (:id_carte, :id_plat)");
 
 		foreach ($newPlats as $carteId => $carte)
 		{
@@ -61,7 +61,7 @@ class Cartes
     public function importCartesFromOtherPage($importList)
     {
     	$dbh = $this->dbh;
-    	$insCarte = $dbh->prepare("INSERT INTO pages (name, family, id_carte) VALUES (:name, :family, :id_carte)");
+    	$insCarte = $dbh->prepare("INSERT INTO citizen_pages (name, family, id_carte) VALUES (:name, :family, :id_carte)");
 
     	foreach ($importList as $page => $ids)
     	{
@@ -85,9 +85,9 @@ class Cartes
     	$styleCarte = "folder";
 		$cartePdfId = [];
 
-		$insCarte = $dbh->prepare("INSERT INTO cartes (title, style) VALUES (:title, :style)");
+		$insCarte = $dbh->prepare("INSERT INTO citizen_cartes (title, style) VALUES (:title, :style)");
 
-		$insPage = $dbh->prepare("INSERT INTO pages (name, family, id_carte) VALUES (:name, :family, :id_carte)");
+		$insPage = $dbh->prepare("INSERT INTO citizen_pages (name, family, id_carte) VALUES (:name, :family, :id_carte)");
 
 		foreach ($newCartes as $pageName => $fams)
 		{
@@ -127,12 +127,12 @@ class Cartes
     {
     	$dbh = $this->dbh;
 
-    	$delCarteInPage = $dbh->prepare("DELETE FROM pages WHERE id_carte = :id AND name = :name");
-		$delCarteInRel_cartes_plats = $dbh->prepare("DELETE FROM rel_cartes_plats WHERE id_carte = :id");
-		$delCarteInCartes = $dbh->prepare("DELETE FROM cartes WHERE id = :id");
+    	$delCarteInPage = $dbh->prepare("DELETE FROM citizen_pages WHERE id_carte = :id AND name = :name");
+		$delCarteInRel_cartes_plats = $dbh->prepare("DELETE FROM citizen_rel_cartes_plats WHERE id_carte = :id");
+		$delCarteInCartes = $dbh->prepare("DELETE FROM citizen_cartes WHERE id = :id");
 
-		$sth = $dbh->prepare('SELECT id_plat from rel_cartes_plats WHERE id_carte = :id_carte');
-    	$delPlat = $dbh->prepare("DELETE FROM plats WHERE id = :id");
+		$sth = $dbh->prepare('SELECT id_plat from citizen_rel_cartes_plats WHERE id_carte = :id_carte');
+    	$delPlat = $dbh->prepare("DELETE FROM citizen_plats WHERE id = :id");
 
 		foreach ($deleteCartesList as $idCarte => $page)
 		{
@@ -141,7 +141,7 @@ class Cartes
 			$delCarteInPage->bindParam(':name', $page, PDO::PARAM_STR);   
 			$delCarteInPage->execute();
 			// check if the carte exist on another page
-			$carteExistOnAnotherPage = $dbh->prepare('SELECT id from pages WHERE id_carte = :id_carte');
+			$carteExistOnAnotherPage = $dbh->prepare('SELECT id from citizen_pages WHERE id_carte = :id_carte');
 			$carteExistOnAnotherPage->bindParam(':id_carte', $idCarte, PDO::PARAM_INT);   
 			$carteExistOnAnotherPage->execute();
 			$carteExistOnAnotherPage = $carteExistOnAnotherPage->fetchAll(PDO::FETCH_COLUMN);
@@ -176,8 +176,8 @@ class Cartes
     {
     	$dbh = $this->dbh;
 
-		$delPlat = $dbh->prepare("DELETE FROM plats WHERE id =  :id");
-		$delRel_cartes_plats = $dbh->prepare("DELETE FROM rel_cartes_plats WHERE id_plat =  :id");
+		$delPlat = $dbh->prepare("DELETE FROM citizen_plats WHERE id =  :id");
+		$delRel_cartes_plats = $dbh->prepare("DELETE FROM citizen_rel_cartes_plats WHERE id_plat =  :id");
 
 		foreach ($deletePlatsList as $idPlat => $empty)
 		{
@@ -192,7 +192,7 @@ class Cartes
     {
 		$dbh = $this->dbh;
 
-		$sth = $dbh->prepare('SELECT imgSrc from cartes WHERE id = :id');
+		$sth = $dbh->prepare('SELECT imgSrc from citizen_cartes WHERE id = :id');
 		$oldImgSrc = [];
 		foreach ($cartesId as $key => $id)
 		{
@@ -210,11 +210,11 @@ class Cartes
 
 		if ($style == "link")
 		{
-			$upt = $dbh->prepare('UPDATE cartes SET link = :link WHERE id = :id');
+			$upt = $dbh->prepare('UPDATE citizen_cartes SET link = :link WHERE id = :id');
 		}
 		else
 		{
-			$upt = $dbh->prepare('UPDATE cartes SET imgSrc = :imgSrc WHERE id = :id');			
+			$upt = $dbh->prepare('UPDATE citizen_cartes SET imgSrc = :imgSrc WHERE id = :id');			
 		}
 
 		foreach ($cartesId as $key => $id)
@@ -348,7 +348,7 @@ class Cartes
     public function updateFamilyCarteTitle($FamilyCarteTitle)
     {
  		$dbh = $this->dbh;
-		$upt = $dbh->prepare('UPDATE pages SET family = :family WHERE id = :id');
+		$upt = $dbh->prepare('UPDATE citizen_pages SET family = :family WHERE id = :id');
 		foreach ($FamilyCarteTitle as $id => $fam)
 		{
 			$upt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -365,7 +365,7 @@ class Cartes
 			$name = false;
 			$price = false;
 			$compo = false;
-			$updPrepare = "UPDATE plats SET";
+			$updPrepare = "UPDATE citizen_plats SET";
 			foreach ($carte as $keyProp => $propery)
 			{
 				if ($keyProp == "name")
@@ -407,7 +407,7 @@ class Cartes
 	public function updateCartesTitle($cartesTitle)
 	{
 		$dbh = $this->dbh;
-		$upt = $dbh->prepare('UPDATE cartes SET title = :title WHERE id = :id');
+		$upt = $dbh->prepare('UPDATE citizen_cartes SET title = :title WHERE id = :id');
 		foreach ($cartesTitle as $id => $title)
 		{
 			if (isset($title))
@@ -423,8 +423,8 @@ class Cartes
 	{
 		$dbh = $this->dbh;
 		// select all const id
-		$sth = $dbh->prepare('SELECT id from rel_cartes_plats WHERE id_carte = :id_carte');
-		$upt = $dbh->prepare('UPDATE rel_cartes_plats SET id_plat = :newId_plat WHERE id = :id');
+		$sth = $dbh->prepare('SELECT id from citizen_rel_cartes_plats WHERE id_carte = :id_carte');
+		$upt = $dbh->prepare('UPDATE citizen_rel_cartes_plats SET id_plat = :newId_plat WHERE id = :id');
 		foreach ($cartes as $keyCarte => $carte)
 		{
 			$sth->bindParam(':id_carte', $keyCarte, PDO::PARAM_STR);
@@ -444,7 +444,7 @@ class Cartes
 	{
 		$dbh = $this->dbh;
 		// cartes Family
-		$sth = $dbh->prepare('SELECT id, id_carte, family, name from pages');
+		$sth = $dbh->prepare('SELECT id, id_carte, family, name from citizen_pages');
 		$sth->execute();
 		$cartes = $sth->fetchAll(PDO::FETCH_ASSOC);
 
@@ -478,7 +478,7 @@ class Cartes
 		}
 
 		// -- Cartes Description --
-		$sth = $dbh->prepare('SELECT title, imgSrc, style, link from cartes WHERE id = :id');
+		$sth = $dbh->prepare('SELECT title, imgSrc, style, link from citizen_cartes WHERE id = :id');
 		// current page
 		foreach ($cartesSorted as $keyFamily => $family)
 		{
@@ -502,7 +502,7 @@ class Cartes
 		}
 
 		// -- Plats --
-		$sth = $dbh->prepare('SELECT plats.* from rel_cartes_plats as rel, plats WHERE rel.id_carte = :id && rel.id_plat = plats.id');
+		$sth = $dbh->prepare('SELECT citizen_plats.* from citizen_rel_cartes_plats as rel, citizen_plats WHERE rel.id_carte = :id && rel.id_plat = citizen_plats.id');
 		// current page
 		foreach ($cartesSorted as $keyFamily => $family)
 		{

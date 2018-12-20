@@ -135,10 +135,11 @@ function loadContact($admin)
 
 function loadAdmin($admin)
 {
-	//if (isset($_POST["g-recaptcha-response"]) && !empty($_POST["g-recaptcha-response"]) && Connexion::checkCaptcha() === true && isset($_POST["nickname"]) && !empty($_POST["nickname"]) && isset($_POST["pwd"]) && !empty($_POST["pwd"]))
-
 	$page = "admin";
 
+/* POUR LA MISE EN LIGNE REMPLACER LE PROCHAIN IF PAR CELUI-CI=>
+if (isset($_POST["g-recaptcha-response"]) && !empty($_POST["g-recaptcha-response"]) && Connexion::checkCaptcha() === true && isset($_POST["email"]) && isset($_POST["pwd"]))
+*/
 	// check connexion infos
 	if (isset($_POST["email"]) && isset($_POST["pwd"]))
 	{
@@ -152,5 +153,6 @@ function loadAdmin($admin)
 	cleanPost($page);
 
 	require('./view/adminView.php');
+}
 }
 

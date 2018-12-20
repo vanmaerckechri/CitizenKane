@@ -12,7 +12,7 @@ class BeerProject
     {
     	$dbh = $this->dbh;
 
-    	$reqAll = $page == "beerProject" ? $dbh->prepare('SELECT * from beerproject ORDER BY date DESC') : $dbh->prepare('SELECT * from agenda ORDER BY date_close DESC');
+    	$reqAll = $page == "beerProject" ? $dbh->prepare('SELECT * from citizen_beerproject ORDER BY date DESC') : $dbh->prepare('SELECT * from citizen_agenda ORDER BY date_close DESC');
     	$reqAll->execute();
 		$beerProjectList = $reqAll->fetchAll(PDO::FETCH_ASSOC);
 
@@ -23,7 +23,7 @@ class BeerProject
     {
     	$dbh = $this->dbh;
 
-		$upt = $page == "beerProject" ? $dbh->prepare('UPDATE beerproject SET title = :title, date = :date, beers = :beers, link = :link WHERE id = :id') : $dbh->prepare('UPDATE agenda SET title = :title, date_open = :date_open, date_close = :date_close, summary = :summary WHERE id = :id');
+		$upt = $page == "beerProject" ? $dbh->prepare('UPDATE citizen_beerproject SET title = :title, date = :date, beers = :beers, link = :link WHERE id = :id') : $dbh->prepare('UPDATE citizen_agenda SET title = :title, date_open = :date_open, date_close = :date_close, summary = :summary WHERE id = :id');
 		foreach ($updateList as $id => $brasserie)
 		{
 			$upt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -70,7 +70,7 @@ class BeerProject
     {
     	$dbh = $this->dbh;
 
-    	$del = $page == "beerProject" ? $dbh->prepare("DELETE FROM beerproject WHERE id = :id") : $dbh->prepare("DELETE FROM agenda WHERE id = :id");
+    	$del = $page == "beerProject" ? $dbh->prepare("DELETE FROM citizen_beerproject WHERE id = :id") : $dbh->prepare("DELETE FROM citizen_agenda WHERE id = :id");
 		foreach ($deleteList as $key => $id)
 		{
 			$del->bindParam(':id', $id, PDO::PARAM_INT);   
@@ -81,7 +81,7 @@ class BeerProject
 	public function insert($newBrasserieList, $page)
     {
     	$dbh = $this->dbh;
-    	$ins = $page == "beerProject" ? $dbh->prepare("INSERT INTO beerproject (title, date, beers, link) VALUES (:title, :date, :beers, :link)") : $dbh->prepare("INSERT INTO agenda (title, date_open, date_close, summary) VALUES (:title, :date_open, :date_close, :summary)");
+    	$ins = $page == "beerProject" ? $dbh->prepare("INSERT INTO citizen_beerproject (title, date, beers, link) VALUES (:title, :date, :beers, :link)") : $dbh->prepare("INSERT INTO citizen_agenda (title, date_open, date_close, summary) VALUES (:title, :date_open, :date_close, :summary)");
     	$idList = [];
 
     	foreach ($newBrasserieList as $key => $brasserie)
@@ -130,7 +130,7 @@ class BeerProject
     {
     	$dbh = $this->dbh;
 
-		$upt = $page == "beerProject" ? $dbh->prepare('UPDATE beerproject SET imgSrc = :imgSrc WHERE id = :id') : $dbh->prepare('UPDATE agenda SET imgSrc = :imgSrc WHERE id = :id');
+		$upt = $page == "beerProject" ? $dbh->prepare('UPDATE citizen_beerproject SET imgSrc = :imgSrc WHERE id = :id') : $dbh->prepare('UPDATE citizen_agenda SET imgSrc = :imgSrc WHERE id = :id');
 		foreach ($imgIdList as $key => $id)
 		{
 			$upt->bindParam(':id', $id[$key], PDO::PARAM_INT);
