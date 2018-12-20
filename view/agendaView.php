@@ -220,7 +220,7 @@ ob_start(); ?>
 </div>
 <?php $content = ob_get_clean(); ?>
 
-<?php ob_start(); 
+<?php ob_start();
 if ($admin === true)
 {
 ?>
@@ -229,6 +229,32 @@ if ($admin === true)
 	</script>
 	<script type="text/javascript" src="assets/js/tools.js"></script>
 	<script type="text/javascript" src="assets/js/admin_beerproject.js"></script>
+<?php
+}
+else
+{
+?>
+	<script type="text/javascript">
+		"use strict";
+		let checkAndTranslateUrl = function(text)
+		{
+			let urlRegex = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+			return text.replace(urlRegex, function(url)
+			{
+		    	return '<a href="' + url + '">' + url + '</a>';
+			})
+		}
+
+		let initUrl = function()
+		{
+			let aboveline = document.querySelectorAll(".aboveline p:nth-of-type(2)");
+			for (let i = aboveline.length - 1; i >= 0; i--)
+			{
+				aboveline[i].innerHTML = checkAndTranslateUrl(aboveline[i].innerHTML);
+			}
+		}
+		initUrl();
+	</script>
 <?php
 }
 ?>

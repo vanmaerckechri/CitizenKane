@@ -107,7 +107,7 @@ class Connexion
 	public function sendMail($title, $message, $mail)
 	{
 		$_sujet = $title;
-		$_message = $message
+		$_message = $message;
 		$_destinataire = $mail;
 
 		$_headers = "From: \"Citizen Kane - Wavre\"<robot@cvm.one>\n";
@@ -156,7 +156,7 @@ class Connexion
 
 		if (isset($id) && !empty($id))
 		{
-			return true		
+			return true;
 		}
 		return false;
     }
@@ -200,7 +200,7 @@ class Connexion
 			{
 				$input = $this->getHashPwd($newInput);
 				$upt = $dbh->prepare('UPDATE auth SET mdp = :input, reset_code = :reset_code WHERE id = :id');
-				
+
 				$_SESSION["nickname"] = $oldMail;
 				$_SESSION["password"] = $input;
 			}
