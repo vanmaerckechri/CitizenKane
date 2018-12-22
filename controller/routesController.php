@@ -136,22 +136,86 @@ function loadContact($admin)
 function loadAdmin($admin)
 {
 	$page = "admin";
+	$connexion = new Connexion();
 
-/* POUR LA MISE EN LIGNE REMPLACER LE PROCHAIN IF PAR CELUI-CI=>
-if (isset($_POST["g-recaptcha-response"]) && !empty($_POST["g-recaptcha-response"]) && Connexion::checkCaptcha() === true && isset($_POST["email"]) && isset($_POST["pwd"]))
-*/
-	// check connexion infos
-	if (isset($_POST["email"]) && isset($_POST["pwd"]))
+	if ($admin === true)
 	{
-		$connexion = new Connexion();
-		$coResult = $connexion->checkConnexion($_POST["email"], $_POST["pwd"]);
-
-		$_SESSION["alertSms"] = $coResult === false ? '<p class="alertSms">Les informations que vous avez entrées sont incorrectes !</p>' : "";
+		// send mail for new pwd
+		if (isset($_POST["changePwd"]))
+		{
+			$connexion->sendResetCode("resetPwd", $_SESSION["nickname"]);
+			$_SESSION["alertSms"] = '<p class="alertSms">Un mail avec lien vous permettant de modifier votre mot de passe vient de vous être envoyé !</p>';
+		}
+		// send mail for new mail
+		if (isset($_POST["changeMail"]))
+		{
+			$connexion->sendResetCode("resetMail", $_SESSION["nickname"]);
+			$_SESSION["alertSms"] = '<p class="alertSms">Un mail avec lien vous permettant de modifier votre adresse mail vient de vous être envoyé !</p>';
+		}
+		// update new pwd
+		else if (isset($_POST["newPwd"]) && !empty($_POST["newPwd"]) && isset($_POST["resetCode"]) && !empty($_POST["resetCode"]))
+		{
+			$updBool = $connexion->updatePwdOrMail($_POST["newPwd"], "pwd", $_POST["resetCode"]);
+			if ($updBool === true)
+			{
+				$_SESSION["alertSms"] = '<p class="alertSms">Mot de passe changé avec succès !</p>';
+			}
+			else
+			{
+				$_SESSION["alertSms"] = '<p class="alertSms">Le lien à expiré !</p>';				
+			}
+		}
+		// update new mail
+		else if (isset($_POST["newMail"]) && !empty($_POST["newMail"]) && isset($_POST["resetCode"]) && !empty($_POST["resetCode"]))
+		{
+			if (filter_var($_POST["newMail"], FILTER_VALIDATE_EMAIL))
+			{
+				$updBool = $connexion->updatePwdOrMail($_POST["newMail"], "mail", $_POST["resetCode"]);
+				if ($updBool === true)
+				{
+					$_SESSION["alertSms"] = '<p class="alertSms">Adresse mail changée avec succès !</p>';
+				}
+				else
+				{
+					$_SESSION["alertSms"] = '<p class="alertSms">Le lien à expiré !</p>';				
+				}
+			}
+			else
+			{
+					$_SESSION["alertSms"] = '<p class="alertSms">Adresse mail invalide !</p>';								
+			}
+		}
 	}
-	else if (isset($_POST["changePwd"]))
+	else
 	{
-		$connexion = new Connexion();
-		$connexion->sendResetCode("resetPwd");
+		if (isset($_POST["g-recaptcha-response"]) && !empty($_POST["g-recaptcha-response"]) && Connexion::checkCaptcha() === true)
+		{
+			// check connexion infos
+			if (isset($_POST["email"]) && isset($_POST["pwd"]))
+			{
+				$coResult = $connexion->checkConnexion($_POST["email"], $_POST["pwd"], true);
+
+				$_SESSION["alertSms"] = $coResult === false ? '<p class="alertSms">Les informations que vous avez entrées sont incorrectes !</p>' : "";
+			}
+			// send mail for lost pwd
+			else if (isset($_POST["mailForChangePwd"]) && !empty($_POST["mailForChangePwd"]))
+			{
+				if (filter_var($_POST["mailForChangePwd"], FILTER_VALIDATE_EMAIL))
+				{
+					$connexion->sendResetCode("resetPwd", $_POST["mailForChangePwd"]);
+					$_SESSION["alertSms"] = '<p class="alertSms">Un mail avec lien vous permettant de modifier votre mot de passe vient de vous être envoyé !</p>';
+				}
+				else
+				{
+						$_SESSION["alertSms"] = '<p class="alertSms">Adresse mail invalide !</p>';								
+				}
+			}		
+			// update new pwd for lost pwd
+			else if (isset($_POST["newPwd"]) && !empty($_POST["newPwd"]) && isset($_POST["resetCode"]) && !empty($_POST["resetCode"]))
+			{
+
+			}
+		}
 	}
 
 	$alertSms = $_SESSION["alertSms"] ?? '';
@@ -159,5 +223,30 @@ if (isset($_POST["g-recaptcha-response"]) && !empty($_POST["g-recaptcha-response
 	cleanPost($page);
 
 	require('./view/adminView.php');
+}
+
+function loadAdminReset($admin, $pwdOrMail)
+{
+	$page = "adminReset";
+
+	if (isset($_GET["code"]) && !empty($_GET["code"]))
+	{
+		$connexion = new Connexion();
+		$codeResultBool = $connexion->checkResetCode($_GET["code"], $pwdOrMail);
+		if ($codeResultBool === true)
+		{
+			require('./view/adminResetView.php');
+		}
+		else
+		{
+			$_SESSION["alertSms"] = '<p class="alertSms">Le lien a expiré !</p>';
+
+			header("Location: ./index.php?action=admin");
+		}
+	}
+	else
+	{
+		header("Location: ./index.php?action=admin");
+	}
 }
 

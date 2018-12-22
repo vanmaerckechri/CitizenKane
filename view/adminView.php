@@ -7,9 +7,10 @@ if ($admin === true)
 {
 ?>
 	<div id="main" class="main mainAuth">
-		<h2>Administration du Compte</h2>
+		<h2 class="underline">Administration du Compte</h2>
+		<?= $alertSms ?>
 		<button id="changePwd_btn" class="btn btn_admin">Modifier le mot de passe</button>
-		<button class="btn btn_admin">Modifier l'adresse mail</button>
+		<button id="changeMail_btn" class="btn btn_admin">Modifier l'adresse mail</button>
 		<button id="disco_btn" class="btn btn_admin">Se déconnecter</button>
 	</div>
 <?php
@@ -23,19 +24,18 @@ else
     			<legend class="underline">Connexion</legend>
     			<?= $alertSms ?>
        			<label for="email">Adresse Mail</label>
-       			<input id="email" type="text" name="email">
+       			<input id="email" type="email" name="email">
        			<label for="pwd">Mot de Passe</label>
        			<input id="pwd" type="password" name="pwd">
        			<a id="toggleForgetPwdButton" class="authForgetPwd" href="./index.php?action=admin">Mot de passe oublié ?</a>
        			<div class="g-recaptcha" data-sitekey="<?= Connexion::getCaptchaPublicKey() ?>" data-callback="submitForm"></div>
-       			<input type="submit" value=valider>
        		</fieldset>
 		</form>
 		<form id="formForgetPwd" class="displayNone" method="post" action="./index.php?action=admin">
 			<fieldset>
     			<legend class="underline">Mot de Passe Oublié ?</legend>
        			<label for="mailForChangePwd">Veuillez entrer votre adresse mail</label>
-       			<input id="mailForChangePwd" type="text" name="mailForChangePwd">
+       			<input id="mailForChangePwd" type="email" name="mailForChangePwd">
        			<a id="toggleAuthButton" class="authForgetPwd" href="./index.php?action=admin">Retour sur la page d'authentification</a>
        			<div class="g-recaptcha" data-sitekey="<?= Connexion::getCaptchaPublicKey() ?>" data-callback="submitForm"></div>
        		</fieldset>
@@ -54,6 +54,7 @@ ob_start();?>
 	{
 	?>
 		let changePwd = document.getElementById("changePwd_btn");
+		let changeMail = document.getElementById("changeMail_btn");
 		let disco = document.getElementById("disco_btn");
 
 		let createForm = function(inputName)
@@ -79,6 +80,12 @@ ob_start();?>
 			form.submit();
 		}
 
+		let sendResetMail = function()
+		{
+			let form = createForm("changeMail");
+			form.submit();
+		}
+
 		let disconnect = function()
 		{
 			let form = createForm("disco");
@@ -86,6 +93,7 @@ ob_start();?>
 		}
 
 		changePwd.addEventListener("click", sendResetPwd, false);
+		changeMail.addEventListener("click", sendResetMail, false);
 		disco.addEventListener("click", disconnect, false);
 	<?php
 	}

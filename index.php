@@ -45,6 +45,14 @@ if (isset($_GET['action']))
     {
         loadAdmin($admin);
     }
+    elseif ($_GET['action'] == 'resetPwd')
+    {
+        loadAdminReset($admin, "resetPwd");
+    }
+    elseif ($_GET['action'] == 'resetMail')
+    {
+        loadAdminReset($admin, "resetMail");
+    }
     else
     {
         loadHome($admin);
