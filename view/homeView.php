@@ -8,7 +8,7 @@
 		<h1>Un Espace Unique au Coeur de wavre</h1>
 		<div>
 			<a class="btn" href="">Je réserve !</a>
-			<a class="btn" href="restaurant.html#carteResto">Le menu</a>
+			<a class="btn" href="index.php?action=restaurant#carteResto">Le menu</a>
 		</div>
 	</section>
 	<section class="anime-container">
@@ -16,12 +16,12 @@
 		<p class="anime-display">Ouvert tous les jours, y compris les jours fériés et les dimanches.</p>
 		<div class="home-cafeResto">
 			<div class="anime-moveRight">
-				<a href="cafe.html"><img src="assets/img/logo_noir.png" alt="le logo de l'établissement en noir et blanc"></a>
+				<a href="index.php?action=cafe"><img src="assets/img/logo_noir.png" alt="le logo de l'établissement en noir et blanc"></a>
 				<h3 class="underline">Le Café-Bar</h3>
 				<p>Pour l’apéro, une soirée entre amis ou un verre en terrasse. Plus de 50 bières à la carte, des boissons maison et beaucoup de convivialité.</p>
 			</div>
 			<div class="anime-moveLeft">
-				<a href="restaurant.html"><img src="assets/img/logo_rouge.png" alt="le logo de l'établissement en rouge"></a>
+				<a href="index.php?action=restaurant"><img src="assets/img/logo_rouge.png" alt="le logo de l'établissement en rouge"></a>
 				<h3 class="underline">Le Restaurant</h3>
 				<p>Pour un bon plat belge, un hamburger maison ou une suggestion du moment. Un cadre chaleureux pour un repas au calme.</p>
 			</div>
@@ -62,7 +62,7 @@
 				</div>
 				<h3 class="underline">Retauration</h3>
 				<p>Pour les petites ou grandes faims, le restaurant vous accueillent tous les jours de 11h à 22h.</p>
-				<a href="restaurant.html#carteResto">Carte restauration</a>
+				<a href="index.php?action=restaurant#carteResto">Carte restauration</a>
 			</div>
 			<div class="anime-scaleUp">
 				<div>
@@ -80,7 +80,7 @@
 				</div>
 				<h3 class="underline">Brunch</h3>
 				<p>Venez déguster notre délicieux brunch !</p>
-				<a href="brunch.html">Brunch</a>
+				<a href="index.php?action=brunch">Brunch</a>
 			</div>
 			<div class="anime-scaleUp">
 				<div>
@@ -89,7 +89,7 @@
 				</div>
 				<h3 class="underline">Routes de Chouffre</h3>
 				<p>Découvrez nos routes de Chouffe !</p>
-				<a href="cafe.html#carteBieres">Nos routes de Chouffe</a>
+				<a href="index.php?action=cafe#chouffes">Nos routes de Chouffe</a>
 			</div>
 		</div>
 	</section>

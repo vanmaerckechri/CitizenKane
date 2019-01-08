@@ -32,7 +32,7 @@ ob_start();
 
 		<?= $carteView ?>
 
-		<div class="cafe-chouffes">
+		<div id="chouffes" class="cafe-chouffes">
 			<h3>Découvrez nos ROUTES DE CHOUFFE, Uniques au Monde !</h3>
 			<div>
 				<p>Le Citizen Kane propose de (re)découvrir la Brasserie d’Achouffe avec ses <b>ROUTES DE CHOUFFE</b> !</p>
