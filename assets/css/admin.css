@@ -226,4 +226,22 @@ textarea {
   .adminContainer input {
     margin-bottom: 1rem; }
 
+.inputRepeat-form {
+  position: relative; }
+
+.inputRepeat-error::after, .inputRepeat-correct::after {
+  margin: 1rem 0;
+  width: 100%;
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%);
+  font-size: 1rem;
+  letter-spacing: 0.1rem; }
+
+.inputRepeat-error::after {
+  content: "les champs ne sont pas identiques!";
+  text-align: center;
+  color: red; }
+
 /*# sourceMappingURL=admin.css.map */
