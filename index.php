@@ -6,6 +6,11 @@ require('./controller/routesController.php');
 $connexion = new Connexion();
 $admin = false;
 
+$_SESSION["nickname"] = "test";
+$_SESSION["password"] = hash('sha1', "test", true);
+
+//0xa94a8fe5ccb19ba61c4c0873d391e987982fbbd3
+
 if (isset($_SESSION["nickname"]) && !empty($_SESSION["nickname"]) && isset($_SESSION["password"]) && !empty($_SESSION["password"]))
 {
     $admin = $connexion->checkConnexion($_SESSION["nickname"], $_SESSION["password"]);

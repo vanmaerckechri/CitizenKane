@@ -305,7 +305,6 @@ nav {
 .readMore-container {
   max-width: 1280px;
   position: relative;
-  min-height: 330px;
   text-align: center; }
   .readMore-container .readMore-content {
     margin: 0;
@@ -502,6 +501,24 @@ nav {
   .alertCookies-container button {
     margin: 1rem auto 0;
     display: block; }
+
+.inputRepeat-form {
+  position: relative; }
+
+.inputRepeat-error::after, .inputRepeat-correct::after {
+  margin: 1rem 0;
+  width: 100%;
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%);
+  font-size: 1rem;
+  letter-spacing: 0.1rem; }
+
+.inputRepeat-error::after {
+  content: "les champs ne sont pas identiques!";
+  text-align: center;
+  color: red; }
 
 .hidden {
   opacity: 0;
@@ -891,8 +908,12 @@ section.beerproject-intro {
     color: #FFF; }
   .mainAuth form {
     max-width: 450px; }
+  .mainAuth fieldset > div {
+    text-align: center; }
   .mainAuth legend {
     margin: 0 auto; }
+  .mainAuth label {
+    display: inline-block; }
   .mainAuth input {
     max-width: 250px; }
   .mainAuth .authForgetPwd {

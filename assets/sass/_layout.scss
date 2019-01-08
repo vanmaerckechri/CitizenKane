@@ -643,9 +643,20 @@ section.beerproject-intro
 	{
 		max-width: 450px;
 	}
+	fieldset
+	{
+		& > div
+		{
+			text-align: center;
+		}
+	}
 	legend
 	{
 		margin: 0 auto;
+	}
+	label
+	{
+		display: inline-block;
 	}
 	input
 	{
