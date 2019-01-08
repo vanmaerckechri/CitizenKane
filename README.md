@@ -1,1 +1,1 @@
-# Restaurant & Café-Bar Citizen Kane (en dév.)
+# Restaurant & Café-Bar Citizen Kane (v1.0)
