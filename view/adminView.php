@@ -48,7 +48,7 @@ $content = ob_get_clean();
 ob_start();?>
 	<script type="text/javascript" src="assets/js/cvm_alertcookies.js"></script>
 	<script type="text/javascript">
-		"use strict";
+	"use strict";
 	<?php
 	if ($admin === true)
 	{

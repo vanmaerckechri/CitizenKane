@@ -11,7 +11,7 @@ require('footer.php');
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="description" content="<?= htmlspecialchars($headDescription) ?>">
     <?php
-    if ($page == "admin")
+    if ($page == "admin" || $page == "adminReset")
     {
     ?>
         <meta name="robots" content="noindex, nofollow">

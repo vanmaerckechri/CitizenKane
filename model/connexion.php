@@ -4,6 +4,7 @@ class Connexion
 {
 	public function dbConnect()
 	{
+
 		$host = 'localhost';
 		$db = 'citizen_kane';
 		$charset = 'utf8';		
@@ -40,12 +41,12 @@ class Connexion
 
 	static function getCaptchaPublicKey()
 	{
-		return "6LcEPoMUAAAAAOCPW43mxGWFrg15qje1coKBmqB1";
+		return "";
 	}
 
 	static function checkCaptcha()
 	{
-		$secret = "6LcEPoMUAAAAAKIH0nIUju_Z8KPtwxhi-bgPckLE";
+		$secret = "";
 	    // Paramètre renvoyé par le recaptcha
     	$response = $_POST['g-recaptcha-response'];
     	// On récupère l'IP de l'utilisateur
@@ -205,7 +206,7 @@ class Connexion
 				$upt = $dbh->prepare('UPDATE citizen_auth SET mdp = :input, reset_pwd = :reset_code WHERE id = :id');
 
 				$_SESSION["nickname"] = $oldMail;
-				$_SESSION["password"] = hash('sha1', $newInput);
+				$_SESSION["password"] = $input;
 			}
 			else
 			{

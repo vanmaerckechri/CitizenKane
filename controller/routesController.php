@@ -182,7 +182,7 @@ function loadAdmin($admin)
 			}
 			else
 			{
-					$_SESSION["alertSms"] = '<p class="alertSms">Adresse mail invalide !</p>';								
+				$_SESSION["alertSms"] = '<p class="alertSms">Adresse mail invalide !</p>';								
 			}
 		}
 	}
@@ -213,7 +213,35 @@ function loadAdmin($admin)
 			// update new pwd for lost pwd
 			else if (isset($_POST["newPwd"]) && !empty($_POST["newPwd"]) && isset($_POST["resetCode"]) && !empty($_POST["resetCode"]))
 			{
-
+				$updBool = $connexion->updatePwdOrMail($_POST["newPwd"], "pwd", $_POST["resetCode"]);
+				if ($updBool === true)
+				{
+					$_SESSION["alertSms"] = '<p class="alertSms">Mot de passe changé avec succès !</p>';
+				}
+				else
+				{
+					$_SESSION["alertSms"] = '<p class="alertSms">Le lien à expiré !</p>';				
+				}
+			}
+			// update new mail
+			else if (isset($_POST["newMail"]) && !empty($_POST["newMail"]) && isset($_POST["resetCode"]) && !empty($_POST["resetCode"]))
+			{
+				if (filter_var($_POST["newMail"], FILTER_VALIDATE_EMAIL))
+				{
+					$updBool = $connexion->updatePwdOrMail($_POST["newMail"], "mail", $_POST["resetCode"]);
+					if ($updBool === true)
+					{
+						$_SESSION["alertSms"] = '<p class="alertSms">Adresse mail changée avec succès !</p>';
+					}
+					else
+					{
+						$_SESSION["alertSms"] = '<p class="alertSms">Le lien à expiré !</p>';
+					}
+				}
+				else
+				{
+					$_SESSION["alertSms"] = '<p class="alertSms">Adresse mail invalide !</p>';								
+				}
 			}
 		}
 	}
